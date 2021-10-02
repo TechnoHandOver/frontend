@@ -7,7 +7,7 @@ const Home = ({ id, go, fetchedUser }) => (
 	<Panel id={id}>
 		<PanelHeader>Example</PanelHeader>
 		{fetchedUser &&
-		<Group header={<Header mode="secondary">User Data Fetched with VK Bridge</Header>}>
+		<Group header={<Header mode="secondary">User Data Fetched with VK Bridge id: {fetchedUser.id}</Header>}>
 			<Cell
 				before={fetchedUser.photo_200 ? <Avatar src={fetchedUser.photo_200}/> : null}
 				description={fetchedUser.city && fetchedUser.city.title ? fetchedUser.city.title : ''}
@@ -30,6 +30,7 @@ Home.propTypes = {
 	id: PropTypes.string.isRequired,
 	go: PropTypes.func.isRequired,
 	fetchedUser: PropTypes.shape({
+		id: PropTypes.string,
 		photo_200: PropTypes.string,
 		first_name: PropTypes.string,
 		last_name: PropTypes.string,
