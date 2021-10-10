@@ -42,7 +42,7 @@ export const DeliveryAdsList = function DeliveryAdsList() {
     const [cards, setCards] = React.useState([]);
 
     React.useEffect(() => {
-        customFetch(`${backendUrl}/ads/list`)
+        customFetch(`${backendUrl}/api/ads/list`)
             .then(({data}) => {
                 console.log(data);
                 setCards(data);
