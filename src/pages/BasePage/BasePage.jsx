@@ -6,7 +6,9 @@ export const BasePage = function BasePage({id, headerText, active, navigationHan
     return (
         <Panel id={id}>
             <PanelHeader>{headerText}</PanelHeader>
-            {children}
+            <div style={{paddingBottom: 60}}>
+                {children}
+            </div>
             <NavigationPanel active={active} navigationHandler={navigationHandler}/>
         </Panel>
     )
