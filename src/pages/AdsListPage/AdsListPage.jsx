@@ -1,14 +1,11 @@
-import {Panel, PanelHeader, View} from "@vkontakte/vkui";
 import {DeliveryAdsList} from "../../components/DeliveryAdsList/DeliveryAdsList";
+import {BasePage} from "../BasePage/BasePage";
 
 
-export const AdsListPage = function AdsListPage() {
+export const AdsListPage = function AdsListPage({id, navigationHandler, active}) {
     return (
-        <View activePanel="adsListPage">
-            <Panel id='adsListPage'>
-                <PanelHeader>Объявления</PanelHeader>
-                <DeliveryAdsList/>
-            </Panel>
-        </View>
-    );
+        <BasePage id={id} headerText='Объявления' active={active} navigationHandler={navigationHandler}>
+            <DeliveryAdsList/>
+        </BasePage>
+    )
 }

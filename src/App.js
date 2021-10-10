@@ -13,7 +13,8 @@ import CreateAds from './pages/CreateAds/CreateAds';
 const App = () => {
 	const [activePanel, setActivePanel] = useState('adsListPage');
 	const [fetchedUser, setUser] = useState(null);
-	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
+	// const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
+	const [popout, setPopout] = useState(null);
 
 	useEffect(() => {
 		bridge.subscribe(({ detail: { type, data }}) => {
@@ -39,11 +40,9 @@ const App = () => {
 		<AdaptivityProvider>
 			<AppRoot>
 				<View activePanel={activePanel} popout={popout}>
-					<CreateAds id='createads' />
-					<Home id='home' fetchedUser={fetchedUser} go={go} />
-					<Persik id='persik' go={go} />
+					<CreateAds id='createads' active={activePanel} navigationHandler={setActivePanel}/>
+					<AdsListPage id='adsListPage' active={activePanel} navigationHandler={setActivePanel}/>
 				</View>
-				<AdsListPage/>
 			</AppRoot>
 		</AdaptivityProvider>
 	);

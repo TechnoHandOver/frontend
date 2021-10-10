@@ -18,6 +18,20 @@ const cards = [
         minPrice: '350',
         timeFrom: '2021-10-02T12:00:00.000Z',
         timeTo: '2021-10-02T12:20:00.000Z',
+    },
+    {
+        locationFrom: 'Общежитие №4 Мытищи',
+        locationTo: 'ГЗ МГТУ им Н.Э. Баумана',
+        minPrice: '370',
+        timeFrom: '2021-10-02T12:00:00.000Z',
+        timeTo: '2021-10-02T12:20:00.000Z',
+    },
+    {
+        locationFrom: 'Общежитие №10 (СМ)',
+        locationTo: 'ГЗ МГТУ им Н.Э. Баумана',
+        minPrice: '370',
+        timeFrom: '2021-10-02T12:00:00.000Z',
+        timeTo: '2021-10-02T12:20:00.000Z',
     }
 ]
 
