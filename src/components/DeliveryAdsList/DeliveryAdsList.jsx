@@ -54,7 +54,7 @@ export const DeliveryAdsList = function DeliveryAdsList() {
 
     return (
         <CardGrid size='l'>
-            {cards.map((item, index) => (
+            {cards.length && cards.map((item, index) => (
                 <DeliveryAd {...item} key={index}/>
             ))}
             {!cards.length && <Footer>К сожалению, пока нет активных объявлений, создавайте объявления для работы сервиса</Footer>}
