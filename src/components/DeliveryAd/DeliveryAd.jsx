@@ -1,5 +1,4 @@
 import {Div, Avatar, Card, Cell, Text} from "@vkontakte/vkui";
-import { Icon28PaperplaneOutline } from '@vkontakte/icons';
 import './DeliveryAd.css'
 import * as React from "react";
 import { Icon24ArrowDownOutline } from '@vkontakte/icons';
@@ -8,6 +7,7 @@ import { Icon16Minus } from '@vkontakte/icons';
 import {parseTime} from "../../helpers/parseTime/parseTime";
 
 const avatarSrc = 'https://sun9-22.userapi.com/impg/GqwjJuFIIMSYaSybujDI7PKayhtdjI8oFcABXA/BH3RAKOv2sY.jpg?size=720x1080&quality=96&sign=0863ce6a5aee8ef2122edc7053335535&type=album';
+const defaultIconSize = 20;
 
 export const DeliveryAd = function DeliveryAd({locationFrom, locationTo, minPrice, timeFrom, timeTo, user}) {
     const timeDeparture = new Date(timeFrom);
@@ -19,7 +19,7 @@ export const DeliveryAd = function DeliveryAd({locationFrom, locationTo, minPric
                 <div className='delivery-ad__travel'>
                     <PaddedText weight="semibold">{locationFrom}</PaddedText>
                     <div className='delivery-ad__icon'>
-                        <Icon24ArrowDownOutline/>
+                        <Icon24ArrowDownOutline width={defaultIconSize} height={defaultIconSize}/>
                     </div>
                     <PaddedText weight="semibold">{locationTo}</PaddedText>
                 </div>

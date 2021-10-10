@@ -11,8 +11,9 @@ import {
     Panel,
     PanelHeader, Textarea,
 } from '@vkontakte/vkui';
+import {BasePage} from "../BasePage/BasePage";
 
-const CreateAds = ({ id }) => {
+const CreateAds = ({ id, navigationHandler, active }) => {
     // const days = [
     //     {value: 'mon', label: 'Понедельник'},
     //     {value: 'tue', label: 'Вторник'},
@@ -29,8 +30,7 @@ const CreateAds = ({ id }) => {
     const minutes = [...Array(60).keys()];
 
     return (
-        <Panel id={id}>
-            <PanelHeader>Создание объявления</PanelHeader>
+        <BasePage id={id} headerText='Создание объявления' active={active} navigationHandler={navigationHandler}>
             <Group header={<Header mode="secondary">Введите данные о своих перемещения</Header>}>
                 <FormLayout>
                     <FormLayoutGroup mode="horizontal">
@@ -41,16 +41,16 @@ const CreateAds = ({ id }) => {
                             <Input />
                         </FormItem>
                     </FormLayoutGroup>
-                        <FormItem top="День">
-                            <DatePicker
-                                min={{day: now.getDate(), month: now.getMonth() + 1, year: now.getFullYear()}}
-                                defaultValue={{day: now.getDate(), month: now.getMonth() + 1, year: now.getFullYear()}}
-                                onDateChange={(value) => {console.log(value)}}
-                                dayPlaceholder="ДД"
-                                monthPlaceholder="ММММ"
-                                yearPlaceholder="ГГГГ"
-                            />
-                        </FormItem>
+                    <FormItem top="День">
+                        <DatePicker
+                            min={{day: now.getDate(), month: now.getMonth() + 1, year: now.getFullYear()}}
+                            defaultValue={{day: now.getDate(), month: now.getMonth() + 1, year: now.getFullYear()}}
+                            onDateChange={(value) => {console.log(value)}}
+                            dayPlaceholder="ДД"
+                            monthPlaceholder="ММММ"
+                            yearPlaceholder="ГГГГ"
+                        />
+                    </FormItem>
                     <FormItem top="Отправление" />
                     <FormLayoutGroup mode="horizontal" top="Отправление">
                         <FormItem top="Часы">
@@ -96,7 +96,7 @@ const CreateAds = ({ id }) => {
                     </FormLayoutGroup>
                 </FormLayout>
             </Group>
-        </Panel>
+        </BasePage>
     );
 };
 
