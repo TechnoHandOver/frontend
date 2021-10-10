@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {CardGrid} from "@vkontakte/vkui";
+import {CardGrid, Footer} from "@vkontakte/vkui";
 import {DeliveryAd} from "../DeliveryAd/DeliveryAd";
 import {customFetch} from "../../helpers/customFetch/customFetch";
 
@@ -35,6 +35,7 @@ const cards = [
     }
 ]
 
+
 const backendUrl = 'http://localhost:8080'
 
 export const DeliveryAdsList = function DeliveryAdsList() {
@@ -49,6 +50,7 @@ export const DeliveryAdsList = function DeliveryAdsList() {
             {cards.map((item, index) => (
                 <DeliveryAd {...item} key={index}/>
             ))}
+            {!cards.length && <Footer>К сожалению, пока нет активных объявлений, создавайте объявления для работы сервиса</Footer>}
         </CardGrid>
     );
 }
