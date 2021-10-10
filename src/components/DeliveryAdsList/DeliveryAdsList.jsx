@@ -48,6 +48,7 @@ export const DeliveryAdsList = function DeliveryAdsList() {
                 setCards(data);
             })
             .catch(() => {
+                console.log(cards);
                 console.log('рисую письки');
             });
     }, [])
