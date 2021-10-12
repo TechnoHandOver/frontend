@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
+import './CreateAds.css';
 import {
+    Button,
     CustomSelect, DatePicker,
     FormItem,
     FormLayout,
@@ -9,25 +11,48 @@ import {
     Header,
     Input, NativeSelect,
     Panel,
-    PanelHeader, Textarea,
+    PanelHeader, Select, Textarea,
 } from '@vkontakte/vkui';
 import {BasePage} from "../BasePage/BasePage";
 
-const CreateAds = ({ id, navigationHandler, active }) => {
-    // const days = [
-    //     {value: 'mon', label: 'Понедельник'},
-    //     {value: 'tue', label: 'Вторник'},
-    //     {value: 'wen', label: 'Среда'},
-    //     {value: 'thu', label: 'Четверг'},
-    //     {value: 'fri', label: 'Пятница'},
-    //     {value: 'sat', label: 'Суббота'},
-    //     {value: 'sun', label: 'Воскресенье'},
-    // ];
-    const [selectedDateTo, setSelectedDateTo] = useState({});
-
+export const CreateAds = ({ id, navigationHandler, active }) => {
     const now = new Date();
+
+    const [locationFrom, setLocationFrom] = useState('');
+    const [locationTo, setLocationTo] = useState('');
+    const [date, setDate] = useState({ day: now.getDate(), month: now.getMonth(), year: now.getFullYear() });
+    const [timeFrom, setTimeFrom] = useState({ hour: 0, minute: 0 });
+    const [timeTo, setTimeTo] = useState({ hour: 0, minute: 0 });
+    const [price, setPrice] = useState('');
+    const [comment, setComment] = useState('');
+
     const hours = [...Array(24).keys()];
     const minutes = [...Array(60).keys()];
+
+    const handleClick = () => {
+        if (!locationFrom || !locationTo || !price) {
+            return;
+        }
+
+        fetch('https://handover.space/api/ads/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                locationFrom,
+                locationTo,
+                timeFrom: new Date(Date.UTC(date.year, date.month, date.day, timeFrom.hour, timeFrom.minute)).toISOString(),
+                timeTo: new Date(Date.UTC(date.year, date.month, date.day, timeTo.hour, timeTo.minute)).toISOString(),
+                minPrice: price.toString(),
+                comment,
+            }),
+        }).then((response) => {
+            console.log(response.json());
+        }).catch((err) => {
+            console.log(err);
+        });
+    };
 
     return (
         <BasePage id={id} headerText='Создание объявления' active={active} navigationHandler={navigationHandler}>
@@ -35,65 +60,95 @@ const CreateAds = ({ id, navigationHandler, active }) => {
                 <FormLayout>
                     <FormLayoutGroup mode="horizontal">
                         <FormItem top="Откуда">
-                            <Input />
+                            <Input placeholder="Общежитие №2" value={locationFrom} onChange={(evt) => { setLocationFrom(evt.target.value); }} />
                         </FormItem>
                         <FormItem top="Куда">
-                            <Input />
+                            <Input placeholder="УЛК МГТУ им. Баумана" value={locationTo} onChange={(evt) => { setLocationTo(evt.target.value); }} />
                         </FormItem>
                     </FormLayoutGroup>
                     <FormItem top="День">
                         <DatePicker
                             min={{day: now.getDate(), month: now.getMonth() + 1, year: now.getFullYear()}}
                             defaultValue={{day: now.getDate(), month: now.getMonth() + 1, year: now.getFullYear()}}
-                            onDateChange={(value) => {console.log(value)}}
+                            onDateChange={(value) => { setDate(value); }}
                             dayPlaceholder="ДД"
                             monthPlaceholder="ММММ"
                             yearPlaceholder="ГГГГ"
                         />
                     </FormItem>
-                    <FormItem top="Отправление" />
-                    <FormLayoutGroup mode="horizontal" top="Отправление">
-                        <FormItem top="Часы">
-                            <NativeSelect>
-                                {hours.map((hour) => (
-                                    <option value={hour}>{hour}</option>
-                                ))}
-                            </NativeSelect>
+                    <FormLayoutGroup mode="horizontal">
+                        <FormItem top="Отправление">
+                            <Select
+                                defaultValue={0}
+                                options={hours.map((hour, idx) => ({ value: idx, label: hour }))}
+                                onChange={(evt) => {
+                                    setTimeFrom((t) => ({
+                                        hour: Number(evt.target.value),
+                                        minute: t.minute,
+                                    }))
+                                }}
+                            />
                         </FormItem>
-                        <FormItem top="Минуты">
-                            <NativeSelect>
-                                {minutes.map((minute) => (
-                                    <option value={minute}>{minute}</option>
-                                ))}
-                            </NativeSelect>
+                        <FormItem className="formItemLayout">
+                            <Select
+                                defaultValue={0}
+                                options={minutes.map((minute, idx) => ({ value: idx, label: minute }))}
+                                onChange={(evt) => {
+                                    setTimeFrom((t) => ({
+                                        hour: t.hour,
+                                        minute: Number(evt.target.value),
+                                    }))
+                                }}
+                            />
                         </FormItem>
                     </FormLayoutGroup>
 
-                    <FormItem top="Прибытие" />
                     <FormLayoutGroup mode="horizontal">
-                        <FormItem top="Часы">
-                            <NativeSelect>
-                                {hours.map((hour) => (
-                                    <option value={hour}>{hour}</option>
-                                ))}
-                            </NativeSelect>
+                        <FormItem top="Прибытие">
+                            <Select
+                                defaultValue={0}
+                                options={hours.map((hour, idx) => ({ value: idx, label: hour }))}
+                                onChange={(evt) => {
+                                    setTimeTo((t) => ({
+                                        hour: Number(evt.target.value),
+                                        minute: t.minute,
+                                    }));
+                                }}
+                            />
                         </FormItem>
-                        <FormItem top="Минуты">
-                            <NativeSelect>
-                                {minutes.map((minute) => (
-                                    <option value={minute}>{minute}</option>
-                                ))}
-                            </NativeSelect>
+                        <FormItem className="formItemLayout">
+                            <Select
+                                defaultValue={0}
+                                options={minutes.map((minute, idx) => ({ value: idx, label: minute }))}
+                                onChange={(evt) => {
+                                    setTimeTo((t) => ({
+                                        hour: t.hour,
+                                        minute: Number(evt.target.value),
+                                    }));
+                                }}
+                            />
                         </FormItem>
                     </FormLayoutGroup>
+
                     <FormLayoutGroup mode="vertical">
                         <FormItem top="Оплата">
-                            <Input />
+                            <Input
+                                placeholder="300"
+                                value={price}
+                                onChange={(evt) => { setPrice(evt.target.value); }}
+                            />
                         </FormItem>
                         <FormItem top="Комментарии">
-                            <Textarea placeholder="Я очень вредный" />
+                            <Textarea
+                                placeholder="Я очень вредный"
+                                value={comment}
+                                onChange={(evt) => { setComment(evt.target.value); }}
+                            />
                         </FormItem>
                     </FormLayoutGroup>
+                    <FormItem>
+                        <Button stretched size="l" onClick={handleClick}>Создать</Button>
+                    </FormItem>
                 </FormLayout>
             </Group>
         </BasePage>
@@ -103,11 +158,3 @@ const CreateAds = ({ id, navigationHandler, active }) => {
 CreateAds.propTypes = {
     id: PropTypes.string.isRequired,
 };
-
-export default CreateAds;
-
-// locationFrom
-// locationTo
-// timeFrom
-// timeTo
-// minPrice

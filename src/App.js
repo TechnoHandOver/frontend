@@ -3,12 +3,8 @@ import bridge from '@vkontakte/vk-bridge';
 import { View, ScreenSpinner, AdaptivityProvider, AppRoot } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 
-import Home from './panels/Home';
-import Persik from './panels/Persik';
-
-import {AdsListPage} from "./pages/AdsListPage/AdsListPage";
-
-import CreateAds from './pages/CreateAds/CreateAds';
+import {AdsListPage} from './pages/AdsListPage/AdsListPage';
+import {CreateAds} from './pages/CreateAds/CreateAds';
 
 const App = () => {
 	const [activePanel, setActivePanel] = useState('adsListPage');
