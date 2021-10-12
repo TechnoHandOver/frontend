@@ -43,9 +43,9 @@ export const DeliveryAdsList = function DeliveryAdsList() {
 
     React.useEffect(() => {
         customFetch(`${backendUrl}/api/ads/list`)
-            .then(({data}) => {
+            .then((data) => {
                 console.log(data);
-                setCards(data);
+                // setCards(data);
             })
             .catch(() => {
                 console.log(cards);
@@ -55,7 +55,7 @@ export const DeliveryAdsList = function DeliveryAdsList() {
 
     return (
         <CardGrid size='l'>
-            {cards.length && cards.map((item, index) => (
+            {cards.map((item, index) => (
                 <DeliveryAd {...item} key={index}/>
             ))}
             {!cards.length && <Footer>К сожалению, пока нет активных объявлений, создавайте объявления для работы сервиса</Footer>}
