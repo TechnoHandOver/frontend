@@ -43,13 +43,11 @@ export const DeliveryAdsList = function DeliveryAdsList() {
 
     React.useEffect(() => {
         customFetch(`${backendUrl}/api/ads/list`)
-            .then((data) => {
-                console.log(data);
-                // setCards(data);
+            .then(({data}) => {
+                setCards(data);
             })
-            .catch(() => {
-                console.log(cards);
-                console.log('рисую письки');
+            .catch((error) => {
+                console.log(error);
             });
     }, [])
 
