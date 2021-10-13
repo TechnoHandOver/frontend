@@ -44,7 +44,7 @@ export const CreateAds = ({ id, navigationHandler, active }) => {
                 locationTo,
                 timeFrom: new Date(Date.UTC(date.year, date.month, date.day, timeFrom.hour, timeFrom.minute)).toISOString(),
                 timeTo: new Date(Date.UTC(date.year, date.month, date.day, timeTo.hour, timeTo.minute)).toISOString(),
-                minPrice: price.toString(),
+                minPrice: Number(price),
                 comment,
             }),
         }).then((response) => {
