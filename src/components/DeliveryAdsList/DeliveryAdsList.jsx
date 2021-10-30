@@ -4,6 +4,8 @@ import {CardGrid, Footer} from "@vkontakte/vkui";
 import {DeliveryAd} from "../DeliveryAd/DeliveryAd";
 import {customFetch} from "../../helpers/customFetch/customFetch";
 
+import './DeliveryAdsList.css';
+
 const mocks = [
     {
         locationFrom: 'Общежитие №4 Измайлово',
@@ -52,11 +54,13 @@ export const DeliveryAdsList = function DeliveryAdsList() {
     // }, [])
 
     return (
-        <CardGrid size='l'>
-            {cards.map((item, index) => (
-                <DeliveryAd {...item} key={index}/>
-            ))}
-            {!cards.length && <Footer>К сожалению, пока нет активных объявлений, создавайте объявления для работы сервиса</Footer>}
-        </CardGrid>
+        <div className='delivery-ads-list'>
+            <CardGrid size='l'>
+                {cards.map((item, index) => (
+                    <DeliveryAd {...item} key={index}/>
+                ))}
+                {!cards.length && <Footer>К сожалению, пока нет активных объявлений, создавайте объявления для работы сервиса</Footer>}
+            </CardGrid>
+        </div>
     );
 }
