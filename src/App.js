@@ -5,11 +5,11 @@ import '@vkontakte/vkui/dist/vkui.css';
 
 import {AdsListPage} from './pages/AdsListPage/AdsListPage';
 import {CreateAds} from './pages/CreateAds/CreateAds';
+import {Profile} from './pages/Profile/Profile';
 
 const App = () => {
 	const [activePanel, setActivePanel] = useState('adsListPage');
 	const [fetchedUser, setUser] = useState(null);
-	// const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
 	const [popout, setPopout] = useState(null);
 
 	useEffect(() => {
@@ -38,6 +38,7 @@ const App = () => {
 				<View activePanel={activePanel} popout={popout}>
 					<CreateAds id='createads' active={activePanel} navigationHandler={setActivePanel}/>
 					<AdsListPage id='adsListPage' active={activePanel} navigationHandler={setActivePanel}/>
+					<Profile id='profile' active={activePanel} navigationHandler={setActivePanel} user={fetchedUser}/>
 				</View>
 			</AppRoot>
 		</AdaptivityProvider>

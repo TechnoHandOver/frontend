@@ -3,6 +3,7 @@ import {Icon24AddSquareOutline, Icon24ServicesOutline, Icon24UserCircleOutline} 
 export const iconIds = {
     'add': 'createads',
     'search': 'adsListPage',
+    'profile': 'profile',
 };
 
 const iconsProps = (isActive) => ({
