@@ -43,15 +43,20 @@ const backendUrl = 'https://handover.space';
 export const DeliveryAdsList = function DeliveryAdsList() {
     const [cards, setCards] = React.useState(mocks);
 
-    // React.useEffect(() => {
-    //     customFetch(`${backendUrl}/api/ads/list`)
-    //         .then(({data}) => {
-    //             setCards(data);
-    //         })
-    //         .catch((error) => {
-    //             console.log(error);
-    //         });
-    // }, [])
+    React.useEffect(() => {
+        customFetch(`${backendUrl}/api/ads/search`)
+            .then(({data}) => {
+                if (data === 'no data') {
+                    setCards(mocks);
+                    return;
+                }
+                setCards(data);
+            })
+            .catch((error) => {
+                console.log(error);
+                setCards(mocks);
+            });
+    }, [])
 
     return (
         <div className='delivery-ads-list'>
