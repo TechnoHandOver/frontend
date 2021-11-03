@@ -6,18 +6,26 @@
 }
 
 .delivery-ad__icon {
-    padding-left: 20px;
+    display:flex;
+    align-items: center;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .delivery-ad__travel {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-shrink: 1;
 }
 
 .delivery-ad__time {
     display: flex;
     flex-direction: row;
+}
+
+.delivery-ad__day {
+    display: flex;
+    flex-direction: column;
 }
 
 .delivery-ad__time-slash {
@@ -40,3 +48,19 @@
     padding-bottom: 8px;
 }
 
+.delivery-ad__text {
+    display: flex;
+    align-items: center;
+    max-width: 40%;
+    overflow: hidden;
+}
+
+.delivery-ad__form-item {
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+
+.delivery-ad__price {
+    color: #2363AD;
+    font-size: 20px;
+}
