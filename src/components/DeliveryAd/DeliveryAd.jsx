@@ -35,7 +35,7 @@ export const DeliveryAd = function DeliveryAd({locationFrom, locationTo, minPric
                     <Text weight="semibold">{`${parseTime(timeDestination.getHours())}:${parseTime(timeDestination.getMinutes())}`}</Text>
                 </FormItem>
             </FormLayoutGroup>
-            <FormItem top='Что нужо перевезти?' className='delivery-ad__form-item'>
+            <FormItem top='Что нужно перевезти?' className='delivery-ad__form-item'>
                 <Input value='тубус' disabled/>
             </FormItem>
             <FormItem top='Цена'>
