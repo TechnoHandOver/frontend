@@ -4,6 +4,7 @@ export const createAd = (locDep, locArr, dateTimeArr, minPrice, comment, item) =
         headers: {
             'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({
             locDep,
             locArr,
