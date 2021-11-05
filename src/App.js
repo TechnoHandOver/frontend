@@ -23,7 +23,6 @@ const App = () => {
 		async function fetchData() {
 			const user = await bridge.send('VKWebAppGetUserInfo');
 			setUser(user);
-			setPopout(null);
 		}
 		fetchData();
 	}, []);
@@ -36,9 +35,9 @@ const App = () => {
 		<AdaptivityProvider>
 			<AppRoot>
 				<View activePanel={activePanel} popout={popout}>
-					<CreateAds id='createads' active={activePanel} navigationHandler={setActivePanel}/>
+					<CreateAds id='createads' active={activePanel} navigationHandler={setActivePanel} setPopout={setPopout} setActivePanel={setActivePanel} />
 					<AdsListPage id='adsListPage' active={activePanel} navigationHandler={setActivePanel}/>
-					<Profile id='profile' active={activePanel} navigationHandler={setActivePanel} user={fetchedUser}/>
+					<Profile id='profile' active={activePanel} navigationHandler={setActivePanel} user={fetchedUser} />
 				</View>
 			</AppRoot>
 		</AdaptivityProvider>
