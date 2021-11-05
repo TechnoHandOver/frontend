@@ -12,7 +12,7 @@ export const BasePage = function BasePage({
   return (
     <Panel id={id}>
       {header ? header : <PanelHeader>{headerText}</PanelHeader>}
-      <div style={{ paddingBottom: 60, paddingTop: header ? 120 : 0 }}>
+      <div style={{ paddingBottom: 70, paddingTop: header ? 130 : 0 }}>
         {children}
       </div>
       <NavigationPanel active={active} navigationHandler={navigationHandler} />
