@@ -23,12 +23,12 @@ export const DeliveryAd = function DeliveryAd({
   locDep,
   locArr,
   minPrice,
-  dateArr,
+  dateTimeArr,
   item,
   comment,
   userAuthorVkId,
 }) {
-  const timeDeparture = new Date(dateArr);
+  const timeDeparture = new Date(dateTimeArr);
   const [commentIsOpen, setCommentIsOpen] = React.useState(false);
 
   const handleClickExpandable = React.useCallback(() => {

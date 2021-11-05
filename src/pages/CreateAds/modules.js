@@ -1,4 +1,4 @@
-export const createAd = (locDep, locArr, dateArr, minPrice, comment, item) =>
+export const createAd = (locDep, locArr, dateTimeArr, minPrice, comment, item) =>
     fetch('https://handover.space/api/ad', {
         method: 'POST',
         headers: {
@@ -7,7 +7,7 @@ export const createAd = (locDep, locArr, dateArr, minPrice, comment, item) =>
         body: JSON.stringify({
             locDep,
             locArr,
-            dateArr,
+            dateTimeArr,
             minPrice,
             comment,
             item,
