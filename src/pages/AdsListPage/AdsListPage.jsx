@@ -74,7 +74,7 @@ export const AdsListPage = function AdsListPage({
           setCards(mocks);
           return;
         }
-        setCards(data.reverse());
+        setCards(data);
       })
       .catch((error) => {
         console.log(error);
