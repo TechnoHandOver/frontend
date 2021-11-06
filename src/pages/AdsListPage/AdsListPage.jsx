@@ -74,7 +74,7 @@ export const AdsListPage = function AdsListPage({
           setCards(mocks);
           return;
         }
-        setCards(data);
+        setCards(data.reverse());
       })
       .catch((error) => {
         console.log(error);
@@ -98,7 +98,7 @@ export const AdsListPage = function AdsListPage({
       active={active}
       navigationHandler={navigationHandler}
     >
-      <DeliveryAdsList cards={cards.reverse()} />
+      <DeliveryAdsList cards={cards} />
     </BasePage>
   );
 };
