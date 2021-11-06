@@ -65,14 +65,13 @@ export const CreateAds = ({ id, navigationHandler, active, setPopout, setActiveP
             subject
         )
             .then(({ ok, statusCode }) => {
-                console.log('modules');
                 setPopout(false);
                 if (!ok) {
                     console.error(`/api/ad: ${statusCode}`);
                     return;
                 }
 
-                setActivePanel('profile');
+                setActivePanel('adsListPage');
             })
             .catch((err) => {
                 console.error(err);

@@ -98,7 +98,7 @@ export const AdsListPage = function AdsListPage({
       active={active}
       navigationHandler={navigationHandler}
     >
-      <DeliveryAdsList cards={cards} />
+      <DeliveryAdsList cards={cards.reverse()} />
     </BasePage>
   );
 };
