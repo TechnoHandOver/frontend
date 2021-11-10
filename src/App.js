@@ -35,6 +35,7 @@ const App = () => {
 					name: `${user.first_name} ${user.last_name}`,
 					avatar: user.photo_200,
 				}),
+				credentials: 'include',
 			});
 			if (!session.ok) {
 				console.log(`/api/session: ${session.status}`);
