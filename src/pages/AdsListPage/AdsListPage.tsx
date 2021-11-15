@@ -48,18 +48,43 @@ const mocks = [
 
 const backendUrl = 'https://handover.space';
 
-export const AdsListPage = function AdsListPage({ id, navigationHandler, active }) {
-    const [cards, setCards] = React.useState([]);
-    const [fromLocation, setFromLocation] = React.useState('');
-    const [toLocation, setToLocation] = React.useState('');
+interface AdsListPageProps {
+  id: string;
+  navigationHandler: Dispatch<SetStateAction<string>>;
+  modalHandler?: Dispatch<SetStateAction<string>>;
+  active: string;
+}
+
+export const AdsListPage = function AdsListPage({
+  id,
+  navigationHandler,
+  modalHandler,
+  active,
+}: AdsListPageProps) {
+  const [cards, setCards] = React.useState<any>([]);
+  const [fromLocation, setFromLocation] = React.useState("");
+  const [toLocation, setToLocation] = React.useState("");
+  const [isOpenModal, setIsOpenModal] = React.useState(false);
 
     const onChangeFromInput = React.useCallback((evt) => {
         setFromLocation(evt.target.value);
     }, []);
 
-    const onChangeToInput = React.useCallback((evt) => {
-        setToLocation(evt.target.value);
-    }, []);
+  const onChangeToInput = React.useCallback((evt) => {
+    setToLocation(evt.target.value);
+  }, []);
+
+  const onClickFilters = React.useCallback(() => {
+    setIsOpenModal(!isOpenModal);
+    if (!modalHandler) {
+      return;
+    }
+    if (!isOpenModal) {
+      modalHandler(Modals.SearchFilter);
+    } else {
+      modalHandler("");
+    }
+  }, []);
 
     React.useEffect(() => {
         customFetch(`${backendUrl}/api/ad/search?loc_dep=${fromLocation}&loc_arr=${toLocation}`)
@@ -76,23 +101,24 @@ export const AdsListPage = function AdsListPage({ id, navigationHandler, active 
             });
     }, []);
 
-    return (
-        <BasePage
-            id={id}
-            header={
-                <FixedLayout filled vertical="top">
-                    <SearchPanel
-                        fromInput={fromLocation}
-                        onChangeFromInput={onChangeFromInput}
-                        toInput={toLocation}
-                        onChangeToInput={onChangeToInput}
-                    />
-                </FixedLayout>
-            }
-            active={active}
-            navigationHandler={navigationHandler}
-        >
-            <DeliveryAdsList cards={cards} />
-        </BasePage>
-    );
+  return (
+    <BasePage
+      id={id}
+      header={
+        <FixedLayout filled vertical="top">
+          <SearchPanel
+            fromInput={fromLocation}
+            onChangeFromInput={onChangeFromInput}
+            toInput={toLocation}
+            onChangeToInput={onChangeToInput}
+            onOpenModal={onClickFilters}
+          />
+        </FixedLayout>
+      }
+      active={active}
+      navigationHandler={navigationHandler}
+    >
+      <DeliveryAdsList cards={cards} />
+    </BasePage>
+  );
 };
