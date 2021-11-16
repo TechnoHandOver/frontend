@@ -1,5 +1,3 @@
-
-
 export const customFetch = async function customFetch(url) {
     let result;
     try {
@@ -9,9 +7,9 @@ export const customFetch = async function customFetch(url) {
     } catch (err) {
         console.log(err);
         return {
-            data: 'no data'
+            data: 'no data',
         };
     }
 
     return await result.json();
-}
+};

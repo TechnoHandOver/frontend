@@ -1,9 +1,9 @@
-import {Icon24AddSquareOutline, Icon24ServicesOutline, Icon24UserCircleOutline} from '@vkontakte/icons';
+import { Icon24AddSquareOutline, Icon24ServicesOutline, Icon24UserCircleOutline } from '@vkontakte/icons';
 
 export const iconIds = {
-    'add': 'createads',
-    'search': 'adsListPage',
-    'profile': 'profile',
+    add: 'createads',
+    search: 'adsListPage',
+    profile: 'profile',
 };
 
 const iconsProps = (isActive) => ({
