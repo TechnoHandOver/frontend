@@ -20,16 +20,30 @@ const App = () => {
 				document.body.attributes.setNamedItem(schemeAttribute);
 			}
 		});
+
 		async function fetchData() {
 			const user = await bridge.send('VKWebAppGetUserInfo');
 			setUser(user);
+
+			const session = await fetch('/api/session', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					vkId: user.id,
+					name: `${user.first_name} ${user.last_name}`,
+					avatar: user.photo_200,
+				}),
+				credentials: 'include',
+			});
+			if (!session.ok) {
+				console.log(`/api/session: ${session.status}`);
+			}
 		}
+
 		fetchData();
 	}, []);
-
-	const go = e => {
-		setActivePanel(e.currentTarget.dataset.to);
-	};
 
 	return (
 		<AdaptivityProvider>
