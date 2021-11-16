@@ -1,0 +1,7 @@
+.idea
+public/
+/storybook-static
+/**/dist
+*.css.d.ts
+tmp
+*.md

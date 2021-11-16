@@ -7,7 +7,9 @@
     "start": "cross-env PORT=10888 HTTPS=true react-scripts start",
     "build": "react-scripts build",
     "predeploy": "npm run build",
-    "deploy": "vk-miniapps-deploy"
+    "deploy": "vk-miniapps-deploy",
+    "prettify": "prettier --check --loglevel warn .",
+    "prettify:fix": "prettier --write ."
   },
   "keywords": [],
   "author": "",

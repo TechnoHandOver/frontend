@@ -1,18 +1,10 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './CreateAds.css';
-import {
-    Button,
-    FixedLayout,
-    FormItem,
-    FormLayout,
-    Group,
-    Input,
-    Textarea,
-} from '@vkontakte/vkui';
-import {BasePage} from "../BasePage/BasePage";
-import {getMasked} from '../../helpers/mask/mask';
-import {createAd} from './modules';
+import { Button, FixedLayout, FormItem, FormLayout, Group, Input, Textarea } from '@vkontakte/vkui';
+import { BasePage } from '../BasePage/BasePage';
+import { getMasked } from '../../helpers/mask/mask';
+import { createAd } from './modules';
 
 export const CreateAds = ({ id, navigationHandler, active, setPopout, setActivePanel }) => {
     const [locationFrom, setLocationFrom] = useState('');
@@ -25,14 +17,14 @@ export const CreateAds = ({ id, navigationHandler, active, setPopout, setActiveP
     const [error, setError] = useState(false);
 
     const handleChangeTime = (evt) => {
-        const {target} = evt;
+        const { target } = evt;
         const masked = getMasked(target.value);
 
         setTime(masked);
     };
 
     const handleChangePrice = (evt) => {
-        const {target} = evt;
+        const { target } = evt;
 
         if (isNaN(Number(target.value))) {
             return;
@@ -59,10 +51,12 @@ export const CreateAds = ({ id, navigationHandler, active, setPopout, setActiveP
         createAd(
             locationFrom,
             locationTo,
-            `${new Intl.DateTimeFormat('ru', {day: '2-digit', month: '2-digit', year: 'numeric'}).format(now)} ${time}`,
+            `${new Intl.DateTimeFormat('ru', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(
+                now,
+            )} ${time}`,
             Number(price),
             extra,
-            subject
+            subject,
         )
             .then(({ ok, statusCode }) => {
                 setPopout(false);
@@ -80,7 +74,7 @@ export const CreateAds = ({ id, navigationHandler, active, setPopout, setActiveP
     };
 
     return (
-        <BasePage id={id} headerText='Создание' active={active} navigationHandler={navigationHandler}>
+        <BasePage id={id} headerText="Создание" active={active} navigationHandler={navigationHandler}>
             <Group>
                 <FormLayout>
                     <FormItem
@@ -88,20 +82,34 @@ export const CreateAds = ({ id, navigationHandler, active, setPopout, setActiveP
                         status={!locationFrom && error && 'error'}
                         bottom={!locationFrom && error && 'Обязательное поле'}
                     >
-                        <Input placeholder="Общежитие №4" value={locationFrom} onChange={(evt) => { setLocationFrom(evt.target.value); }} />
+                        <Input
+                            placeholder="Общежитие №4"
+                            value={locationFrom}
+                            onChange={(evt) => {
+                                setLocationFrom(evt.target.value);
+                            }}
+                        />
                     </FormItem>
                     <FormItem
                         top="Куда доставить"
                         status={!locationTo && error && 'error'}
                         bottom={!locationTo && error && 'Обязательное поле'}
                     >
-                        <Input placeholder="УЛК МГТУ им. Баумана" value={locationTo} onChange={(evt) => { setLocationTo(evt.target.value); }} />
+                        <Input
+                            placeholder="УЛК МГТУ им. Баумана"
+                            value={locationTo}
+                            onChange={(evt) => {
+                                setLocationTo(evt.target.value);
+                            }}
+                        />
                     </FormItem>
                     <FormItem
                         top="Время доставки"
                         className="time"
-                        status={(!time && error || time.length !== 5 && error) && 'error'}
-                        bottom={!time && error ? 'Обязательное поле' : time.length !== 5 && error && 'Некорректные данные'}
+                        status={((!time && error) || (time.length !== 5 && error)) && 'error'}
+                        bottom={
+                            !time && error ? 'Обязательное поле' : time.length !== 5 && error && 'Некорректные данные'
+                        }
                     >
                         <Input placeholder="14:20" value={time} onChange={handleChangeTime} />
                     </FormItem>
@@ -110,10 +118,22 @@ export const CreateAds = ({ id, navigationHandler, active, setPopout, setActiveP
                         status={!subject && error && 'error'}
                         bottom={!subject && error && 'Обязательное поле'}
                     >
-                        <Input placeholder="Тубус" value={subject} onChange={(evt) => { setSubject(evt.target.value) }}/>
+                        <Input
+                            placeholder="Тубус"
+                            value={subject}
+                            onChange={(evt) => {
+                                setSubject(evt.target.value);
+                            }}
+                        />
                     </FormItem>
                     <FormItem top="Описание">
-                        <Textarea placeholder="5 комната, 8 этажа. Постучите три раза, прыгните два раза и вам откроют." value={extra} onChange={(evt) => { setExtra(evt.target.value); }}/>
+                        <Textarea
+                            placeholder="5 комната, 8 этажа. Постучите три раза, прыгните два раза и вам откроют."
+                            value={extra}
+                            onChange={(evt) => {
+                                setExtra(evt.target.value);
+                            }}
+                        />
                     </FormItem>
                     <FormItem
                         top="Предложите цену"
@@ -121,11 +141,13 @@ export const CreateAds = ({ id, navigationHandler, active, setPopout, setActiveP
                         status={!price && error && 'error'}
                         bottom={!price && error && 'Обязательное поле'}
                     >
-                        <Input placeholder="Не выбрано" value={price} onChange={handleChangePrice}/>
+                        <Input placeholder="Не выбрано" value={price} onChange={handleChangePrice} />
                     </FormItem>
                     <FixedLayout filled vertical="bottom" style={{ bottom: '50px' }}>
                         <FormItem>
-                            <Button stretched size="l" onClick={handleClick}>Создать</Button>
+                            <Button stretched size="l" onClick={handleClick}>
+                                Создать
+                            </Button>
                         </FormItem>
                     </FixedLayout>
                 </FormLayout>

@@ -13,9 +13,11 @@ export const createAd = (locDep, locArr, dateTimeArr, minPrice, comment, item) =
             comment,
             item,
         }),
-    }).then((response) => {
-        const {ok, status: statusCode} = response;
-        return { ok, statusCode };
-    }).catch((err) => {
-        console.log(err);
-    });
+    })
+        .then((response) => {
+            const { ok, status: statusCode } = response;
+            return { ok, statusCode };
+        })
+        .catch((err) => {
+            console.log(err);
+        });
