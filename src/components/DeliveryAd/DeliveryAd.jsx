@@ -18,6 +18,8 @@ export const DeliveryAd = function DeliveryAd({
     item,
     comment,
     userAuthorVkId,
+    setActiveView,
+    setAdData,
 }) {
     const timeDeparture = new Date(dateTimeArr);
     const [commentIsOpen, setCommentIsOpen] = React.useState(false);
@@ -26,8 +28,13 @@ export const DeliveryAd = function DeliveryAd({
         setCommentIsOpen(!commentIsOpen);
     }, [commentIsOpen]);
 
+    const handleClickCard = () => {
+        setAdData({ locDep, locArr, minPrice, dateTimeArr, item, comment });
+        setActiveView('one-ad');
+    };
+
     return (
-        <Card mode="shadow">
+        <Card mode="shadow" onClick={handleClickCard}>
             <FormItem>
                 <div className="delivery-ad__travel">
                     <Text weight="medium" className="delivery-ad__text">

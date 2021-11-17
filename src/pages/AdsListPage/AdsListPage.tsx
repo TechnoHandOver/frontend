@@ -12,10 +12,10 @@ import { debounce } from '@vkontakte/vkjs';
 const mocks = [
     {
         userAuthorVkId: 16233,
-        locDep: 'Общежитие №4 Измайлово',
-        locArr: 'ГЗ МГТУ им Н.Э. Баумана',
+        locDep: 'Москва',
+        locArr: 'Санкт-Петербург',
         minPrice: '500',
-        dateArr: '02.01.2006 04:15',
+        dateTimeArr: '02.01.2006 04:15',
         item: 'Зачётная книжка',
         comment: 'Просьба довезти осторожно, не трепать!',
     },
@@ -24,7 +24,7 @@ const mocks = [
         locDep: 'Общежитие №4 Мытищи',
         locArr: 'УЛК',
         minPrice: '350',
-        dateArr: '02.01.2006 04:15',
+        dateTimeArr: '02.01.2006 04:15',
         item: 'Зачётная книжка',
         comment: 'Просьба довезти осторожно, не трепать!',
     },
@@ -33,7 +33,7 @@ const mocks = [
         locDep: 'Общежитие №4 Мытищи',
         locArr: 'ГЗ МГТУ им Н.Э. Баумана',
         minPrice: '350',
-        dateArr: '02.01.2006 04:15',
+        dateTimeArr: '02.01.2006 04:15',
         item: 'Зачётная книжка',
         comment: 'Просьба довезти осторожно, не трепать!',
     },
@@ -42,7 +42,7 @@ const mocks = [
         locDep: 'Общежитие №10 (СМ)',
         locArr: 'ГЗ МГТУ им Н.Э. Баумана',
         minPrice: '370',
-        dateArr: '02.01.2006 04:15',
+        dateTimeArr: '02.01.2006 04:15',
         item: 'Зачётная книжка',
         comment: 'Просьба довезти осторожно, не трепать!',
     },
@@ -66,7 +66,7 @@ export const AdsListPage = function AdsListPage({
     active,
     priceFilter,
 }: AdsListPageProps) {
-    const [cards, setCards] = React.useState<any>([]);
+    const [cards, setCards] = React.useState<any>(mocks);
     const [fromLocation, setFromLocation] = React.useState('');
     const [toLocation, setToLocation] = React.useState('');
     const [isOpenModal, setIsOpenModal] = React.useState(false);
@@ -126,7 +126,7 @@ export const AdsListPage = function AdsListPage({
             active={active}
             navigationHandler={navigationHandler}
         >
-            <DeliveryAdsList cards={cards} />
+            <DeliveryAdsList cards={cards} setActiveView={setActiveView} setAdData={setAdData} />
         </BasePage>
     );
 };
