@@ -10,10 +10,10 @@ import { customFetch } from '../../helpers/customFetch/customFetch';
 const mocks = [
     {
         userAuthorVkId: 16233,
-        locDep: 'Общежитие №4 Измайлово',
-        locArr: 'ГЗ МГТУ им Н.Э. Баумана',
+        locDep: 'Москва',
+        locArr: 'Санкт-Петербург',
         minPrice: '500',
-        dateArr: '02.01.2006 04:15',
+        dateTimeArr: '02.01.2006 04:15',
         item: 'Зачётная книжка',
         comment: 'Просьба довезти осторожно, не трепать!',
     },
@@ -22,7 +22,7 @@ const mocks = [
         locDep: 'Общежитие №4 Мытищи',
         locArr: 'УЛК',
         minPrice: '350',
-        dateArr: '02.01.2006 04:15',
+        dateTimeArr: '02.01.2006 04:15',
         item: 'Зачётная книжка',
         comment: 'Просьба довезти осторожно, не трепать!',
     },
@@ -31,7 +31,7 @@ const mocks = [
         locDep: 'Общежитие №4 Мытищи',
         locArr: 'ГЗ МГТУ им Н.Э. Баумана',
         minPrice: '350',
-        dateArr: '02.01.2006 04:15',
+        dateTimeArr: '02.01.2006 04:15',
         item: 'Зачётная книжка',
         comment: 'Просьба довезти осторожно, не трепать!',
     },
@@ -40,7 +40,7 @@ const mocks = [
         locDep: 'Общежитие №10 (СМ)',
         locArr: 'ГЗ МГТУ им Н.Э. Баумана',
         minPrice: '370',
-        dateArr: '02.01.2006 04:15',
+        dateTimeArr: '02.01.2006 04:15',
         item: 'Зачётная книжка',
         comment: 'Просьба довезти осторожно, не трепать!',
     },
@@ -48,8 +48,8 @@ const mocks = [
 
 const backendUrl = 'https://handover.space';
 
-export const AdsListPage = function AdsListPage({ id, navigationHandler, active }) {
-    const [cards, setCards] = React.useState([]);
+export const AdsListPage = function AdsListPage({ id, navigationHandler, active, setActiveView, setAdData }) {
+    const [cards, setCards] = React.useState(mocks);
     const [fromLocation, setFromLocation] = React.useState('');
     const [toLocation, setToLocation] = React.useState('');
 
@@ -62,18 +62,18 @@ export const AdsListPage = function AdsListPage({ id, navigationHandler, active 
     }, []);
 
     React.useEffect(() => {
-        customFetch(`${backendUrl}/api/ad/search?loc_dep=${fromLocation}&loc_arr=${toLocation}`)
-            .then(({ data }) => {
-                if (data === 'no data') {
-                    setCards(mocks);
-                    return;
-                }
-                setCards(data);
-            })
-            .catch((error) => {
-                console.log(error);
-                setCards(mocks);
-            });
+        // customFetch(`${backendUrl}/api/ad/search?loc_dep=${fromLocation}&loc_arr=${toLocation}`)
+        //     .then(({ data }) => {
+        //         if (data === 'no data') {
+        //             setCards(mocks);
+        //             return;
+        //         }
+        //         setCards(data);
+        //     })
+        //     .catch((error) => {
+        //         console.log(error);
+        //         setCards(mocks);
+        //     });
     }, []);
 
     return (
@@ -92,7 +92,7 @@ export const AdsListPage = function AdsListPage({ id, navigationHandler, active 
             active={active}
             navigationHandler={navigationHandler}
         >
-            <DeliveryAdsList cards={cards} />
+            <DeliveryAdsList cards={cards} setActiveView={setActiveView} setAdData={setAdData} />
         </BasePage>
     );
 };
