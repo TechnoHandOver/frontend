@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { DeliveryAdsList } from '../../components/DeliveryAdsList/DeliveryAdsList';
 import { BasePage } from '../BasePage/BasePage';
 import { SearchPanel } from '../../components/SearchPanel/SearchPanel';
@@ -6,6 +6,8 @@ import { SettingsIcon } from '../../images/settings/SettingsIcon';
 import './AdsListPage.css';
 import { FixedLayout, FormItem, Separator, Spacing } from '@vkontakte/vkui';
 import { customFetch } from '../../helpers/customFetch/customFetch';
+import { Modals } from '../../enums/Modals';
+import { debounce } from '@vkontakte/vkjs';
 
 const mocks = [
     {
@@ -46,12 +48,28 @@ const mocks = [
     },
 ];
 
+const delay = 500;
 const backendUrl = 'https://handover.space';
 
-export const AdsListPage = function AdsListPage({ id, navigationHandler, active }) {
-    const [cards, setCards] = React.useState([]);
+interface AdsListPageProps {
+    id: string;
+    priceFilter?: string;
+    navigationHandler: Dispatch<SetStateAction<string>>;
+    modalHandler?: Dispatch<SetStateAction<Modals | null>>;
+    active: string;
+}
+
+export const AdsListPage = function AdsListPage({
+    id,
+    navigationHandler,
+    modalHandler,
+    active,
+    priceFilter,
+}: AdsListPageProps) {
+    const [cards, setCards] = React.useState<any>([]);
     const [fromLocation, setFromLocation] = React.useState('');
     const [toLocation, setToLocation] = React.useState('');
+    const [isOpenModal, setIsOpenModal] = React.useState(false);
 
     const onChangeFromInput = React.useCallback((evt) => {
         setFromLocation(evt.target.value);
@@ -61,20 +79,35 @@ export const AdsListPage = function AdsListPage({ id, navigationHandler, active 
         setToLocation(evt.target.value);
     }, []);
 
-    React.useEffect(() => {
-        customFetch(`${backendUrl}/api/ad/search?loc_dep=${fromLocation}&loc_arr=${toLocation}`)
-            .then(({ data }) => {
-                if (data === 'no data') {
-                    setCards(mocks);
-                    return;
-                }
-                setCards(data);
-            })
-            .catch((error) => {
-                console.log(error);
-                setCards(mocks);
-            });
+    const onClickFilters = React.useCallback(() => {
+        if (modalHandler) {
+            modalHandler(Modals.SearchFilter);
+        }
     }, []);
+
+    const search = React.useCallback(
+        debounce((fromLocation, toLocation, priceFilter) => {
+            customFetch(
+                `${backendUrl}/api/ads/search?loc_dep=${fromLocation}&loc_arr=${toLocation}&max_price=${priceFilter}`,
+            )
+                .then(({ data }) => {
+                    if (data === 'no data') {
+                        setCards(mocks);
+                        return;
+                    }
+                    setCards(data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                    setCards(mocks);
+                });
+        }, delay),
+        [],
+    );
+
+    React.useEffect(() => {
+        search(fromLocation, toLocation, priceFilter);
+    }, [fromLocation, toLocation, priceFilter]);
 
     return (
         <BasePage
@@ -86,6 +119,7 @@ export const AdsListPage = function AdsListPage({ id, navigationHandler, active 
                         onChangeFromInput={onChangeFromInput}
                         toInput={toLocation}
                         onChangeToInput={onChangeToInput}
+                        onOpenModal={onClickFilters}
                     />
                 </FixedLayout>
             }
