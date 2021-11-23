@@ -20,8 +20,8 @@ export const NavigationPanel = function NavigationPanel({ active, navigationHand
     return (
         <FixedLayout filled vertical="bottom">
             <div className="navigational-panel">
-                {icons.map((item) => (
-                    <div className="icon-button">
+                {icons.map((item, idx) => (
+                    <div className="icon-button" key={idx}>
                         <IconButton id={item.id} onClick={onClickHandler} key={item.id}>
                             {iconIds[item.id] === activeId ? item.activeContent : item.content}
                         </IconButton>
