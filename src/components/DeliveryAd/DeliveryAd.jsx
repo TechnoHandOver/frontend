@@ -18,7 +18,7 @@ export const DeliveryAd = function DeliveryAd({
     item,
     comment,
     userAuthorVkId,
-    setActiveView,
+    setActivePanel,
     setAdData,
 }) {
     const timeDeparture = new Date(dateTimeArr);
@@ -29,8 +29,8 @@ export const DeliveryAd = function DeliveryAd({
     }, [commentIsOpen]);
 
     const handleClickCard = () => {
+        setActivePanel('one-ad');
         setAdData({ locDep, locArr, minPrice, dateTimeArr, item, comment });
-        setActiveView('one-ad');
     };
 
     return (

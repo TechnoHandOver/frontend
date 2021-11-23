@@ -15,19 +15,19 @@ import {
 import { Icon28ChevronLeftOutline } from '@vkontakte/icons';
 import { parseTime } from '../../helpers/parseTime/parseTime';
 
-export const AdPage = ({ data, setActiveView }) => {
+export const AdPage = ({ id, data, setActivePanel }) => {
     const handleClick = () => {
         window.location.href = `//vk.com/id${data.userAuthorVkId}`;
     };
 
     return (
-        <Panel>
+        <Panel id={id}>
             <PanelHeader
                 left={
                     <PanelHeaderButton>
                         <Icon28ChevronLeftOutline
                             onClick={() => {
-                                setActiveView('main');
+                                setActivePanel('adsListPage');
                             }}
                         />
                     </PanelHeaderButton>

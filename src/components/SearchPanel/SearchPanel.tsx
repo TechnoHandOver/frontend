@@ -6,7 +6,27 @@ import { SettingsIcon } from '../../images/settings/SettingsIcon';
 
 import './SearchPanel.css';
 
-export const SearchPanel = ({ fromInput, onChangeFromInput, toInput, onChangeToInput }) => {
+interface SearchPanelProps {
+    fromInput: string;
+    onChangeFromInput: (evt: any) => void;
+    toInput: string;
+    onChangeToInput: (evt: any) => void;
+    onOpenModal: () => void;
+}
+
+export const SearchPanel = ({
+    fromInput,
+    onChangeFromInput,
+    toInput,
+    onChangeToInput,
+    onOpenModal,
+}: SearchPanelProps) => {
+    const handleClick = React.useCallback(() => {
+        if (onOpenModal) {
+            onOpenModal();
+        }
+    }, []);
+
     return (
         <div className="search-panel">
             <div className="search-panel__inputs-block">
@@ -19,7 +39,7 @@ export const SearchPanel = ({ fromInput, onChangeFromInput, toInput, onChangeToI
                     onChange={onChangeToInput}
                 />
             </div>
-            <div className="search-panel__icon">
+            <div className="search-panel__icon" onClick={handleClick}>
                 <SettingsIcon />
             </div>
         </div>
