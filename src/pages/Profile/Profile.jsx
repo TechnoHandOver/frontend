@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { BasePage } from '../BasePage/BasePage';
-import { Avatar, Cell, Group, Title } from '@vkontakte/vkui';
+import { Avatar, Badge, Cell, Group, Title } from '@vkontakte/vkui';
+import { AdsIcon } from '../../images/ads/AdsIcon';
 
 export const Profile = ({ id, user, active, navigationHandler }) => {
     return (
@@ -16,6 +17,7 @@ export const Profile = ({ id, user, active, navigationHandler }) => {
                     </Cell>
                 </Group>
             )}
+            <Cell before={<AdsIcon />}>Мои объявления</Cell>
         </BasePage>
     );
 };
