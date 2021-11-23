@@ -1,5 +1,5 @@
 const backendPath = 'https://handover.space';
 
 export enum BackendPaths {
-    MyAdsList = `https://handover.space/myads`,
+    MyAdsList = 'https://handover.space/ads/list',
 }

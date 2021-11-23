@@ -8,7 +8,7 @@ export interface BasePageProps {
     navigationHandler: Dispatch<SetStateAction<string>>;
     headerText?: string;
     header?: ReactNode;
-    children: ReactNode;
+    children?: ReactNode;
 }
 
 export const BasePage: FC<BasePageProps> = function BasePage({
