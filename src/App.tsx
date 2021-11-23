@@ -66,7 +66,7 @@ const App = () => {
             }
         }
 
-        // fetchData();
+        fetchData();
     }, []);
     const handleCloseModal = useCallback(() => {
         // @ts-ignore
