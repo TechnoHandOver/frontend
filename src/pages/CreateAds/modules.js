@@ -1,5 +1,5 @@
 export const createAd = (locDep, locArr, dateTimeArr, minPrice, comment, item) =>
-    fetch('https://handover.space/api/ad', {
+    fetch('https://handover.space/api/ads', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
