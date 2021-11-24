@@ -24,12 +24,14 @@ import { Profile } from './pages/Profile/Profile';
 import { SearchModal } from './components/SearchModal/SearchModal';
 import { Modals } from './enums/Modals';
 import { AdPage } from './pages/AdPage/AdPage';
+import { MyAdsListPage } from './pages/MyAdsListPage/MyAdsListPage';
 
 const App = () => {
     const [activePanel, setActivePanel] = useState('adsListPage');
     const [activeModal, setActiveModal] = useState(null);
     const [activeView, setActiveView] = useState('main');
     const [adData, setAdData] = useState({});
+    const [myAdData, setMyAdData] = useState({});
     const [fetchedUser, setUser] = useState<any>(null);
     const [popout, setPopout] = useState(null);
     const [modalPriceInput, setModalPriceInput] = useState('');
@@ -77,6 +79,10 @@ const App = () => {
         setModalPriceInput(evt.target.value);
     }, []);
 
+    const onClickMyAds = useCallback((evt) => {
+        setActivePanel('myAds');
+    }, []);
+
     const modal = (
         <ModalRoot activeModal={activeModal} onClose={handleCloseModal}>
             <ModalPage
@@ -109,31 +115,38 @@ const App = () => {
         <AdaptivityProvider>
             <AppRoot>
                 <SplitLayout modal={modal}>
-                        <View activePanel={activePanel} popout={popout}>
-                            <CreateAds
-                                id="createads"
-                                active={activePanel}
-                                navigationHandler={setActivePanel}
-                                setPopout={setPopout}
-                                setActivePanel={setActivePanel}
-                            />
-                            <AdsListPage
-                                id="adsListPage"
-                                active={activePanel}
-                                navigationHandler={setActivePanel}
-                                priceFilter={modalPriceInput}
-                                // @ts-ignore
-                                modalHandler={setActiveModal}
-                                setAdData={setAdData}
-                            />
-                            <Profile
-                                id="profile"
-                                active={activePanel}
-                                navigationHandler={setActivePanel}
-                                user={fetchedUser}
-                            />
-                            <AdPage id="one-ad" data={adData} setActivePanel={setActivePanel} />
-                        </View>
+                    <View activePanel={activePanel} popout={popout}>
+                        <CreateAds
+                            id="createads"
+                            active={activePanel}
+                            navigationHandler={setActivePanel}
+                            setPopout={setPopout}
+                            setActivePanel={setActivePanel}
+                        />
+                        <AdsListPage
+                            id="adsListPage"
+                            active={activePanel}
+                            navigationHandler={setActivePanel}
+                            priceFilter={modalPriceInput}
+                            // @ts-ignore
+                            modalHandler={setActiveModal}
+                            setAdData={setAdData}
+                        />
+                        <Profile
+                            id="profile"
+                            active={activePanel}
+                            navigationHandler={setActivePanel}
+                            user={fetchedUser}
+                            onClickMyAds={onClickMyAds}
+                        />
+                        <AdPage id="one-ad" data={adData} setActivePanel={setActivePanel} />
+                        <MyAdsListPage
+                            id="myAds"
+                            active={activePanel}
+                            navigationHandler={setActivePanel}
+                            setAdData={setAdData}
+                        />
+                    </View>
                 </SplitLayout>
             </AppRoot>
         </AdaptivityProvider>

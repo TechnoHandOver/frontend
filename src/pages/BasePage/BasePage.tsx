@@ -2,13 +2,13 @@ import { Panel, PanelHeader } from '@vkontakte/vkui';
 import { NavigationPanel } from '../../components/NavigationPanel/NavigationPanel';
 import { Dispatch, FC, ReactNode, SetStateAction } from 'react';
 
-interface BasePageProps {
+export interface BasePageProps {
     id: string;
     active: string;
     navigationHandler: Dispatch<SetStateAction<string>>;
     headerText?: string;
     header?: ReactNode;
-    children: ReactNode;
+    children?: ReactNode;
 }
 
 export const BasePage: FC<BasePageProps> = function BasePage({

@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { BasePage } from '../BasePage/BasePage';
-import { Avatar, Cell, Group, Title } from '@vkontakte/vkui';
+import { Avatar, Badge, Cell, Group, Title } from '@vkontakte/vkui';
+import { AdsIcon } from '../../images/ads/AdsIcon';
 
-export const Profile = ({ id, user, active, navigationHandler }) => {
+export const Profile = ({ id, user, active, navigationHandler, onClickMyAds }) => {
     return (
         <BasePage id={id} active={active} headerText="Профиль" navigationHandler={navigationHandler}>
             {user && (
@@ -16,6 +17,9 @@ export const Profile = ({ id, user, active, navigationHandler }) => {
                     </Cell>
                 </Group>
             )}
+            <Cell before={<AdsIcon />} onClick={onClickMyAds}>
+                Мои объявления
+            </Cell>
         </BasePage>
     );
 };
