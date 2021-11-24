@@ -100,7 +100,9 @@ export const AdsListPage = function AdsListPage({
         if (toLocation) {
             result += `loc_arr=${toLocation}&`;
         }
-        result += `max_price=${priceFilter || 0}`;
+        if (priceFilter) {
+            result += `max_price=${priceFilter}`;
+        }
 
         return result;
     }, []);
