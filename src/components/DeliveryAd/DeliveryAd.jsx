@@ -21,7 +21,7 @@ export const DeliveryAd = function DeliveryAd({
     setActivePanel,
     setAdData,
 }) {
-    const timeDeparture = new Date(dateTimeArr);
+    // const timeDeparture = new Date(dateTimeArr);
     const [commentIsOpen, setCommentIsOpen] = React.useState(false);
 
     const handleClickExpandable = React.useCallback(() => {
@@ -50,9 +50,7 @@ export const DeliveryAd = function DeliveryAd({
             </FormItem>
             <FormLayoutGroup mode="horizontal" className="delivery-ad__form-item">
                 <FormItem top="Время доставки:">
-                    <Text weight="semibold">{`${parseTime(timeDeparture.getHours())}:${parseTime(
-                        timeDeparture.getMinutes(),
-                    )}`}</Text>
+                    <Text weight="semibold">{dateTimeArr.split(' ')[1]}</Text>
                 </FormItem>
             </FormLayoutGroup>
             <FormItem top="Что нужно перевезти?" className="delivery-ad__form-item">
