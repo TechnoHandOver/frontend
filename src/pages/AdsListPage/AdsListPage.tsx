@@ -50,6 +50,11 @@ const mocks = [
 
 const delay = 500;
 const backendUrl = 'https://handover.space';
+enum QueryParams {
+    LocDep,
+    LocArr,
+    MaxPrice,
+}
 
 interface AdsListPageProps {
     id: string;
@@ -87,21 +92,34 @@ export const AdsListPage = function AdsListPage({
         }
     }, []);
 
+    const generateUrl = React.useCallback((fromLocation, toLocation, priceFilter) => {
+        let result = `${backendUrl}/api/ads/search?`;
+        if (fromLocation) {
+            result += `loc_dep=${fromLocation}&`;
+        }
+        if (toLocation) {
+            result += `loc_arr=${toLocation}&`;
+        }
+        result += `max_price=${priceFilter || 0}`;
+
+        return result;
+    }, []);
+
     const search = React.useCallback(
         debounce((fromLocation, toLocation, priceFilter) => {
-            customFetch(
-                `${backendUrl}/api/ads/search?loc_dep=${fromLocation}&loc_arr=${toLocation}&max_price=${priceFilter}`,
-            )
+            const url = generateUrl(fromLocation, toLocation, priceFilter);
+
+            customFetch(`${url}`)
                 .then(({ data }) => {
                     if (data === 'no data') {
-                        setCards(mocks);
+                        setCards([]);
                         return;
                     }
                     setCards(data);
                 })
                 .catch((error) => {
                     console.log(error);
-                    setCards(mocks);
+                    setCards([]);
                 });
         }, delay),
         [],
