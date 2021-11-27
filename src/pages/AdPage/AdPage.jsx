@@ -14,6 +14,8 @@ import {
 } from '@vkontakte/vkui';
 import { Icon28ChevronLeftOutline } from '@vkontakte/icons';
 
+import './AdPage.css';
+
 export const AdPage = ({ id, data, setActivePanel }) => {
     const linkRef = React.useRef(null);
 
@@ -23,7 +25,7 @@ export const AdPage = ({ id, data, setActivePanel }) => {
     };
 
     React.useEffect(() => {
-        linkRef.current.href = `vk.com/id${data.userAuthorVkId}`;
+        linkRef.current.href = `https://vk.com/id${data.userAuthorVkId}`;
     }, []);
 
     return (
