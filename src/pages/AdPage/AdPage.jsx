@@ -13,13 +13,18 @@ import {
     Button,
 } from '@vkontakte/vkui';
 import { Icon28ChevronLeftOutline } from '@vkontakte/icons';
-import { parseTime } from '../../helpers/parseTime/parseTime';
 
 export const AdPage = ({ id, data, setActivePanel }) => {
+    const linkRef = React.useRef(null);
+
     const handleClick = () => {
-        window.location.href = `//vk.com/id${data.userAuthorVkId}`;
+        // window.location.href = `//vk.com/id${data.userAuthorVkId}`;
         console.log(data.userAuthorVkId);
     };
+
+    React.useEffect(() => {
+        linkRef.current.href = `vk.com/id${data.userAuthorVkId}`;
+    }, []);
 
     return (
         <Panel id={id}>
@@ -72,9 +77,11 @@ export const AdPage = ({ id, data, setActivePanel }) => {
             </FormItem>
             <FixedLayout filled vertical="bottom" style={{ bottom: '50px' }}>
                 <FormItem>
-                    <Button stretched size="l" onClick={handleClick}>
-                        Откликнуться
-                    </Button>
+                    <a className="link" ref={linkRef}>
+                        <Button stretched size="l" onClick={handleClick}>
+                            Откликнуться
+                        </Button>
+                    </a>
                 </FormItem>
             </FixedLayout>
         </Panel>
