@@ -19,7 +19,7 @@ export const DeliveryAd = function DeliveryAd({
 }) {
     const handleClickCard = () => {
         setActivePanel('one-ad');
-        setAdData({ locDep, locArr, minPrice, dateTimeArr, item, comment });
+        setAdData({ userAuthorVkId, locDep, locArr, minPrice, dateTimeArr, item, comment });
     };
 
     return (
