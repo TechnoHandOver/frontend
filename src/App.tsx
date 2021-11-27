@@ -93,7 +93,7 @@ const App = () => {
                 }
             >
                 <FormItem top="Максимальная цена">
-                    <Input value={modalPriceInput} onChange={handleChangePrice} />
+                    <Input type="number" value={modalPriceInput} onChange={handleChangePrice} />
                 </FormItem>
                 <FormItem top="Сортировка">
                     <Radio name="radio" value="1" defaultChecked>

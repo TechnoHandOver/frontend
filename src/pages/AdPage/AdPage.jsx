@@ -18,6 +18,7 @@ import { parseTime } from '../../helpers/parseTime/parseTime';
 export const AdPage = ({ id, data, setActivePanel }) => {
     const handleClick = () => {
         window.location.href = `//vk.com/id${data.userAuthorVkId}`;
+        console.log(data.userAuthorVkId);
     };
 
     return (

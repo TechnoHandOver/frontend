@@ -76,7 +76,6 @@ export const AdsListPage = function AdsListPage({
     const [cards, setCards] = React.useState<any>([]);
     const [fromLocation, setFromLocation] = React.useState('');
     const [toLocation, setToLocation] = React.useState('');
-    const [isOpenModal, setIsOpenModal] = React.useState(false);
 
     const onChangeFromInput = React.useCallback((evt) => {
         setFromLocation(evt.target.value);
