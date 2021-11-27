@@ -19,11 +19,6 @@ import './AdPage.css';
 export const AdPage = ({ id, data, setActivePanel }) => {
     const linkRef = React.useRef(null);
 
-    const handleClick = () => {
-        // window.location.href = `//vk.com/id${data.userAuthorVkId}`;
-        console.log(data.userAuthorVkId);
-    };
-
     React.useEffect(() => {
         linkRef.current.href = `https://vk.com/id${data.userAuthorVkId}`;
     }, []);
@@ -80,7 +75,7 @@ export const AdPage = ({ id, data, setActivePanel }) => {
             <FixedLayout filled vertical="bottom" style={{ bottom: '50px' }}>
                 <FormItem>
                     <a className="link" ref={linkRef}>
-                        <Button stretched size="l" onClick={handleClick}>
+                        <Button stretched size="l">
                             Откликнуться
                         </Button>
                     </a>
