@@ -77,6 +77,8 @@ export const AdsListPage = function AdsListPage({
     const [fromLocation, setFromLocation] = React.useState('');
     const [toLocation, setToLocation] = React.useState('');
 
+    const [isLoading, setIsLoading] = React.useState(true);
+
     const onChangeFromInput = React.useCallback((evt) => {
         setFromLocation(evt.target.value);
     }, []);
@@ -114,13 +116,16 @@ export const AdsListPage = function AdsListPage({
                 .then(({ data }) => {
                     if (data === 'no data') {
                         setCards([]);
+                        setIsLoading(false);
                         return;
                     }
                     setCards(data);
+                    setIsLoading(false);
                 })
                 .catch((error) => {
                     console.log(error);
                     setCards([]);
+                    setIsLoading(false);
                 });
         }, delay),
         [],
@@ -147,7 +152,12 @@ export const AdsListPage = function AdsListPage({
             active={active}
             navigationHandler={navigationHandler}
         >
-            <DeliveryAdsList cards={cards} setActivePanel={navigationHandler} setAdData={setAdData} />
+            <DeliveryAdsList
+                isLoading={isLoading}
+                cards={cards}
+                setActivePanel={navigationHandler}
+                setAdData={setAdData}
+            />
         </BasePage>
     );
 };

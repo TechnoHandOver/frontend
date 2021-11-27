@@ -1,13 +1,32 @@
 import * as React from 'react';
 
-import { CardGrid, Footer } from '@vkontakte/vkui';
+import { CardGrid, Footer, Spinner } from '@vkontakte/vkui';
 import { DeliveryAd } from '../DeliveryAd/DeliveryAd';
 import { customFetch } from '../../helpers/customFetch/customFetch';
 
 import './DeliveryAdsList.css';
 
-export const DeliveryAdsList = function DeliveryAdsList({ cards, setActivePanel, setAdData, isMy = false }) {
-    return (
+export interface DeliveryAdsListProps {
+    cards: Array<any>;
+    setActivePanel: any;
+    setAdData: any;
+
+    isLoading: boolean;
+    isMy?: boolean;
+}
+
+export const DeliveryAdsList = ({
+    isLoading,
+    cards,
+    setActivePanel,
+    setAdData,
+    isMy = false,
+}: DeliveryAdsListProps) => {
+    return isLoading ? (
+        <div className="delivery-ads-list__loader">
+            <Spinner size="large" />
+        </div>
+    ) : (
         <div className="delivery-ads-list">
             <CardGrid size="l">
                 {cards.map((item, index) => (
