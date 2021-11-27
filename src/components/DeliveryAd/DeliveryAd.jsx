@@ -6,10 +6,6 @@ import { PaddedText } from '../../uiKit/PaddedText/PaddedText';
 import { parseTime } from '../../helpers/parseTime/parseTime';
 import { Arrow } from '../../images/arrow/Arrow';
 
-const avatarSrc =
-    'https://sun9-22.userapi.com/impg/GqwjJuFIIMSYaSybujDI7PKayhtdjI8oFcABXA/BH3RAKOv2sY.jpg?size=720x1080&quality=96&sign=0863ce6a5aee8ef2122edc7053335535&type=album';
-const defaultIconSize = 20;
-
 export const DeliveryAd = function DeliveryAd({
     locDep,
     locArr,
@@ -21,16 +17,9 @@ export const DeliveryAd = function DeliveryAd({
     setActivePanel,
     setAdData,
 }) {
-    // const timeDeparture = new Date(dateTimeArr);
-    const [commentIsOpen, setCommentIsOpen] = React.useState(false);
-
-    const handleClickExpandable = React.useCallback(() => {
-        setCommentIsOpen(!commentIsOpen);
-    }, [commentIsOpen]);
-
     const handleClickCard = () => {
         setActivePanel('one-ad');
-        setAdData({ locDep, locArr, minPrice, dateTimeArr, item, comment });
+        setAdData({ userAuthorVkId, locDep, locArr, minPrice, dateTimeArr, item, comment });
     };
 
     return (
@@ -60,9 +49,6 @@ export const DeliveryAd = function DeliveryAd({
                 <Text weight="semibold" className="delivery-ad__price">
                     {minPrice} руб.
                 </Text>
-            </FormItem>
-            <FormItem top="Раскрыть ещё" onClick={handleClickExpandable}>
-                {commentIsOpen && <Text weight="regular">{comment}</Text>}
             </FormItem>
         </Card>
     );
