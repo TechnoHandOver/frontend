@@ -1,8 +1,8 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { DeliveryAdsList } from '../../components/DeliveryAdsList/DeliveryAdsList';
-import { BasePage } from '../BasePage/BasePage';
 import { SearchPanel } from '../../components/SearchPanel/SearchPanel';
 import { SettingsIcon } from '../../images/settings/SettingsIcon';
+import { BasePage } from '../BasePage/BasePage';
 import './AdsListPage.css';
 import { FixedLayout, FormItem, Separator, Spacing } from '@vkontakte/vkui';
 import { customFetch } from '../../helpers/customFetch/customFetch';

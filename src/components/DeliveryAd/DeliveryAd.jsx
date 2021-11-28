@@ -2,9 +2,9 @@ import { Avatar, Card, Cell, Div, FormItem, FormLayoutGroup, Input, Text } from 
 import './DeliveryAd.css';
 import * as React from 'react';
 import { Icon16Minus } from '@vkontakte/icons';
-import { PaddedText } from '../../uiKit/PaddedText/PaddedText';
 import { parseTime } from '../../helpers/parseTime/parseTime';
 import { Arrow } from '../../images/arrow/Arrow';
+import { PaddedText } from '../../uiKit/PaddedText/PaddedText';
 
 export const DeliveryAd = function DeliveryAd({
     locDep,

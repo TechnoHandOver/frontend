@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import './CreateAds.css';
 import { Button, FixedLayout, FormItem, FormLayout, Group, Input, Textarea } from '@vkontakte/vkui';
-import { BasePage } from '../BasePage/BasePage';
 import { getMasked } from '../../helpers/mask/mask';
+import { BasePage } from '../BasePage/BasePage';
 import { createAd } from './modules';
 
 export const CreateAds = ({ id, navigationHandler, active, setPopout, setActivePanel }) => {

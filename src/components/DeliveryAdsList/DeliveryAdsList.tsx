@@ -1,8 +1,8 @@
+import { CardGrid, Footer, Spinner } from '@vkontakte/vkui';
 import * as React from 'react';
 
-import { CardGrid, Footer, Spinner } from '@vkontakte/vkui';
-import { DeliveryAd } from '../DeliveryAd/DeliveryAd';
 import { customFetch } from '../../helpers/customFetch/customFetch';
+import { DeliveryAd } from '../DeliveryAd/DeliveryAd';
 
 import './DeliveryAdsList.css';
 

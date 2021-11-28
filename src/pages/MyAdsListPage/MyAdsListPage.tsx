@@ -1,8 +1,8 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { BasePage, BasePageProps } from '../BasePage/BasePage';
 import { DeliveryAdsList } from '../../components/DeliveryAdsList/DeliveryAdsList';
-import { customFetch } from '../../helpers/customFetch/customFetch';
 import { BackendPaths } from '../../enums/BackendPaths';
+import { customFetch } from '../../helpers/customFetch/customFetch';
+import { BasePage, BasePageProps } from '../BasePage/BasePage';
 
 type MyAdsListPageProps = BasePageProps & {
     setAdData: any;

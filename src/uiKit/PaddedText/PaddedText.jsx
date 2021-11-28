@@ -1,4 +1,5 @@
 import { Div, Text } from '@vkontakte/vkui';
+import React from 'react';
 
 export const PaddedText = function PaddedText({ children, weight, className, divClassName }) {
     return (

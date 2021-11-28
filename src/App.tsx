@@ -1,4 +1,3 @@
-import React, { useState, useEffect, useCallback } from 'react';
 import bridge from '@vkontakte/vk-bridge';
 import {
     View,
@@ -16,22 +15,21 @@ import {
     Radio,
     Root,
 } from '@vkontakte/vkui';
+import React, { useState, useEffect, useCallback } from 'react';
 import '@vkontakte/vkui/dist/vkui.css';
 
-import { AdsListPage } from './pages/AdsListPage/AdsListPage';
-import { CreateAds } from './pages/CreateAds/CreateAds';
-import { Profile } from './pages/Profile/Profile';
 import { SearchModal } from './components/SearchModal/SearchModal';
 import { Modals } from './enums/Modals';
 import { AdPage } from './pages/AdPage/AdPage';
+import { AdsListPage } from './pages/AdsListPage/AdsListPage';
+import { CreateAds } from './pages/CreateAds/CreateAds';
 import { MyAdsListPage } from './pages/MyAdsListPage/MyAdsListPage';
+import { Profile } from './pages/Profile/Profile';
 
 const App = () => {
     const [activePanel, setActivePanel] = useState('adsListPage');
     const [activeModal, setActiveModal] = useState(null);
-    const [activeView, setActiveView] = useState('main');
     const [adData, setAdData] = useState({});
-    const [myAdData, setMyAdData] = useState({});
     const [fetchedUser, setUser] = useState<any>(null);
     const [popout, setPopout] = useState(null);
     const [modalPriceInput, setModalPriceInput] = useState('');

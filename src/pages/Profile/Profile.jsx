@@ -1,8 +1,8 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { BasePage } from '../BasePage/BasePage';
 import { Avatar, Badge, Cell, Group, Title } from '@vkontakte/vkui';
+import PropTypes from 'prop-types';
+import React from 'react';
 import { AdsIcon } from '../../images/ads/AdsIcon';
+import { BasePage } from '../BasePage/BasePage';
 
 export const Profile = ({ id, user, active, navigationHandler, onClickMyAds }) => {
     return (

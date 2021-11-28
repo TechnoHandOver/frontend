@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { Icon28ChevronLeftOutline } from '@vkontakte/icons';
 import {
     Panel,
     PanelHeader,
@@ -12,7 +12,7 @@ import {
     FixedLayout,
     Button,
 } from '@vkontakte/vkui';
-import { Icon28ChevronLeftOutline } from '@vkontakte/icons';
+import React, { useEffect } from 'react';
 
 import './AdPage.css';
 

@@ -1,7 +1,7 @@
+import { Icon16Clear } from '@vkontakte/icons';
+import { IconButton, Input } from '@vkontakte/vkui';
 import React from 'react';
 
-import { IconButton, Input } from '@vkontakte/vkui';
-import { Icon16Clear } from '@vkontakte/icons';
 import { SettingsIcon } from '../../images/settings/SettingsIcon';
 
 import './SearchPanel.css';
