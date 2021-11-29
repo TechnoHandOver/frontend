@@ -4,6 +4,7 @@ import * as React from 'react';
 import { Arrow } from '../../images/arrow/Arrow';
 
 export const DeliveryAd = function DeliveryAd({
+    id,
     locDep,
     locArr,
     minPrice,
@@ -16,7 +17,7 @@ export const DeliveryAd = function DeliveryAd({
 }) {
     const handleClickCard = () => {
         setActivePanel('one-ad');
-        setAdData({ userAuthorVkId, locDep, locArr, minPrice, dateTimeArr, item, comment });
+        setAdData({ id, userAuthorVkId, locDep, locArr, minPrice, dateTimeArr, item, comment });
     };
 
     return (
