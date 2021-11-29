@@ -198,7 +198,7 @@ export enum ContentType {
 }
 
 export class HttpClient<SecurityDataType = unknown> {
-  public baseUrl: string = "https://virtserver.swaggerhub.com/NikitaLobaev/HandOver/1.1.1";
+  public baseUrl: string = "https://handover.space";
   private securityData: SecurityDataType | null = null;
   private securityWorker?: ApiConfig<SecurityDataType>["securityWorker"];
   private abortControllers = new Map<CancelToken, AbortController>();
