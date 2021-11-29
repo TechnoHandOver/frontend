@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { FC } from "react";
 import { DeliveryAdsList } from '../../components/DeliveryAdsList/DeliveryAdsList';
 import { BackendPaths } from '../../enums/BackendPaths';
 import { customFetch } from '../../helpers/customFetch/customFetch';
@@ -8,14 +8,13 @@ type MyAdsListPageProps = BasePageProps & {
     setAdData: any;
 };
 
-export const MyAdsListPage = ({ id, navigationHandler, active, setAdData }: MyAdsListPageProps) => {
+export const MyAdsListPage: FC<MyAdsListPageProps> = ({ id, navigationHandler, active, setAdData }) => {
     const [cards, setCards] = React.useState([]);
     const [isLoading, setIsLoading] = React.useState(true);
 
     React.useEffect(() => {
         customFetch(BackendPaths.MyAdsList)
             .then(({ data }) => {
-                debugger;
                 if (data === 'no data') {
                     setCards([]);
                     setIsLoading(false);

@@ -1,32 +1,39 @@
-import PropTypes from 'prop-types';
-import React, { useState } from 'react';
-import './CreateAds.css';
-import { Button, FixedLayout, FormItem, FormLayout, Group, Input, Textarea } from '@vkontakte/vkui';
-import { getMasked } from '../../helpers/mask/mask';
-import { BasePage } from '../BasePage/BasePage';
-import { createAd } from './modules';
+import { Button, FixedLayout, FormItem, FormLayout, Group, Input, Textarea } from "@vkontakte/vkui";
+import React, { Dispatch, FC, SetStateAction, useState } from "react";
+import { Ad, Api } from "../../api/Api";
+import { getMasked } from "../../helpers/mask/mask";
+import { BasePage } from "../BasePage/BasePage";
 
-export const CreateAds = ({ id, navigationHandler, active, setPopout, setActivePanel }) => {
-    const [locationFrom, setLocationFrom] = useState('');
-    const [locationTo, setLocationTo] = useState('');
-    const [time, setTime] = useState('');
-    const [subject, setSubject] = useState('');
-    const [extra, setExtra] = useState('');
-    const [price, setPrice] = useState('');
+export interface ChangeAdsProps {
+    id: string;
+    navigationHandler: Dispatch<SetStateAction<string>>;
+    active: string;
+    setPopout: any;
+    setActivePanel: Dispatch<SetStateAction<string>>;
+    data: Ad;
+}
+
+export const ChangeAds: FC<ChangeAdsProps> = ({ id, data, navigationHandler, active,setActivePanel, setPopout }) => {
+    const [locationFrom, setLocationFrom] = useState(data.locDep || '');
+    const [locationTo, setLocationTo] = useState(data.locArr || '');
+    const [time, setTime] = useState(data.dateTimeArr?.split(' ')[1] || '');
+    const [subject, setSubject] = useState(data.item || '');
+    const [extra, setExtra] = useState(data.comment || '');
+    const [price, setPrice] = useState(data.minPrice || '');
 
     const [error, setError] = useState(false);
 
-    const handleChangeTime = (evt) => {
-        const { target } = evt;
+    const handleChangeTime = (evt: React.ChangeEvent) => {
+        const target = evt.target as HTMLInputElement;
         const masked = getMasked(target.value);
 
         setTime(masked);
     };
 
-    const handleChangePrice = (evt) => {
-        const { target } = evt;
+    const handleChangePrice = (evt: React.ChangeEvent) => {
+        const target = evt.target as HTMLInputElement;
 
-        if (isNaN(Number(target.value))) {
+        if (Number.isNaN(Number(target.value))) {
             return;
         }
 
@@ -48,29 +55,26 @@ export const CreateAds = ({ id, navigationHandler, active, setPopout, setActiveP
 
         const now = new Date();
 
-        createAd(
-            locationFrom,
-            locationTo,
-            `${new Intl.DateTimeFormat('ru', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(
-                now,
-            )} ${time}`,
-            Number(price),
-            extra,
-            subject,
-        )
-            .then(({ ok, statusCode }) => {
+        const body = {
+            locDep: locationFrom,
+            locArr: locationTo,
+            dateTimeArr: `${new Intl.DateTimeFormat('ru', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(now)} ${time}`,
+            minPrice: Number(price),
+            comment: extra,
+            item: subject,
+        };
+
+        new Api().api.putApi(data?.id || -1, body)
+            .then(({ ok }) => {
                 setPopout(false);
                 if (!ok) {
-                    console.error(`/api/ad: ${statusCode}`);
                     return;
                 }
 
                 setActivePanel('adsListPage');
-            })
-            .catch((err) => {
-                console.error(err);
-                setPopout(false);
-            });
+            }).catch(() => {
+            setPopout(false);
+        });
     };
 
     return (
@@ -79,7 +83,7 @@ export const CreateAds = ({ id, navigationHandler, active, setPopout, setActiveP
                 <FormLayout>
                     <FormItem
                         top="Откуда доставить"
-                        status={!locationFrom && error && 'error'}
+                        status={!locationFrom && error ? 'error' : undefined}
                         bottom={!locationFrom && error && 'Обязательное поле'}
                     >
                         <Input
@@ -92,7 +96,7 @@ export const CreateAds = ({ id, navigationHandler, active, setPopout, setActiveP
                     </FormItem>
                     <FormItem
                         top="Куда доставить"
-                        status={!locationTo && error && 'error'}
+                        status={!locationTo && error ? 'error' : undefined}
                         bottom={!locationTo && error && 'Обязательное поле'}
                     >
                         <Input
@@ -106,7 +110,7 @@ export const CreateAds = ({ id, navigationHandler, active, setPopout, setActiveP
                     <FormItem
                         top="Время доставки"
                         className="time"
-                        status={((!time && error) || (time.length !== 5 && error)) && 'error'}
+                        status={((!time && error) || (time.length !== 5 && error)) ? 'error' : undefined}
                         bottom={
                             !time && error ? 'Обязательное поле' : time.length !== 5 && error && 'Некорректные данные'
                         }
@@ -115,7 +119,7 @@ export const CreateAds = ({ id, navigationHandler, active, setPopout, setActiveP
                     </FormItem>
                     <FormItem
                         top="Что доставить"
-                        status={!subject && error && 'error'}
+                        status={!subject && error ? 'error' : undefined}
                         bottom={!subject && error && 'Обязательное поле'}
                     >
                         <Input
@@ -138,7 +142,7 @@ export const CreateAds = ({ id, navigationHandler, active, setPopout, setActiveP
                     <FormItem
                         top="Предложите цену"
                         style={{ marginBottom: '50px' }}
-                        status={!price && error && 'error'}
+                        status={!price && error ? 'error' : undefined}
                         bottom={!price && error && 'Обязательное поле'}
                     >
                         <Input placeholder="Не выбрано" value={price} onChange={handleChangePrice} />
@@ -154,8 +158,4 @@ export const CreateAds = ({ id, navigationHandler, active, setPopout, setActiveP
             </Group>
         </BasePage>
     );
-};
-
-CreateAds.propTypes = {
-    id: PropTypes.string.isRequired,
 };

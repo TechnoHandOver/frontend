@@ -11,5 +11,5 @@ export const customFetch = async function customFetch(url) {
         };
     }
 
-    return await result.json();
+    return result.json();
 };

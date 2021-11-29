@@ -1,4 +1,4 @@
-import { Avatar, Badge, Cell, Group, Title } from '@vkontakte/vkui';
+import { Avatar, Cell, Group, Title } from '@vkontakte/vkui';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { AdsIcon } from '../../images/ads/AdsIcon';

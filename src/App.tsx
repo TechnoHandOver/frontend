@@ -1,7 +1,6 @@
 import bridge from '@vkontakte/vk-bridge';
 import {
     View,
-    ScreenSpinner,
     AdaptivityProvider,
     AppRoot,
     ModalRoot,
@@ -9,35 +8,35 @@ import {
     ModalPage,
     ModalPageHeader,
     PanelHeaderClose,
-    PanelHeaderSubmit,
     FormItem,
     Input,
     Radio,
-    Root,
 } from '@vkontakte/vkui';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, FC } from "react";
 import '@vkontakte/vkui/dist/vkui.css';
 
-import { SearchModal } from './components/SearchModal/SearchModal';
 import { Modals } from './enums/Modals';
 import { AdPage } from './pages/AdPage/AdPage';
 import { AdsListPage } from './pages/AdsListPage/AdsListPage';
+import { ChangeAds } from "./pages/ChangeAds/ChangeAds";
 import { CreateAds } from './pages/CreateAds/CreateAds';
 import { MyAdsListPage } from './pages/MyAdsListPage/MyAdsListPage';
 import { Profile } from './pages/Profile/Profile';
 
-const App = () => {
+const App: FC = () => {
     const [activePanel, setActivePanel] = useState('adsListPage');
     const [activeModal, setActiveModal] = useState(null);
     const [adData, setAdData] = useState({});
     const [fetchedUser, setUser] = useState<any>(null);
     const [popout, setPopout] = useState(null);
     const [modalPriceInput, setModalPriceInput] = useState('');
+    const [createAd, setCreateAd] = useState({});
 
     useEffect(() => {
         bridge.subscribe(({ detail: { type, data } }) => {
             if (type === 'VKWebAppUpdateConfig') {
                 const schemeAttribute = document.createAttribute('scheme');
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
                 schemeAttribute.value = data.scheme ? data.scheme : 'client_light';
                 document.body.attributes.setNamedItem(schemeAttribute);
@@ -68,7 +67,10 @@ const App = () => {
 
         fetchData();
     }, []);
+
+
     const handleCloseModal = useCallback(() => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         setActiveModal(null);
     }, []);
@@ -77,7 +79,7 @@ const App = () => {
         setModalPriceInput(evt.target.value);
     }, []);
 
-    const onClickMyAds = useCallback((evt) => {
+    const onClickMyAds = useCallback(() => {
         setActivePanel('myAds');
     }, []);
 
@@ -108,6 +110,7 @@ const App = () => {
         </ModalRoot>
     );
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     return (
         <AdaptivityProvider>
@@ -126,6 +129,7 @@ const App = () => {
                             active={activePanel}
                             navigationHandler={setActivePanel}
                             priceFilter={modalPriceInput}
+                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                             // @ts-ignore
                             modalHandler={setActiveModal}
                             setAdData={setAdData}
@@ -137,13 +141,14 @@ const App = () => {
                             user={fetchedUser}
                             onClickMyAds={onClickMyAds}
                         />
-                        <AdPage id="one-ad" data={adData} setActivePanel={setActivePanel} />
+                        <AdPage id="one-ad" data={adData} setActivePanel={setActivePanel} setCreateAd={setCreateAd}  userId={fetchedUser?.id}/>
                         <MyAdsListPage
                             id="myAds"
                             active={activePanel}
                             navigationHandler={setActivePanel}
                             setAdData={setAdData}
                         />
+                        <ChangeAds id="change-ad" navigationHandler={setActivePanel} active={activePanel} setPopout={setPopout} setActivePanel={setActivePanel} data={createAd}/>
                     </View>
                 </SplitLayout>
             </AppRoot>

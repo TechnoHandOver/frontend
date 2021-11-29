@@ -1,7 +1,6 @@
 import { CardGrid, Footer, Spinner } from '@vkontakte/vkui';
-import * as React from 'react';
+import React, { FC } from "react";
 
-import { customFetch } from '../../helpers/customFetch/customFetch';
 import { DeliveryAd } from '../DeliveryAd/DeliveryAd';
 
 import './DeliveryAdsList.css';
@@ -15,13 +14,13 @@ export interface DeliveryAdsListProps {
     isMy?: boolean;
 }
 
-export const DeliveryAdsList = ({
+export const DeliveryAdsList: FC<DeliveryAdsListProps> = ({
     isLoading,
     cards,
     setActivePanel,
     setAdData,
     isMy = false,
-}: DeliveryAdsListProps) => {
+}) => {
     return isLoading ? (
         <div className="delivery-ads-list__loader">
             <Spinner size="large" />

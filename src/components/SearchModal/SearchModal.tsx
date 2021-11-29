@@ -1,7 +1,8 @@
 import { FormItem, Input, ModalPage, ModalPageHeader, PanelHeaderClose, PanelHeaderSubmit } from '@vkontakte/vkui';
+import React, { FC } from 'react';
 import { Modals } from '../../enums/Modals';
 
-export const SearchModal = () => {
+export const SearchModal: FC = () => {
     return (
         <ModalPage
             id={Modals.SearchFilter}

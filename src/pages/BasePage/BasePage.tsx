@@ -1,5 +1,5 @@
 import { Panel, PanelHeader } from '@vkontakte/vkui';
-import { Dispatch, FC, ReactNode, SetStateAction } from 'react';
+import React, { Dispatch, FC, ReactNode, SetStateAction } from 'react';
 import { NavigationPanel } from '../../components/NavigationPanel/NavigationPanel';
 
 export interface BasePageProps {

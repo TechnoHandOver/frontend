@@ -22,7 +22,6 @@ module.exports = {
   },
   plugins: ['react', 'react-hooks'],
   rules: {
-    'no-console': 'error',
     'no-plusplus': 'off',
     'no-shadow': 'off',
     'camelcase': 'off',
@@ -125,7 +124,6 @@ module.exports = {
         node: true,
       },
       rules: {
-        'no-console': 'off',
         'prefer-template': 'off',
         'prefer-destructuring': 'off',
         'import/order': 'off',
