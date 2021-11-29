@@ -85,7 +85,7 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
                 </Title>
             </FormItem>
             <FixedLayout filled vertical="bottom" style={{ bottom: '10px' }}>
-                {data.userAuthorVkId === userId ? (
+                {data.userAuthorVkId !== userId ? (
                     <FormItem>
                         <a className="link" ref={linkRef}>
                             <Button stretched size="l">
