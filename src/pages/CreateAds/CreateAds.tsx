@@ -149,7 +149,7 @@ export const CreateAds: FC<CreateAdsProps> = ({ id, navigationHandler, active, s
                     <FixedLayout filled vertical="bottom" style={{ bottom: '50px' }}>
                         <FormItem>
                             <Button stretched size="l" onClick={handleClick}>
-                                Изменить
+                                Создать
                             </Button>
                         </FormItem>
                     </FixedLayout>

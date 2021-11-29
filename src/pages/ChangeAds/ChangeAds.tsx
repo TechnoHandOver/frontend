@@ -150,7 +150,7 @@ export const ChangeAds: FC<ChangeAdsProps> = ({ id, data, navigationHandler, act
                     <FixedLayout filled vertical="bottom" style={{ bottom: '50px' }}>
                         <FormItem>
                             <Button stretched size="l" onClick={handleClick}>
-                                Создать
+                                Изменить
                             </Button>
                         </FormItem>
                     </FixedLayout>
