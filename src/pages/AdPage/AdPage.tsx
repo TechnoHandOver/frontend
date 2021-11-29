@@ -11,7 +11,7 @@ import {
 } from '@vkontakte/vkui';
 import React, { Dispatch, FC, SetStateAction } from "react";
 import './AdPage.css';
-import { Ad } from "../../api/Api";
+import { Ad, Api } from "../../api/Api";
 
 interface AdPageProps {
     id: string;
@@ -33,6 +33,16 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
     const handleChangeAd = () => {
         setCreateAd(data);
         setActivePanel('change-ad');
+    };
+
+    const handleDeleteAd = () => {
+        new Api().api.deleteApi(data?.id || -1)
+            .then(() => {
+                setActivePanel('myAds');
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     };
 
     return (
@@ -101,7 +111,7 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
                             </Button>
                         </FormItem>
                         <FormItem>
-                            <Button stretched size="l" mode="destructive" onClick={() => {}}>
+                            <Button stretched size="l" mode="destructive" onClick={handleDeleteAd}>
                                 Удалить
                             </Button>
                         </FormItem>
