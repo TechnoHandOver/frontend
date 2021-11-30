@@ -72,7 +72,7 @@ const App: FC = () => {
                 console.log(`/api/sessions: ${session.status}`);
             }
 
-            const { result } = await bridge.send('VKWebAppAllowMessagesFromGroup', { group_id: 207601466, key: 'misha' });
+            const { result } = await bridge.send('VKWebAppAllowMessagesFromGroup', { group_id: 207601466, key: 'misha', request_id: 0 });
             if (result) {
                 console.log('привет');
             }
