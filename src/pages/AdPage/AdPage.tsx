@@ -46,7 +46,7 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
     };
 
     const handleRespondAd = async () => {
-        const response = await fetch(`https://handover.space/bot/execute?author_id=${data.userAuthorVkId}&executor_id=${userId}`);
+        const response = await fetch(`https://handover.space/bot/respond?author_id=${data.userAuthorVkId}&executor_id=${userId}`);
         if (linkRef.current) {
             linkRef.current.href = `https://vk.com/id${data.userAuthorVkId}`;
         }
