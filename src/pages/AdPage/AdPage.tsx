@@ -24,11 +24,11 @@ interface AdPageProps {
 export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setCreateAd }) => {
     const linkRef = React.useRef<HTMLAnchorElement>(null);
 
-    React.useEffect(() => {
-        if (linkRef.current) {
-            linkRef.current.href = `https://vk.com/id${data.userAuthorVkId}`;
-        }
-    }, [data.userAuthorVkId]);
+    // React.useEffect(() => {
+    //     if (linkRef.current) {
+    //         linkRef.current.href = `https://vk.com/id${data.userAuthorVkId}`;
+    //     }
+    // }, [data.userAuthorVkId]);
 
     const handleChangeAd = () => {
         setCreateAd(data);
@@ -48,6 +48,7 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
     const handleRespondAd = async () => {
         const response = await fetch(`https://handover.space/bot/respond?author_id=${data.userAuthorVkId}&executor_id=${userId}`);
         if (linkRef.current) {
+            linkRef.current.href = `https://vk.com/id${data.userAuthorVkId}`;
             linkRef.current.click();
         }
 
@@ -108,7 +109,7 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
             <FixedLayout filled vertical="bottom" style={{ bottom: '10px' }}>
                 {data.userAuthorVkId !== userId ? (
                     <FormItem>
-                        <a className="link" ref={linkRef} onClick={(evt) => {evt.preventDefault()}}>
+                        <a className="link" ref={linkRef}>
                             <Button stretched size="l" onClick={handleRespondAd}>
                                 Откликнуться
                             </Button>
