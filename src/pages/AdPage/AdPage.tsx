@@ -1,27 +1,49 @@
-import React, { useEffect } from 'react';
+import { Icon28ChevronLeftOutline } from '@vkontakte/icons';
 import {
     Panel,
     PanelHeader,
     PanelHeaderButton,
     Title,
-    Div,
     FormLayoutGroup,
     FormItem,
-    Text,
-    Input,
     FixedLayout,
     Button,
 } from '@vkontakte/vkui';
-import { Icon28ChevronLeftOutline } from '@vkontakte/icons';
-
+import React, { Dispatch, FC, SetStateAction } from "react";
 import './AdPage.css';
+import { Ad, Api } from "../../api/Api";
 
-export const AdPage = ({ id, data, setActivePanel }) => {
-    const linkRef = React.useRef(null);
+interface AdPageProps {
+    id: string;
+    data: Ad;
+    setActivePanel: Dispatch<SetStateAction<string>>;
+    userId: number | undefined;
+    setCreateAd: any;
+}
+
+export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setCreateAd }) => {
+    const linkRef = React.useRef<HTMLAnchorElement>(null);
 
     React.useEffect(() => {
-        linkRef.current.href = `https://vk.com/id${data.userAuthorVkId}`;
-    }, []);
+        if (linkRef.current) {
+            linkRef.current.href = `https://vk.com/id${data.userAuthorVkId}`;
+        }
+    }, [data.userAuthorVkId]);
+
+    const handleChangeAd = () => {
+        setCreateAd(data);
+        setActivePanel('change-ad');
+    };
+
+    const handleDeleteAd = () => {
+        new Api().api.deleteApi(data?.id || -1)
+            .then(() => {
+                setActivePanel('myAds');
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    };
 
     return (
         <Panel id={id}>
@@ -51,7 +73,7 @@ export const AdPage = ({ id, data, setActivePanel }) => {
             <FormLayoutGroup mode="horizontal" className="delivery-ad__form-item">
                 <FormItem top="Время доставки:">
                     <Title weight="regular" level="3">
-                        {data && data.dateTimeArr.split(' ')[1]}
+                        {data.dateTimeArr && data.dateTimeArr.split(' ')[1]}
                     </Title>
                 </FormItem>
             </FormLayoutGroup>
@@ -72,14 +94,29 @@ export const AdPage = ({ id, data, setActivePanel }) => {
                     {data.minPrice} &#8381;
                 </Title>
             </FormItem>
-            <FixedLayout filled vertical="bottom" style={{ bottom: '50px' }}>
-                <FormItem>
-                    <a className="link" ref={linkRef}>
-                        <Button stretched size="l">
-                            Откликнуться
-                        </Button>
-                    </a>
-                </FormItem>
+            <FixedLayout filled vertical="bottom" style={{ bottom: '10px' }}>
+                {data.userAuthorVkId !== userId ? (
+                    <FormItem>
+                        <a className="link" ref={linkRef}>
+                            <Button stretched size="l">
+                                Откликнуться
+                            </Button>
+                        </a>
+                    </FormItem>
+                ) : (
+                    <>
+                        <FormItem>
+                            <Button stretched size="l" onClick={handleChangeAd}>
+                                Изменить
+                            </Button>
+                        </FormItem>
+                        <FormItem>
+                            <Button stretched size="l" mode="destructive" onClick={handleDeleteAd}>
+                                Удалить
+                            </Button>
+                        </FormItem>
+                    </>
+                )}
             </FixedLayout>
         </Panel>
     );

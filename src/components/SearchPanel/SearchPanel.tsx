@@ -1,7 +1,6 @@
-import React from 'react';
+import { Input } from '@vkontakte/vkui';
+import React, { FC } from "react";
 
-import { IconButton, Input } from '@vkontakte/vkui';
-import { Icon16Clear } from '@vkontakte/icons';
 import { SettingsIcon } from '../../images/settings/SettingsIcon';
 
 import './SearchPanel.css';
@@ -14,18 +13,18 @@ interface SearchPanelProps {
     onOpenModal: () => void;
 }
 
-export const SearchPanel = ({
+export const SearchPanel: FC<SearchPanelProps> = ({
     fromInput,
     onChangeFromInput,
     toInput,
     onChangeToInput,
     onOpenModal,
-}: SearchPanelProps) => {
+}) => {
     const handleClick = React.useCallback(() => {
         if (onOpenModal) {
             onOpenModal();
         }
-    }, []);
+    }, [onOpenModal]);
 
     return (
         <div className="search-panel">

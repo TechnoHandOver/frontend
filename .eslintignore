@@ -1,0 +1,9 @@
+.idea
+node_modules/
+__mocks__/
+public/
+/storybook-static
+/**/*.test.ts
+/**/*.test.tsx
+/**/dist
+tmp

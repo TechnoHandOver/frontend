@@ -1,5 +1,5 @@
-import * as React from 'react';
 import { Caption, FixedLayout, IconButton } from '@vkontakte/vkui';
+import * as React from 'react';
 import { iconIds, icons } from './NavigationPanel.config';
 import './NavigationPanel.css';
 

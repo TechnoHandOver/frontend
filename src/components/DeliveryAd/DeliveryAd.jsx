@@ -1,12 +1,10 @@
-import { Avatar, Card, Cell, Div, FormItem, FormLayoutGroup, Input, Text } from '@vkontakte/vkui';
+import { Card, FormItem, FormLayoutGroup, Input, Text } from '@vkontakte/vkui';
 import './DeliveryAd.css';
 import * as React from 'react';
-import { Icon16Minus } from '@vkontakte/icons';
-import { PaddedText } from '../../uiKit/PaddedText/PaddedText';
-import { parseTime } from '../../helpers/parseTime/parseTime';
 import { Arrow } from '../../images/arrow/Arrow';
 
 export const DeliveryAd = function DeliveryAd({
+    id,
     locDep,
     locArr,
     minPrice,
@@ -19,7 +17,7 @@ export const DeliveryAd = function DeliveryAd({
 }) {
     const handleClickCard = () => {
         setActivePanel('one-ad');
-        setAdData({ userAuthorVkId, locDep, locArr, minPrice, dateTimeArr, item, comment });
+        setAdData({ id, userAuthorVkId, locDep, locArr, minPrice, dateTimeArr, item, comment });
     };
 
     return (

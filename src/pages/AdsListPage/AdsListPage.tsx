@@ -1,60 +1,15 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import { DeliveryAdsList } from '../../components/DeliveryAdsList/DeliveryAdsList';
-import { BasePage } from '../BasePage/BasePage';
-import { SearchPanel } from '../../components/SearchPanel/SearchPanel';
-import { SettingsIcon } from '../../images/settings/SettingsIcon';
-import './AdsListPage.css';
-import { FixedLayout, FormItem, Separator, Spacing } from '@vkontakte/vkui';
-import { customFetch } from '../../helpers/customFetch/customFetch';
-import { Modals } from '../../enums/Modals';
 import { debounce } from '@vkontakte/vkjs';
-
-const mocks = [
-    {
-        userAuthorVkId: 16233,
-        locDep: 'Москва',
-        locArr: 'Санкт-Петербург',
-        minPrice: '500',
-        dateTimeArr: '02.01.2006 04:15',
-        item: 'Зачётная книжка',
-        comment: 'Просьба довезти осторожно, не трепать!',
-    },
-    {
-        userAuthorVkId: 16233,
-        locDep: 'Общежитие №4 Мытищи',
-        locArr: 'УЛК',
-        minPrice: '350',
-        dateTimeArr: '02.01.2006 04:15',
-        item: 'Зачётная книжка',
-        comment: 'Просьба довезти осторожно, не трепать!',
-    },
-    {
-        userAuthorVkId: 16233,
-        locDep: 'Общежитие №4 Мытищи',
-        locArr: 'ГЗ МГТУ им Н.Э. Баумана',
-        minPrice: '350',
-        dateTimeArr: '02.01.2006 04:15',
-        item: 'Зачётная книжка',
-        comment: 'Просьба довезти осторожно, не трепать!',
-    },
-    {
-        userAuthorVkId: 16233,
-        locDep: 'Общежитие №10 (СМ)',
-        locArr: 'ГЗ МГТУ им Н.Э. Баумана',
-        minPrice: '370',
-        dateTimeArr: '02.01.2006 04:15',
-        item: 'Зачётная книжка',
-        comment: 'Просьба довезти осторожно, не трепать!',
-    },
-];
+import { FixedLayout } from '@vkontakte/vkui';
+import React, { Dispatch, FC, SetStateAction } from "react";
+import { DeliveryAdsList } from '../../components/DeliveryAdsList/DeliveryAdsList';
+import { SearchPanel } from '../../components/SearchPanel/SearchPanel';
+import { Modals } from '../../enums/Modals';
+import { customFetch } from '../../helpers/customFetch/customFetch';
+import { BasePage } from '../BasePage/BasePage';
+import './AdsListPage.css';
 
 const delay = 500;
 const backendUrl = 'https://handover.space';
-enum QueryParams {
-    LocDep,
-    LocArr,
-    MaxPrice,
-}
 
 interface AdsListPageProps {
     id: string;
@@ -65,14 +20,14 @@ interface AdsListPageProps {
     setAdData: Dispatch<SetStateAction<any>>;
 }
 
-export const AdsListPage = function AdsListPage({
+export const AdsListPage: FC<AdsListPageProps> = ({
     id,
     navigationHandler,
     modalHandler,
     active,
     priceFilter,
     setAdData,
-}: AdsListPageProps) {
+}) => {
     const [cards, setCards] = React.useState<any>([]);
     const [fromLocation, setFromLocation] = React.useState('');
     const [toLocation, setToLocation] = React.useState('');
@@ -91,7 +46,7 @@ export const AdsListPage = function AdsListPage({
         if (modalHandler) {
             modalHandler(Modals.SearchFilter);
         }
-    }, []);
+    }, [modalHandler]);
 
     const generateUrl = React.useCallback((fromLocation, toLocation, priceFilter) => {
         let result = `${backendUrl}/api/ads/search?`;
@@ -108,6 +63,7 @@ export const AdsListPage = function AdsListPage({
         return result;
     }, []);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const search = React.useCallback(
         debounce((fromLocation, toLocation, priceFilter) => {
             const url = generateUrl(fromLocation, toLocation, priceFilter);
@@ -133,7 +89,7 @@ export const AdsListPage = function AdsListPage({
 
     React.useEffect(() => {
         search(fromLocation, toLocation, priceFilter);
-    }, [fromLocation, toLocation, priceFilter]);
+    }, [fromLocation, toLocation, priceFilter, search]);
 
     return (
         <BasePage

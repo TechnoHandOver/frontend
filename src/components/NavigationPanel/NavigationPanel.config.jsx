@@ -1,4 +1,5 @@
 import { Icon24AddSquareOutline, Icon24ServicesOutline, Icon24UserCircleOutline } from '@vkontakte/icons';
+import React from 'react';
 
 export const iconIds = {
     add: 'createads',
