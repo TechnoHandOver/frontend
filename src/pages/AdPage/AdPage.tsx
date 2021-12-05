@@ -125,7 +125,7 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
                         />
                         <FormItem>
                             {respond ? (
-                                <Button stretched size="l" color="tertiary">
+                                <Button stretched size="l" mode="tertiary">
                                     Исполняется
                                 </Button>
                             ) : (
