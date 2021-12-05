@@ -9,9 +9,10 @@ import {
     FixedLayout,
     Button,
 } from '@vkontakte/vkui';
-import React, { Dispatch, FC, SetStateAction } from "react";
+import React, { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import './AdPage.css';
-import { Ad, Api } from "../../api/Api";
+import { Ad, Api, InlineResponse2012 } from "../../api/Api";
+import { ProfileBlock } from "../../components/ProfileBlock/ProfileBlock";
 
 interface AdPageProps {
     id: string;
@@ -22,13 +23,9 @@ interface AdPageProps {
 }
 
 export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setCreateAd }) => {
-    const linkRef = React.useRef<HTMLAnchorElement>(null);
+    const [ad, setAd] = useState<Ad | undefined>(data);
 
-    // React.useEffect(() => {
-    //     if (linkRef.current) {
-    //         linkRef.current.href = `https://vk.com/id${data.userAuthorVkId}`;
-    //     }
-    // }, [data.userAuthorVkId]);
+    const linkRef = React.useRef<HTMLAnchorElement>(null);
 
     const handleChangeAd = () => {
         setCreateAd(data);
@@ -36,7 +33,7 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
     };
 
     const handleDeleteAd = () => {
-        new Api().api.deleteApi(data?.id || -1)
+        new Api().api.deleteApi(ad?.id || -1)
             .then(() => {
                 setActivePanel('myAds');
             })
@@ -57,6 +54,15 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
         }
     };
 
+    useEffect(() => {
+        new Api().api.getApi(data?.id || -1)
+            .then(async (response) => {
+                const {data}: InlineResponse2012 = await response.json();
+                setAd(data);
+            })
+            .catch(() => null);
+    }, [data?.id]);
+
     return (
         <Panel id={id}>
             <PanelHeader
@@ -74,47 +80,56 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
             </PanelHeader>
             <FormItem top="Откуда" className="delivery-ad__form-item">
                 <Title level="3" weight="regular">
-                    {data.locDep}
+                    {ad?.locDep}
                 </Title>
             </FormItem>
             <FormItem top="Куда" className="delivery-ad__form-item">
                 <Title level="3" weight="regular">
-                    {data.locArr}
+                    {ad?.locArr}
                 </Title>
             </FormItem>
             <FormLayoutGroup mode="horizontal" className="delivery-ad__form-item">
                 <FormItem top="Время доставки:">
                     <Title weight="regular" level="3">
-                        {data.dateTimeArr && data.dateTimeArr.split(' ')[1]}
+                        {ad?.dateTimeArr && ad.dateTimeArr.split(' ')[1]}
                     </Title>
                 </FormItem>
             </FormLayoutGroup>
             <FormItem top="Что нужно перевезти?" className="delivery-ad__form-item">
                 <Title weight="regular" level="3">
-                    {data.item}
+                    {ad?.item}
                 </Title>
             </FormItem>
             {data.comment && (
                 <FormItem top="Комментарий" className="delivery-ad__form-item">
                     <Title weight="regular" level="3">
-                        {data.comment}
+                        {ad?.comment}
                     </Title>
                 </FormItem>
             )}
             <FormItem top="Цена">
                 <Title level="1" weight="semibold" style={{ color: '#2363AD' }}>
-                    {data.minPrice} &#8381;
+                    {ad?.minPrice} &#8381;
                 </Title>
             </FormItem>
             <FixedLayout filled vertical="bottom" style={{ bottom: '10px' }}>
-                {data.userAuthorVkId !== userId ? (
-                    <FormItem>
-                        <a className="link" ref={linkRef}>
-                            <Button stretched size="l" onClick={handleRespondAd}>
-                                Откликнуться
-                            </Button>
-                        </a>
-                    </FormItem>
+                {ad?.userAuthorVkId !== userId ? (
+                    <>
+                        <ProfileBlock
+                            id={ad?.userAuthorVkId}
+                            first_name={ad?.userAuthorName?.split(' ')[0]}
+                            last_name={ad?.userAuthorName?.split(' ')[1]}
+                            photo_200={ad?.userAuthorAvatar}
+                            redirect
+                        />
+                        <FormItem>
+                            <a className="link" ref={linkRef}>
+                                <Button stretched size="l" onClick={handleRespondAd}>
+                                    Откликнуться
+                                </Button>
+                            </a>
+                        </FormItem>
+                    </>
                 ) : (
                     <>
                         <FormItem>

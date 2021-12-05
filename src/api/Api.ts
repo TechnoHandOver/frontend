@@ -111,7 +111,13 @@ export interface AdCreate {
 
 export type AdUpdate = AdCreate;
 
-export type Ad = { id?: number; userAuthorVkId?: number; userExecutorVkId?: number } & AdCreate;
+export type Ad = {
+  id?: number;
+  userAuthorVkId?: number;
+  userAuthorName?: string;
+  userAuthorAvatar?: string;
+  userExecutorVkId?: number;
+} & AdCreate;
 
 export type ApiSessionsBody = User;
 
