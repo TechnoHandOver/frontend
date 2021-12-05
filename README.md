@@ -19,6 +19,7 @@ npm run build
 sudo node scripts/generate-swagger/index
 sudo chmod 777 src/api/
 sudo chmod 777 src/api/schema.json
+nvm use 16
 sta -p ./src/api/schema.json -o ./src/api/
 ```
 
