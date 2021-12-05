@@ -1,4 +1,4 @@
-import { Avatar, Cell, Group, Title } from '@vkontakte/vkui';
+import { Cell } from '@vkontakte/vkui';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { ProfileBlock } from "../../components/ProfileBlock/ProfileBlock";

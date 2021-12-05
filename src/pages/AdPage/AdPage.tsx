@@ -118,7 +118,6 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
                 {ad?.userAuthorVkId !== userId ? (
                     <>
                         <ProfileBlock
-                            id={ad?.userAuthorVkId}
                             first_name={ad?.userAuthorName?.split(' ')[0]}
                             last_name={ad?.userAuthorName?.split(' ')[1]}
                             photo_200={ad?.userAuthorAvatar}
