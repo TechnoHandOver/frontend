@@ -2,7 +2,7 @@ import { Avatar, Cell, Group, Title } from "@vkontakte/vkui";
 import React, { FC } from "react";
 
 export interface ProfileBlock {
-    // id?: number;
+    id?: number;
     first_name?: string;
     last_name?: string;
     city?: {
@@ -14,14 +14,16 @@ export interface ProfileBlock {
     redirect?: boolean;
 }
 
-export const ProfileBlock: FC<ProfileBlock> = ({ first_name, last_name, city, photo_200, redirect }) => {
+export const ProfileBlock: FC<ProfileBlock> = ({ id, first_name, last_name, city, photo_200, redirect }) => {
     const handleClickProfile = () => {
         if (!redirect) {
             return;
         }
 
-        // TODO: делать редирект при помощи айдишника
-        console.log(window.frames);
+        if (window.top) {
+            console.log('я в топе')
+            window.top.location.href = `https://vk.com/id${id}`;
+        }
     };
 
     return (

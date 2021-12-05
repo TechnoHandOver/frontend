@@ -44,10 +44,10 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
 
     const handleRespondAd = async () => {
         const response = await fetch(`https://handover.space/bot/respond?author_id=${data.userAuthorVkId}&executor_id=${userId}`);
-        if (linkRef.current) {
-            linkRef.current.href = `https://vk.com/id${data.userAuthorVkId}`;
-            linkRef.current.click();
-        }
+        // if (linkRef.current) {
+        //     linkRef.current.href = `https://vk.com/id${data.userAuthorVkId}`;
+        //     linkRef.current.click();
+        // }
 
         if (!response.ok) {
             console.log(`error: ${response}`);
@@ -118,6 +118,7 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
                 {ad?.userAuthorVkId !== userId ? (
                     <>
                         <ProfileBlock
+                            id={data?.userAuthorVkId}
                             first_name={ad?.userAuthorName?.split(' ')[0]}
                             last_name={ad?.userAuthorName?.split(' ')[1]}
                             photo_200={ad?.userAuthorAvatar}
