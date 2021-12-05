@@ -1,5 +1,5 @@
-import { Avatar, Cell, Group, Title } from "@vkontakte/vkui";
-import React, { FC } from "react";
+import { Avatar, Cell, Group, Title } from '@vkontakte/vkui';
+import React, { FC } from 'react';
 
 export interface ProfileBlock {
     id?: number;
@@ -20,10 +20,10 @@ export const ProfileBlock: FC<ProfileBlock> = ({ id, first_name, last_name, city
             return;
         }
 
-        console.log(window);
         if (window.top) {
-            console.log('я в топе');
             window.top.location.href = `https://vk.com/id${id}`;
+        } else {
+            window.location.href = `https://vk.com/id${id}`;
         }
     };
 

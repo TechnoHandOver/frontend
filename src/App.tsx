@@ -1,4 +1,4 @@
-import bridge, { UserInfo } from "@vkontakte/vk-bridge";
+import bridge, { UserInfo } from '@vkontakte/vk-bridge';
 import {
     View,
     AdaptivityProvider,
@@ -12,13 +12,13 @@ import {
     Input,
     Radio,
 } from '@vkontakte/vkui';
-import React, { useState, useEffect, useCallback, FC } from "react";
+import React, { useState, useEffect, useCallback, FC } from 'react';
 import '@vkontakte/vkui/dist/vkui.css';
 
 import { Modals } from './enums/Modals';
 import { AdPage } from './pages/AdPage/AdPage';
 import { AdsListPage } from './pages/AdsListPage/AdsListPage';
-import { ChangeAds } from "./pages/ChangeAds/ChangeAds";
+import { ChangeAds } from './pages/ChangeAds/ChangeAds';
 import { CreateAds } from './pages/CreateAds/CreateAds';
 import { MyAdsListPage } from './pages/MyAdsListPage/MyAdsListPage';
 import { Profile } from './pages/Profile/Profile';
@@ -80,7 +80,6 @@ const App: FC = () => {
 
         fetchData();
     }, []);
-
 
     const handleCloseModal = useCallback(() => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -154,14 +153,27 @@ const App: FC = () => {
                             user={fetchedUser}
                             onClickMyAds={onClickMyAds}
                         />
-                        <AdPage id="one-ad" data={adData} setActivePanel={setActivePanel} setCreateAd={setCreateAd} userId={fetchedUser?.id}/>
+                        <AdPage
+                            id="one-ad"
+                            data={adData}
+                            setActivePanel={setActivePanel}
+                            setCreateAd={setCreateAd}
+                            userId={fetchedUser?.id}
+                        />
                         <MyAdsListPage
                             id="myAds"
                             active={activePanel}
                             navigationHandler={setActivePanel}
                             setAdData={setAdData}
                         />
-                        <ChangeAds id="change-ad" navigationHandler={setActivePanel} active={activePanel} setPopout={setPopout} setActivePanel={setActivePanel} data={createAd}/>
+                        <ChangeAds
+                            id="change-ad"
+                            navigationHandler={setActivePanel}
+                            active={activePanel}
+                            setPopout={setPopout}
+                            setActivePanel={setActivePanel}
+                            data={createAd}
+                        />
                     </View>
                 </SplitLayout>
             </AppRoot>

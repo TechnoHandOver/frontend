@@ -1,5 +1,5 @@
 import { Input } from '@vkontakte/vkui';
-import React, { FC } from "react";
+import React, { FC } from 'react';
 
 import { SettingsIcon } from '../../images/settings/SettingsIcon';
 

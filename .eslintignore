@@ -7,3 +7,4 @@ public/
 /**/*.test.tsx
 /**/dist
 tmp
+build/

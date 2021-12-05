@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC } from 'react';
 import { DeliveryAdsList } from '../../components/DeliveryAdsList/DeliveryAdsList';
 import { BackendPaths } from '../../enums/BackendPaths';
 import { customFetch } from '../../helpers/customFetch/customFetch';

@@ -1,8 +1,8 @@
-import { Button, FixedLayout, FormItem, FormLayout, Group, Input, Textarea } from "@vkontakte/vkui";
-import React, { Dispatch, FC, SetStateAction, useState } from "react";
-import { Ad, Api } from "../../api/Api";
-import { getMasked } from "../../helpers/mask/mask";
-import { BasePage } from "../BasePage/BasePage";
+import { Button, FixedLayout, FormItem, FormLayout, Group, Input, Textarea } from '@vkontakte/vkui';
+import React, { Dispatch, FC, SetStateAction, useState } from 'react';
+import { Ad, Api } from '../../api/Api';
+import { getMasked } from '../../helpers/mask/mask';
+import { BasePage } from '../BasePage/BasePage';
 
 export interface ChangeAdsProps {
     id: string;
@@ -13,7 +13,7 @@ export interface ChangeAdsProps {
     data: Ad;
 }
 
-export const ChangeAds: FC<ChangeAdsProps> = ({ id, data, navigationHandler, active,setActivePanel, setPopout }) => {
+export const ChangeAds: FC<ChangeAdsProps> = ({ id, data, navigationHandler, active, setActivePanel, setPopout }) => {
     const [locationFrom, setLocationFrom] = useState(data.locDep || '');
     const [locationTo, setLocationTo] = useState(data.locArr || '');
     const [time, setTime] = useState(data.dateTimeArr?.split(' ')[1] || '');
@@ -58,13 +58,16 @@ export const ChangeAds: FC<ChangeAdsProps> = ({ id, data, navigationHandler, act
         const body = {
             locDep: locationFrom,
             locArr: locationTo,
-            dateTimeArr: `${new Intl.DateTimeFormat('ru', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(now)} ${time}`,
+            dateTimeArr: `${new Intl.DateTimeFormat('ru', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(
+                now,
+            )} ${time}`,
             minPrice: Number(price),
             comment: extra,
             item: subject,
         };
 
-        new Api().api.putApi(data?.id || -1, body)
+        new Api().api
+            .putApi(data?.id || -1, body)
             .then(({ ok }) => {
                 setPopout(false);
                 if (!ok) {
@@ -72,9 +75,10 @@ export const ChangeAds: FC<ChangeAdsProps> = ({ id, data, navigationHandler, act
                 }
 
                 setActivePanel('adsListPage');
-            }).catch(() => {
-            setPopout(false);
-        });
+            })
+            .catch(() => {
+                setPopout(false);
+            });
     };
 
     return (
@@ -110,7 +114,7 @@ export const ChangeAds: FC<ChangeAdsProps> = ({ id, data, navigationHandler, act
                     <FormItem
                         top="Время доставки"
                         className="time"
-                        status={((!time && error) || (time.length !== 5 && error)) ? 'error' : undefined}
+                        status={(!time && error) || (time.length !== 5 && error) ? 'error' : undefined}
                         bottom={
                             !time && error ? 'Обязательное поле' : time.length !== 5 && error && 'Некорректные данные'
                         }

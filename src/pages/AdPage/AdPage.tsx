@@ -9,10 +9,10 @@ import {
     FixedLayout,
     Button,
 } from '@vkontakte/vkui';
-import React, { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import React, { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
 import './AdPage.css';
-import { Ad, Api, InlineResponse2012 } from "../../api/Api";
-import { ProfileBlock } from "../../components/ProfileBlock/ProfileBlock";
+import { Ad, Api, InlineResponse2012 } from '../../api/Api';
+import { ProfileBlock } from '../../components/ProfileBlock/ProfileBlock';
 
 interface AdPageProps {
     id: string;
@@ -24,8 +24,7 @@ interface AdPageProps {
 
 export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setCreateAd }) => {
     const [ad, setAd] = useState<Ad | undefined>(data);
-
-    const linkRef = React.useRef<HTMLAnchorElement>(null);
+    const [respond, setRespond] = useState<boolean>(false);
 
     const handleChangeAd = () => {
         setCreateAd(data);
@@ -33,7 +32,8 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
     };
 
     const handleDeleteAd = () => {
-        new Api().api.deleteApi(ad?.id || -1)
+        new Api().api
+            .deleteApi(ad?.id || -1)
             .then(() => {
                 setActivePanel('myAds');
             })
@@ -43,27 +43,26 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
     };
 
     const handleRespondAd = async () => {
-        const response = await fetch(`https://handover.space/bot/respond?author_id=${data.userAuthorVkId}&executor_id=${userId}`);
-        // if (linkRef.current) {
-        //     linkRef.current.href = `https://vk.com/id${data.userAuthorVkId}`;
-        //     linkRef.current.click();
-        // }
+        const response = await fetch(
+            `https://handover.space/bot/respond?author_id=${data.userAuthorVkId}&executor_id=${userId}`,
+        );
 
         if (!response.ok) {
             console.log(`error: ${response}`);
         }
+
+        setRespond(true);
     };
 
     useEffect(() => {
-        new Api().api.getApi(data?.id || -1)
+        new Api().api
+            .getApi(data?.id || -1)
             .then(async (response) => {
-                const {data}: InlineResponse2012 = await response.json();
+                const { data }: InlineResponse2012 = await response.json();
                 setAd(data);
             })
             .catch(() => null);
     }, [data?.id]);
-
-    console.log('рисую письки');
 
     return (
         <Panel id={id}>
@@ -125,11 +124,15 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
                             redirect
                         />
                         <FormItem>
-                            <a className="link" ref={linkRef}>
+                            {respond ? (
+                                <Button stretched size="l" color="tertiary">
+                                    Исполняется
+                                </Button>
+                            ) : (
                                 <Button stretched size="l" onClick={handleRespondAd}>
                                     Откликнуться
                                 </Button>
-                            </a>
+                            )}
                         </FormItem>
                     </>
                 ) : (
