@@ -20,8 +20,9 @@ export const ProfileBlock: FC<ProfileBlock> = ({ id, first_name, last_name, city
             return;
         }
 
+        console.log(window);
         if (window.top) {
-            console.log('я в топе')
+            console.log('я в топе');
             window.top.location.href = `https://vk.com/id${id}`;
         }
     };
