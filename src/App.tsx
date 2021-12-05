@@ -41,6 +41,14 @@ const App: FC = () => {
                 schemeAttribute.value = data.scheme ? data.scheme : 'client_light';
                 document.body.attributes.setNamedItem(schemeAttribute);
             }
+
+            if (type === 'VKWebAppAllowMessagesFromGroupResult') {
+                console.log('успех');
+            }
+
+            if (type === 'VKWebAppAllowMessagesFromGroupFailed') {
+                console.log(data);
+            }
         });
 
         async function fetchData() {
@@ -62,6 +70,11 @@ const App: FC = () => {
 
             if (!session.ok) {
                 console.log(`/api/sessions: ${session.status}`);
+            }
+
+            const { result } = await bridge.send('VKWebAppAllowMessagesFromGroup', { group_id: 207601466 });
+            if (result) {
+                console.log('привет');
             }
         }
 

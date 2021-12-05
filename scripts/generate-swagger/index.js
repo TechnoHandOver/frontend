@@ -6,7 +6,7 @@ const fetch = require('node-fetch');
 const ROOT = join(__dirname, '../..');
 const FILENAME = 'schema.json';
 
-const SCHEMA_URL = 'https://app.swaggerhub.com/apiproxy/registry/NikitaLobaev/HandOver/1.1.1?resolved=true&flatten=true&pretty=true';
+const SCHEMA_URL = 'https://app.swaggerhub.com/apiproxy/registry/NikitaLobaev/HandOver/1.2?resolved=true&flatten=true&pretty=true';
 
 const generate = async () => {
     const API_FOLDER = join(ROOT, 'src', 'api');

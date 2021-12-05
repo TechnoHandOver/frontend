@@ -363,9 +363,9 @@ export class HttpClient<SecurityDataType = unknown> {
 
 /**
  * @title HandOver API
- * @version 1.1.1
+ * @version 1.2
  * @license Apache 2.0 (http://www.apache.org/licenses/LICENSE-2.0.html)
- * @baseUrl https://virtserver.swaggerhub.com/NikitaLobaev/HandOver/1.1.1
+ * @baseUrl https://virtserver.swaggerhub.com/NikitaLobaev/HandOver/1.2
  * @contact <nikitos2255@yandex.ru>
  *
  * HandOver API
