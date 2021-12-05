@@ -63,6 +63,8 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
             .catch(() => null);
     }, [data?.id]);
 
+    console.log('рисую письки');
+
     return (
         <Panel id={id}>
             <PanelHeader
