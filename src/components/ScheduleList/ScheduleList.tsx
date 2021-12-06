@@ -1,5 +1,5 @@
 import { Icon28AddOutline } from '@vkontakte/icons';
-import { CellButton, Footer, Group, Tabs, TabsItem } from '@vkontakte/vkui';
+import { CellButton, Footer, Group, Separator, Tabs, TabsItem } from "@vkontakte/vkui";
 import React, { FC, useMemo, useState } from 'react';
 import './Schedule.css';
 
@@ -19,7 +19,7 @@ enum TabType {
 
 export const ScheduleList: FC<ScheduleListProps> = ({ onClickAddSchedule }) => {
     const [routes, setRoutes] = useState<RoutePerm[]>([]);
-    const [tab, setTab] = useState<TabType>(TabType.EVEN);
+    const [tab, setTab] = useState<TabType>(TabType.ODD);
 
     React.useEffect(() => {
         new Api().api
@@ -57,6 +57,7 @@ export const ScheduleList: FC<ScheduleListProps> = ({ onClickAddSchedule }) => {
                             Четная
                         </TabsItem>
                     </Tabs>
+                    <Separator />
                     {(tab === TabType.ODD ? oddRoutes : evenRoutes).map((route, idx) => (
                         <ScheduleCard {...route} setRoutes={setRoutes} key={idx} />
                     ))}
