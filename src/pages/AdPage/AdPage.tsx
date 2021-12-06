@@ -7,7 +7,7 @@ import {
     FormLayoutGroup,
     FormItem,
     FixedLayout,
-    Button, Snackbar, Avatar
+    Button, Snackbar, Avatar, Separator
 } from "@vkontakte/vkui";
 import React, { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
 import './AdPage.css';
@@ -135,6 +135,7 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
             <FixedLayout filled vertical="bottom" style={{ bottom: '10px' }}>
                 {ad?.userAuthorVkId !== userId ? (
                     <>
+                        <Separator style={{ margin: '10px 0' }} />
                         <ProfileBlock
                             id={data?.userAuthorVkId}
                             first_name={ad?.userAuthorName?.split(' ')[0]}
@@ -142,6 +143,7 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
                             photo_200={ad?.userAuthorAvatar}
                             redirect
                         />
+                        <Separator style={{ margin: '10px 0' }} />
                         <FormItem>
                             {respond ? (
                                 <Button stretched size="l" mode="tertiary">

@@ -1,3 +1,4 @@
+import { Icon24ChevronRight } from "@vkontakte/icons";
 import { Avatar, Cell, Group, Title } from '@vkontakte/vkui';
 import React, { FC } from 'react';
 
@@ -32,6 +33,7 @@ export const ProfileBlock: FC<ProfileBlock> = ({ id, first_name, last_name, city
             <Cell
                 before={photo_200 ? <Avatar src={photo_200} size={72} /> : null}
                 description={city && city.title ? city.title : ''}
+                after={redirect ? <Icon24ChevronRight /> : null}
             >
                 <Title level="1" weight="regular">{`${first_name} ${last_name}`}</Title>
             </Cell>
