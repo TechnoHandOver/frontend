@@ -43,7 +43,7 @@ const App: FC = () => {
             }
 
             if (type === 'VKWebAppAllowMessagesFromGroupResult') {
-                console.log('успех');
+                console.log('VKWebAppAllowMessagesFromGroupResult');
             }
 
             if (type === 'VKWebAppAllowMessagesFromGroupFailed') {
@@ -72,10 +72,7 @@ const App: FC = () => {
                 console.log(`/api/sessions: ${session.status}`);
             }
 
-            const { result } = await bridge.send('VKWebAppAllowMessagesFromGroup', { group_id: 207601466 });
-            if (result) {
-                console.log('привет');
-            }
+            await bridge.send('VKWebAppAllowMessagesFromGroup', { group_id: 207601466 });
         }
 
         fetchData();

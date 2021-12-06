@@ -77,7 +77,11 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
                 console.log(data);
                 setAd(data);
             })
-            .catch(() => null);
+            .catch((err) => {
+                console.log(err);
+            });
+
+        console.log('я здесь');
     }, [data?.id]);
 
     return (
