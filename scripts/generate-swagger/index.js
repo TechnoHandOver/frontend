@@ -2,11 +2,11 @@ const fs = require('fs');
 const { join } = require('path');
 const fetch = require('node-fetch');
 
-
 const ROOT = join(__dirname, '../..');
 const FILENAME = 'schema.json';
 
-const SCHEMA_URL = 'https://app.swaggerhub.com/apiproxy/registry/NikitaLobaev/HandOver/1.2?resolved=true&flatten=true&pretty=true';
+const SCHEMA_URL =
+    'https://app.swaggerhub.com/apiproxy/registry/NikitaLobaev/HandOver/1.2?resolved=true&flatten=true&pretty=true';
 
 const generate = async () => {
     const API_FOLDER = join(ROOT, 'src', 'api');
@@ -14,7 +14,7 @@ const generate = async () => {
     try {
         fs.mkdirSync(API_FOLDER);
         // eslint-disable-next-line no-empty
-    } catch (err) { }
+    } catch (err) {}
 
     // качаем схему
     const schema = await fetch(SCHEMA_URL)

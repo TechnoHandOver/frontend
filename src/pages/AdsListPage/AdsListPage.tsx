@@ -1,6 +1,6 @@
 import { debounce } from '@vkontakte/vkjs';
 import { FixedLayout } from '@vkontakte/vkui';
-import React, { Dispatch, FC, SetStateAction } from "react";
+import React, { Dispatch, FC, SetStateAction } from 'react';
 import { DeliveryAdsList } from '../../components/DeliveryAdsList/DeliveryAdsList';
 import { SearchPanel } from '../../components/SearchPanel/SearchPanel';
 import { Modals } from '../../enums/Modals';

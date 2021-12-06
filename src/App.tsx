@@ -1,4 +1,4 @@
-import bridge from '@vkontakte/vk-bridge';
+import bridge, { UserInfo } from '@vkontakte/vk-bridge';
 import {
     View,
     AdaptivityProvider,
@@ -30,7 +30,7 @@ const App: FC = () => {
     const [activePanel, setActivePanel] = useState('adsListPage');
     const [activeModal, setActiveModal] = useState(null);
     const [adData, setAdData] = useState({});
-    const [fetchedUser, setUser] = useState<any>(null);
+    const [fetchedUser, setUser] = useState<UserInfo | undefined>();
     const [popout, setPopout] = useState(null);
     const [modalPriceInput, setModalPriceInput] = useState('');
     const [createAd, setCreateAd] = useState({});
@@ -46,7 +46,7 @@ const App: FC = () => {
             }
 
             if (type === 'VKWebAppAllowMessagesFromGroupResult') {
-                console.log('успех');
+                console.log('VKWebAppAllowMessagesFromGroupResult');
             }
 
             if (type === 'VKWebAppAllowMessagesFromGroupFailed') {
@@ -75,10 +75,7 @@ const App: FC = () => {
                 console.log(`/api/sessions: ${session.status}`);
             }
 
-            const { result } = await bridge.send('VKWebAppAllowMessagesFromGroup', { group_id: 207601466 });
-            if (result) {
-                console.log('привет');
-            }
+            await bridge.send('VKWebAppAllowMessagesFromGroup', { group_id: 207601466 });
         }
 
         fetchData();

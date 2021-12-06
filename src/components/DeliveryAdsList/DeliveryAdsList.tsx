@@ -1,5 +1,5 @@
 import { CardGrid, Footer, Spinner } from '@vkontakte/vkui';
-import React, { FC } from "react";
+import React, { FC } from 'react';
 
 import { DeliveryAd } from '../DeliveryAd/DeliveryAd';
 

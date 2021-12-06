@@ -1,4 +1,4 @@
-import { Icon28ChevronLeftOutline } from '@vkontakte/icons';
+import { Icon28ChevronLeftOutline, Icon28CancelCircleFillRed } from '@vkontakte/icons';
 import {
     Panel,
     PanelHeader,
@@ -7,11 +7,12 @@ import {
     FormLayoutGroup,
     FormItem,
     FixedLayout,
-    Button,
-} from '@vkontakte/vkui';
-import React, { Dispatch, FC, SetStateAction } from "react";
+    Button, Snackbar, Avatar, Separator
+} from "@vkontakte/vkui";
+import React, { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
 import './AdPage.css';
-import { Ad, Api } from "../../api/Api";
+import { Ad, Api } from '../../api/Api';
+import { ProfileBlock } from '../../components/ProfileBlock/ProfileBlock';
 
 interface AdPageProps {
     id: string;
@@ -22,13 +23,9 @@ interface AdPageProps {
 }
 
 export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setCreateAd }) => {
-    const linkRef = React.useRef<HTMLAnchorElement>(null);
-
-    // React.useEffect(() => {
-    //     if (linkRef.current) {
-    //         linkRef.current.href = `https://vk.com/id${data.userAuthorVkId}`;
-    //     }
-    // }, [data.userAuthorVkId]);
+    const [ad, setAd] = useState<Ad | undefined>(data);
+    const [respond, setRespond] = useState<boolean>(false);
+    const [snackbar, setSnackbar] = useState<JSX.Element | null>(null);
 
     const handleChangeAd = () => {
         setCreateAd(data);
@@ -36,7 +33,8 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
     };
 
     const handleDeleteAd = () => {
-        new Api().api.deleteApi(data?.id || -1)
+        new Api().api
+            .deleteApi(ad?.id || -1)
             .then(() => {
                 setActivePanel('myAds');
             })
@@ -46,16 +44,44 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
     };
 
     const handleRespondAd = async () => {
-        const response = await fetch(`https://handover.space/bot/respond?author_id=${data.userAuthorVkId}&executor_id=${userId}`);
-        if (linkRef.current) {
-            linkRef.current.href = `https://vk.com/id${data.userAuthorVkId}`;
-            linkRef.current.click();
-        }
-
-        if (!response.ok) {
-            console.log(`error: ${response}`);
-        }
+        new Api().api.adsExecutionCreate(data?.id || -1)
+            .then(() => {
+                setSnackbar(
+                    <Snackbar
+                        onClose={() => { setSnackbar(null); }}
+                        after={<Avatar src={data?.userAuthorAvatar} size={32} />}
+                    >
+                        Отправлено {data?.userAuthorName}.
+                    </Snackbar>
+                );
+                setRespond(true);
+            })
+            .catch(() => {
+                setSnackbar(
+                    <Snackbar
+                        onClose={() => { setSnackbar(null); }}
+                        before={<Avatar size={24}><Icon28CancelCircleFillRed width={14} height={14} /></Avatar>}
+                    >
+                        Произошли некоторые проблемы.
+                    </Snackbar>
+                );
+                setRespond(false);
+            });
     };
+
+    useEffect(() => {
+        new Api().api
+            .getApi(data?.id || -1)
+            .then(async (response) => {
+                const {data} = response;
+                setAd(data.data);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+        console.log('я здесь');
+    }, [data, data?.id]);
 
     return (
         <Panel id={id}>
@@ -74,47 +100,62 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
             </PanelHeader>
             <FormItem top="Откуда" className="delivery-ad__form-item">
                 <Title level="3" weight="regular">
-                    {data.locDep}
+                    {ad?.locDep}
                 </Title>
             </FormItem>
             <FormItem top="Куда" className="delivery-ad__form-item">
                 <Title level="3" weight="regular">
-                    {data.locArr}
+                    {ad?.locArr}
                 </Title>
             </FormItem>
             <FormLayoutGroup mode="horizontal" className="delivery-ad__form-item">
                 <FormItem top="Время доставки:">
                     <Title weight="regular" level="3">
-                        {data.dateTimeArr && data.dateTimeArr.split(' ')[1]}
+                        {ad?.dateTimeArr && ad.dateTimeArr.split(' ')[1]}
                     </Title>
                 </FormItem>
             </FormLayoutGroup>
             <FormItem top="Что нужно перевезти?" className="delivery-ad__form-item">
                 <Title weight="regular" level="3">
-                    {data.item}
+                    {ad?.item}
                 </Title>
             </FormItem>
             {data.comment && (
                 <FormItem top="Комментарий" className="delivery-ad__form-item">
                     <Title weight="regular" level="3">
-                        {data.comment}
+                        {ad?.comment}
                     </Title>
                 </FormItem>
             )}
             <FormItem top="Цена">
                 <Title level="1" weight="semibold" style={{ color: '#2363AD' }}>
-                    {data.minPrice} &#8381;
+                    {ad?.minPrice} &#8381;
                 </Title>
             </FormItem>
             <FixedLayout filled vertical="bottom" style={{ bottom: '10px' }}>
-                {data.userAuthorVkId !== userId ? (
-                    <FormItem>
-                        <a className="link" ref={linkRef}>
-                            <Button stretched size="l" onClick={handleRespondAd}>
-                                Откликнуться
-                            </Button>
-                        </a>
-                    </FormItem>
+                {ad?.userAuthorVkId !== userId ? (
+                    <>
+                        <Separator />
+                        <ProfileBlock
+                            id={data?.userAuthorVkId}
+                            first_name={ad?.userAuthorName?.split(' ')[0]}
+                            last_name={ad?.userAuthorName?.split(' ')[1]}
+                            photo_200={ad?.userAuthorAvatar}
+                            redirect
+                        />
+                        <Separator />
+                        <FormItem>
+                            {respond ? (
+                                <Button stretched size="l" mode="tertiary">
+                                    Исполняется
+                                </Button>
+                            ) : (
+                                <Button stretched size="l" onClick={handleRespondAd}>
+                                    Откликнуться
+                                </Button>
+                            )}
+                        </FormItem>
+                    </>
                 ) : (
                     <>
                         <FormItem>
@@ -130,6 +171,7 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
                     </>
                 )}
             </FixedLayout>
+            {snackbar}
         </Panel>
     );
 };
