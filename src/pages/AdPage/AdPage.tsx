@@ -77,13 +77,14 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
                 // const { data }: InlineResponse2012 = await response.json();
                 // console.log(data);
                 // setAd(data);
+                setAd(data);
             })
             .catch((err) => {
                 console.log(err);
             });
 
         console.log('я здесь');
-    }, [data?.id]);
+    }, [data, data?.id]);
 
     return (
         <Panel id={id}>
