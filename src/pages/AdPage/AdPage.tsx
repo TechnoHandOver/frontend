@@ -7,8 +7,11 @@ import {
     FormLayoutGroup,
     FormItem,
     FixedLayout,
-    Button, Snackbar, Avatar, Separator
-} from "@vkontakte/vkui";
+    Button,
+    Snackbar,
+    Avatar,
+    Separator,
+} from '@vkontakte/vkui';
 import React, { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
 import './AdPage.css';
 import { Ad, Api } from '../../api/Api';
@@ -44,26 +47,35 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
     };
 
     const handleRespondAd = async () => {
-        new Api().api.adsExecutionCreate(data?.id || -1)
+        new Api().api
+            .adsExecutionCreate(data?.id || -1)
             .then(() => {
                 setSnackbar(
                     <Snackbar
-                        onClose={() => { setSnackbar(null); }}
+                        onClose={() => {
+                            setSnackbar(null);
+                        }}
                         after={<Avatar src={data?.userAuthorAvatar} size={32} />}
                     >
                         Отправлено {data?.userAuthorName}.
-                    </Snackbar>
+                    </Snackbar>,
                 );
                 setRespond(true);
             })
             .catch(() => {
                 setSnackbar(
                     <Snackbar
-                        onClose={() => { setSnackbar(null); }}
-                        before={<Avatar size={24}><Icon28CancelCircleFillRed width={14} height={14} /></Avatar>}
+                        onClose={() => {
+                            setSnackbar(null);
+                        }}
+                        before={
+                            <Avatar size={24}>
+                                <Icon28CancelCircleFillRed width={14} height={14} />
+                            </Avatar>
+                        }
                     >
                         Произошли некоторые проблемы.
-                    </Snackbar>
+                    </Snackbar>,
                 );
                 setRespond(false);
             });
@@ -73,7 +85,7 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
         new Api().api
             .getApi(data?.id || -1)
             .then(async (response) => {
-                const {data} = response;
+                const { data } = response;
                 setAd(data.data);
             })
             .catch((err) => {

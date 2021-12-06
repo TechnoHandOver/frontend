@@ -1,4 +1,4 @@
-import { Icon24ChevronRight } from "@vkontakte/icons";
+import { Icon24ChevronRight } from '@vkontakte/icons';
 import { Avatar, Cell, Group, Title } from '@vkontakte/vkui';
 import React, { FC } from 'react';
 

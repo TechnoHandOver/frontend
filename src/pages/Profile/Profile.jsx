@@ -1,9 +1,8 @@
+import { Icon24CalendarOutline, Icon20CheckNewsfeedOutline } from '@vkontakte/icons';
+import { Cell } from '@vkontakte/vkui';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { ProfileBlock } from '../../components/ProfileBlock/ProfileBlock';
-import { Icon24CalendarOutline, Icon20CheckNewsfeedOutline } from '@vkontakte/icons';
-import { Avatar, Cell, Group, Title } from '@vkontakte/vkui';
-import PropTypes from 'prop-types';
 import { BasePage } from '../BasePage/BasePage';
 import './Profile.css';
 
