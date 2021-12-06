@@ -73,9 +73,10 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
         new Api().api
             .getApi(data?.id || -1)
             .then(async (response) => {
-                const { data }: InlineResponse2012 = await response.json();
-                console.log(data);
-                setAd(data);
+                console.log(response);
+                // const { data }: InlineResponse2012 = await response.json();
+                // console.log(data);
+                // setAd(data);
             })
             .catch((err) => {
                 console.log(err);
