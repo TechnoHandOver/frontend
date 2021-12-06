@@ -57,7 +57,7 @@ export const ScheduleList: FC<ScheduleListProps> = ({ onClickAddSchedule }) => {
                             Четная
                         </TabsItem>
                     </Tabs>
-                    <Separator />
+                    <Separator style={{ margin: '10px 0' }} />
                     {(tab === TabType.ODD ? oddRoutes : evenRoutes).map((route, idx) => (
                         <ScheduleCard {...route} setRoutes={setRoutes} key={idx} />
                     ))}
