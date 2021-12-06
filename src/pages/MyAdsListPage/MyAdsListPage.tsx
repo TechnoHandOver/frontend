@@ -1,6 +1,8 @@
 import React, { FC } from 'react';
 import { DeliveryAdsList } from '../../components/DeliveryAdsList/DeliveryAdsList';
+import { HeaderWithBackButton } from '../../components/HeaderWithBackButton/HeaderWithBackButton';
 import { BackendPaths } from '../../enums/BackendPaths';
+import { Pages } from '../../enums/Pages';
 import { customFetch } from '../../helpers/customFetch/customFetch';
 import { BasePage, BasePageProps } from '../BasePage/BasePage';
 
@@ -31,7 +33,16 @@ export const MyAdsListPage: FC<MyAdsListPageProps> = ({ id, navigationHandler, a
     }, []);
 
     return (
-        <BasePage id={id} active={active} navigationHandler={navigationHandler} headerText="Мои объявления">
+        <BasePage
+            id={id}
+            active={active}
+            navigationHandler={navigationHandler}
+            header={
+                <HeaderWithBackButton navigationHandler={navigationHandler} preventPage={Pages.Profile}>
+                    Мои объявления
+                </HeaderWithBackButton>
+            }
+        >
             <DeliveryAdsList
                 isLoading={isLoading}
                 cards={cards}
