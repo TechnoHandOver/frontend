@@ -1,56 +1,199 @@
-import { FormLayout, FormItem, Group, Input, Select, Radio } from '@vkontakte/vkui';
+import {
+    FormLayout,
+    FormItem,
+    Group,
+    Input,
+    Select,
+    Radio,
+    Header,
+    FormLayoutGroup,
+    FixedLayout,
+    Button,
+} from '@vkontakte/vkui';
 import React, { FC } from 'react';
 
-export const CreateSchedule: FC = () => {
+import './CreateSchedule.css';
+import { Api } from '../../api/Api';
+import { Pages } from '../../enums/Pages';
+import { TimeInput } from '../TimeInput/TimeInput';
+
+enum DaysOfTheWeek {
+    Monday = 'Mon',
+    Tuesday = 'Tue',
+    Wednesday = 'Wed',
+    Thursday = 'Thu',
+    Friday = 'Fri',
+    Saturday = 'Sat',
+    Sunday = 'Sun',
+}
+
+enum WeekType {
+    Odd = 'odd',
+    Even = 'even',
+}
+
+interface CreateScheduleProps {
+    navigationHandler: (value: string) => void;
+}
+
+export const CreateSchedule: FC<CreateScheduleProps> = ({ navigationHandler }) => {
+    const [dayOfTheWeek, setDayOfTheWeek] = React.useState(DaysOfTheWeek.Monday);
+    const [timeDeparture, setTimeDeparture] = React.useState('');
+    const [timeArrival, setTimeArrival] = React.useState('');
+    const [locationFrom, setLocationFrom] = React.useState('');
+    const [locationTo, setLocationTo] = React.useState('');
+    const [weekType, setWeekType] = React.useState(WeekType.Even);
+    const [minPrice, setMinPrice] = React.useState('');
+
+    const [error, setError] = React.useState(false);
+
+    const handleChangeDay = React.useCallback((evt) => {
+        setDayOfTheWeek(evt.target.value);
+    }, []);
+
+    const handleClick = React.useCallback(() => {
+        if (!(locationTo || timeDeparture || timeDeparture || locationFrom || minPrice)) {
+            setError(true);
+            return;
+        }
+        setError(false);
+
+        const now = new Date();
+        const body = {
+            locDep: locationFrom,
+            locArr: locationTo,
+            evenWeek: weekType === WeekType.Even,
+            oddWeek: weekType === WeekType.Odd,
+            timeDep: `${new Intl.DateTimeFormat('ru', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(
+                now,
+            )} ${timeDeparture}`,
+            timeArr: `${new Intl.DateTimeFormat('ru', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(
+                now,
+            )} ${timeArrival}`,
+            minPrice: Number(minPrice),
+            dayOfWeek: dayOfTheWeek,
+        };
+
+        new Api().api
+            .usersRoutesPermCreate(body)
+            .then(({ ok }) => {
+                if (!ok) {
+                    console.log('что то пошло не так');
+                }
+
+                navigationHandler(Pages.Schedule);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, [dayOfTheWeek, locationFrom, locationTo, minPrice, navigationHandler, timeArrival, timeDeparture, weekType]);
+
+    const handleChangeFrom = React.useCallback((evt) => {
+        setLocationFrom(evt.target.value);
+    }, []);
+
+    const handleChangeTo = React.useCallback((evt) => {
+        setLocationTo(evt.target.value);
+    }, []);
+
+    const handleChangeRadio = React.useCallback((evt) => {
+        setWeekType(evt.target.value);
+    }, []);
+
+    const handleChangeMinPrice = React.useCallback((evt) => {
+        setMinPrice(evt.target.value);
+    }, []);
+
     return (
         <Group>
-            <FormLayout>
-                <FormItem top="Откуда">
-                    <Input placeholder="Начало маршрута" />
+            <FormLayout className="create-schedule__content">
+                <FormItem
+                    top="Откуда"
+                    status={!locationFrom && error ? 'error' : undefined}
+                    bottom={!locationFrom && error && 'Обязательное поле'}
+                >
+                    <Input placeholder="Начало маршрута" value={locationFrom} onChange={handleChangeFrom} />
                 </FormItem>
-                <FormItem top="Куда">
-                    <Input placeholder="Конечная точка маршрута" />
+                <FormItem
+                    top="Куда"
+                    status={!locationTo && error ? 'error' : undefined}
+                    bottom={!locationTo && error && 'Обязательное поле'}
+                >
+                    <Input placeholder="Конечная точка маршрута" value={locationTo} onChange={handleChangeTo} />
                 </FormItem>
                 <FormItem top="Неделя">
-                    <Radio name="type">Чётная</Radio>
-                    <Radio name="type">Нечётная</Radio>
+                    <Radio name="type" value={WeekType.Even} onChange={handleChangeRadio} defaultChecked>
+                        Чётная
+                    </Radio>
+                    <Radio name="type" value={WeekType.Odd} onChange={handleChangeRadio}>
+                        Нечётная
+                    </Radio>
                 </FormItem>
                 <FormItem top="День недели">
                     <Select
-                        name="purpose"
+                        name="dayOfTheWeek"
+                        value={dayOfTheWeek}
+                        onChange={handleChangeDay}
                         options={[
                             {
-                                value: '0',
+                                value: DaysOfTheWeek.Monday,
                                 label: 'Понедельник',
                             },
                             {
-                                value: '1',
+                                value: DaysOfTheWeek.Tuesday,
                                 label: 'Вторник',
                             },
                             {
-                                value: '2',
+                                value: DaysOfTheWeek.Wednesday,
                                 label: 'Среда',
                             },
                             {
-                                value: '3',
+                                value: DaysOfTheWeek.Thursday,
                                 label: 'Четверг',
                             },
                             {
-                                value: '4',
+                                value: DaysOfTheWeek.Friday,
                                 label: 'Пятница',
                             },
                             {
-                                value: '5',
+                                value: DaysOfTheWeek.Saturday,
                                 label: 'Суббота',
                             },
                             {
-                                value: '6',
+                                value: DaysOfTheWeek.Sunday,
                                 label: 'Воскресенье',
                             },
                         ]}
                     />
                 </FormItem>
+                <Group
+                    header={
+                        <Header>
+                            Выберите время, в которое
+                            <br /> вам будут присылать уведомления
+                        </Header>
+                    }
+                >
+                    <FormLayoutGroup mode="horizontal">
+                        <TimeInput error={error} header="От" time={timeDeparture} setTime={setTimeDeparture} />
+                        <TimeInput error={error} header="До" time={timeArrival} setTime={setTimeArrival} />
+                    </FormLayoutGroup>
+                </Group>
+                <FormItem
+                    top="Минимальная цена"
+                    status={!minPrice && error ? 'error' : undefined}
+                    bottom={!minPrice && error && 'Обязательное поле'}
+                >
+                    <Input placeholder="500" value={minPrice} onChange={handleChangeMinPrice} />
+                </FormItem>
             </FormLayout>
+            <FixedLayout filled vertical="bottom" style={{ bottom: '50px' }}>
+                <FormItem>
+                    <Button stretched size="l" onClick={handleClick}>
+                        Создать
+                    </Button>
+                </FormItem>
+            </FixedLayout>
         </Group>
     );
 };

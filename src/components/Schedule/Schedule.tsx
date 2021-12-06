@@ -3,11 +3,24 @@ import { CellButton, Footer, Group } from '@vkontakte/vkui';
 import React, { FC } from 'react';
 import './Schedule.css';
 
+import { Api } from '../../api/Api';
+
 type Schedule = {
     onClickAddSchedule: () => void;
 };
 
 export const Schedule: FC<Schedule> = ({ onClickAddSchedule }: Schedule) => {
+    React.useEffect(() => {
+        new Api().api
+            .usersRoutesPermListList()
+            .then(({ data }) => {
+                console.log(data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+
     return (
         <>
             <Footer className="schedule">

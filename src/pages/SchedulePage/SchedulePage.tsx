@@ -1,7 +1,7 @@
-import { Icon28ChevronLeftOutline } from '@vkontakte/icons';
-import { PanelHeader, PanelHeaderButton } from '@vkontakte/vkui';
 import React, { FC } from 'react';
+import { HeaderWithBackButton } from '../../components/HeaderWithBackButton/HeaderWithBackButton';
 import { Schedule } from '../../components/Schedule/Schedule';
+import { Pages } from '../../enums/Pages';
 import { BasePage, BasePageProps } from '../BasePage/BasePage';
 
 type SchedulePageProps = BasePageProps & {
@@ -15,19 +15,9 @@ export const SchedulePage: FC<SchedulePageProps> = ({ id, active, navigationHand
             active={active}
             navigationHandler={navigationHandler}
             header={
-                <PanelHeader
-                    left={
-                        <PanelHeaderButton>
-                            <Icon28ChevronLeftOutline
-                                onClick={() => {
-                                    navigationHandler('profile');
-                                }}
-                            />
-                        </PanelHeaderButton>
-                    }
-                >
+                <HeaderWithBackButton navigationHandler={navigationHandler} preventPage={Pages.Profile}>
                     Моё расписание
-                </PanelHeader>
+                </HeaderWithBackButton>
             }
         >
             <Schedule onClickAddSchedule={onClickAddSchedule} />

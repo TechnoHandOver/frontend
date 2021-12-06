@@ -128,14 +128,14 @@ const App: FC = () => {
                 <SplitLayout modal={modal}>
                     <View activePanel={activePanel} popout={popout}>
                         <CreateAds
-                            id="createads"
+                            id={Pages.CreateAds}
                             active={activePanel}
                             navigationHandler={setActivePanel}
                             setPopout={setPopout}
                             setActivePanel={setActivePanel}
                         />
                         <AdsListPage
-                            id="adsListPage"
+                            id={Pages.AdsList}
                             active={activePanel}
                             navigationHandler={setActivePanel}
                             priceFilter={modalPriceInput}
@@ -145,7 +145,7 @@ const App: FC = () => {
                             setAdData={setAdData}
                         />
                         <Profile
-                            id="profile"
+                            id={Pages.Profile}
                             active={activePanel}
                             navigationHandler={setActivePanel}
                             user={fetchedUser}
@@ -153,20 +153,20 @@ const App: FC = () => {
                             onClickSchedule={handleClickSchedule}
                         />
                         <AdPage
-                            id="one-ad"
+                            id={Pages.OneAd}
                             data={adData}
                             setActivePanel={setActivePanel}
                             setCreateAd={setCreateAd}
                             userId={fetchedUser?.id}
                         />
                         <MyAdsListPage
-                            id="myAds"
+                            id={Pages.MyAds}
                             active={activePanel}
                             navigationHandler={setActivePanel}
                             setAdData={setAdData}
                         />
                         <ChangeAds
-                            id="change-ad"
+                            id={Pages.ChangeAd}
                             navigationHandler={setActivePanel}
                             active={activePanel}
                             setPopout={setPopout}
