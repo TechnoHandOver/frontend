@@ -57,8 +57,6 @@ export const CreateSchedule: FC<CreateScheduleProps> = ({ navigationHandler }) =
             return;
         }
         setError(false);
-
-        const now = new Date();
         const body = {
             locDep: locationFrom,
             locArr: locationTo,
