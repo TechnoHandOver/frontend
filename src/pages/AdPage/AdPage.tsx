@@ -11,7 +11,7 @@ import {
 } from "@vkontakte/vkui";
 import React, { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
 import './AdPage.css';
-import { Ad, Api, InlineResponse2012 } from '../../api/Api';
+import { Ad, Api } from '../../api/Api';
 import { ProfileBlock } from '../../components/ProfileBlock/ProfileBlock';
 
 interface AdPageProps {
