@@ -1,5 +1,5 @@
 import { Button, RichCell } from '@vkontakte/vkui';
-import React, { Dispatch, FC, SetStateAction } from "react";
+import React, { Dispatch, FC, SetStateAction } from 'react';
 import { Api, RoutePerm } from '../../api/Api';
 import { dayOfWeekMap } from './ScheduleCard.config';
 
@@ -7,7 +7,16 @@ interface ScheduleCardProps extends RoutePerm {
     setRoutes: Dispatch<SetStateAction<RoutePerm[]>>;
 }
 
-export const ScheduleCard: FC<ScheduleCardProps> = ({ id, locDep, locArr, minPrice, timeArr, timeDep, dayOfWeek, setRoutes }) => {
+export const ScheduleCard: FC<ScheduleCardProps> = ({
+    id,
+    locDep,
+    locArr,
+    minPrice,
+    timeArr,
+    timeDep,
+    dayOfWeek,
+    setRoutes,
+}) => {
     const handleChange = () => {};
 
     const handleDelete = () => {
@@ -25,7 +34,7 @@ export const ScheduleCard: FC<ScheduleCardProps> = ({ id, locDep, locArr, minPri
     return (
         <RichCell
             multiline
-            text={`Из ${locDep} в ${locArr}`}
+            text={`Из "${locDep}" в "${locArr}"`}
             caption={`С ${timeDep} до ${timeArr}`}
             after={`${minPrice} руб.`}
             actions={

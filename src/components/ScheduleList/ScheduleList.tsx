@@ -1,6 +1,6 @@
 import { Icon28AddOutline } from '@vkontakte/icons';
-import { CellButton, Footer, Group } from '@vkontakte/vkui';
-import React, { FC, useState } from 'react';
+import { CellButton, Footer, Group, Tabs, TabsItem } from '@vkontakte/vkui';
+import React, { FC, useMemo, useState } from 'react';
 import './Schedule.css';
 
 import { Api, RoutePerm } from '../../api/Api';
@@ -10,26 +10,54 @@ type ScheduleListProps = {
     onClickAddSchedule: () => void;
 };
 
+// ебанный кринжовый енам обосанный
+// TODO: заменить на православный 'odd' | 'even'
+enum TabType {
+    ODD,
+    EVEN,
+}
+
 export const ScheduleList: FC<ScheduleListProps> = ({ onClickAddSchedule }) => {
     const [routes, setRoutes] = useState<RoutePerm[]>([]);
+    const [tab, setTab] = useState<TabType>(TabType.EVEN);
 
     React.useEffect(() => {
         new Api().api
             .usersRoutesPermListList()
             .then(({ data }) => {
                 setRoutes(data.data || []);
-                console.log(data);
             })
             .catch((error) => {
                 console.log(error);
             });
     }, []);
 
+    const oddRoutes = useMemo(() => routes.filter((route) => route.oddWeek), [routes]);
+    const evenRoutes = useMemo(() => routes.filter((route) => route.evenWeek), [routes]);
+
     return (
         <>
             {routes.length ? (
                 <Group>
-                    {routes.map((route, idx) => (
+                    <Tabs>
+                        <TabsItem
+                            onClick={() => {
+                                setTab(TabType.ODD);
+                            }}
+                            selected={tab === TabType.ODD}
+                        >
+                            Нечетная
+                        </TabsItem>
+                        <TabsItem
+                            onClick={() => {
+                                setTab(TabType.EVEN);
+                            }}
+                            selected={tab === TabType.EVEN}
+                        >
+                            Четная
+                        </TabsItem>
+                    </Tabs>
+                    {(tab === TabType.ODD ? oddRoutes : evenRoutes).map((route, idx) => (
                         <ScheduleCard {...route} setRoutes={setRoutes} key={idx} />
                     ))}
                 </Group>
