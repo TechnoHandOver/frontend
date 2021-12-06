@@ -1,18 +1,21 @@
 import { Button, RichCell } from '@vkontakte/vkui';
-import React, { FC } from 'react';
+import React, { Dispatch, FC, SetStateAction } from "react";
 import { Api, RoutePerm } from '../../api/Api';
 import { dayOfWeekMap } from './ScheduleCard.config';
 
-interface ScheduleCardProps extends RoutePerm {}
+interface ScheduleCardProps extends RoutePerm {
+    setRoutes: Dispatch<SetStateAction<RoutePerm[]>>;
+}
 
-export const ScheduleCard: FC<ScheduleCardProps> = ({ id, locDep, locArr, minPrice, timeArr, timeDep, dayOfWeek }) => {
+export const ScheduleCard: FC<ScheduleCardProps> = ({ id, locDep, locArr, minPrice, timeArr, timeDep, dayOfWeek, setRoutes }) => {
     const handleChange = () => {};
 
     const handleDelete = () => {
         new Api().api
             .usersRoutesPermDelete(id || -1)
-            .then((response) => {
-                console.log(response.data);
+            .then(({ data }) => {
+                const deletedId = data.data?.id;
+                setRoutes((r) => r.filter((item) => item.id !== deletedId));
             })
             .catch((err) => {
                 console.log(err);
