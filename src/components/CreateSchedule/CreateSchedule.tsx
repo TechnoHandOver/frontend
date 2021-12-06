@@ -64,12 +64,8 @@ export const CreateSchedule: FC<CreateScheduleProps> = ({ navigationHandler }) =
             locArr: locationTo,
             evenWeek: weekType === WeekType.Even,
             oddWeek: weekType === WeekType.Odd,
-            timeDep: `${new Intl.DateTimeFormat('ru', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(
-                now,
-            )} ${timeDeparture}`,
-            timeArr: `${new Intl.DateTimeFormat('ru', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(
-                now,
-            )} ${timeArrival}`,
+            timeDep: timeDeparture,
+            timeArr: timeArrival,
             minPrice: Number(minPrice),
             dayOfWeek: dayOfTheWeek,
         };
