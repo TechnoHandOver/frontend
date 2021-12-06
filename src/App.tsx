@@ -12,16 +12,19 @@ import {
     Input,
     Radio,
 } from '@vkontakte/vkui';
-import React, { useState, useEffect, useCallback, FC } from "react";
+import React, { useState, useEffect, useCallback, FC } from 'react';
 import '@vkontakte/vkui/dist/vkui.css';
 
 import { Modals } from './enums/Modals';
+import { Pages } from './enums/Pages';
 import { AdPage } from './pages/AdPage/AdPage';
 import { AdsListPage } from './pages/AdsListPage/AdsListPage';
-import { ChangeAds } from "./pages/ChangeAds/ChangeAds";
+import { ChangeAds } from './pages/ChangeAds/ChangeAds';
 import { CreateAds } from './pages/CreateAds/CreateAds';
+import { CreateSchedulePage } from './pages/CreateSchedulePage/CreateSchedulePage';
 import { MyAdsListPage } from './pages/MyAdsListPage/MyAdsListPage';
 import { Profile } from './pages/Profile/Profile';
+import { SchedulePage } from './pages/SchedulePage/SchedulePage';
 
 const App: FC = () => {
     const [activePanel, setActivePanel] = useState('adsListPage');
@@ -81,7 +84,6 @@ const App: FC = () => {
         fetchData();
     }, []);
 
-
     const handleCloseModal = useCallback(() => {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
@@ -94,6 +96,14 @@ const App: FC = () => {
 
     const onClickMyAds = useCallback(() => {
         setActivePanel('myAds');
+    }, []);
+
+    const handleClickSchedule = useCallback(() => {
+        setActivePanel(Pages.Schedule);
+    }, []);
+
+    const handleClickAddSchedule = useCallback(() => {
+        setActivePanel(Pages.CreateSchedule);
     }, []);
 
     const modal = (
@@ -131,14 +141,14 @@ const App: FC = () => {
                 <SplitLayout modal={modal}>
                     <View activePanel={activePanel} popout={popout}>
                         <CreateAds
-                            id="createads"
+                            id={Pages.CreateAds}
                             active={activePanel}
                             navigationHandler={setActivePanel}
                             setPopout={setPopout}
                             setActivePanel={setActivePanel}
                         />
                         <AdsListPage
-                            id="adsListPage"
+                            id={Pages.AdsList}
                             active={activePanel}
                             navigationHandler={setActivePanel}
                             priceFilter={modalPriceInput}
@@ -148,20 +158,45 @@ const App: FC = () => {
                             setAdData={setAdData}
                         />
                         <Profile
-                            id="profile"
+                            id={Pages.Profile}
                             active={activePanel}
                             navigationHandler={setActivePanel}
                             user={fetchedUser}
                             onClickMyAds={onClickMyAds}
+                            onClickSchedule={handleClickSchedule}
                         />
-                        <AdPage id="one-ad" data={adData} setActivePanel={setActivePanel} setCreateAd={setCreateAd}  userId={fetchedUser?.id}/>
+                        <AdPage
+                            id={Pages.OneAd}
+                            data={adData}
+                            setActivePanel={setActivePanel}
+                            setCreateAd={setCreateAd}
+                            userId={fetchedUser?.id}
+                        />
                         <MyAdsListPage
-                            id="myAds"
+                            id={Pages.MyAds}
                             active={activePanel}
                             navigationHandler={setActivePanel}
                             setAdData={setAdData}
                         />
-                        <ChangeAds id="change-ad" navigationHandler={setActivePanel} active={activePanel} setPopout={setPopout} setActivePanel={setActivePanel} data={createAd}/>
+                        <ChangeAds
+                            id={Pages.ChangeAd}
+                            navigationHandler={setActivePanel}
+                            active={activePanel}
+                            setPopout={setPopout}
+                            setActivePanel={setActivePanel}
+                            data={createAd}
+                        />
+                        <SchedulePage
+                            id={Pages.Schedule}
+                            navigationHandler={setActivePanel}
+                            active={activePanel}
+                            onClickAddSchedule={handleClickAddSchedule}
+                        />
+                        <CreateSchedulePage
+                            id={Pages.CreateSchedule}
+                            navigationHandler={setActivePanel}
+                            active={activePanel}
+                        />
                     </View>
                 </SplitLayout>
             </AppRoot>
