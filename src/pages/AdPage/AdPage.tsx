@@ -135,7 +135,7 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
             <FixedLayout filled vertical="bottom" style={{ bottom: '10px' }}>
                 {ad?.userAuthorVkId !== userId ? (
                     <>
-                        <Separator style={{ margin: '10px 0' }} />
+                        <Separator />
                         <ProfileBlock
                             id={data?.userAuthorVkId}
                             first_name={ad?.userAuthorName?.split(' ')[0]}
@@ -143,7 +143,7 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
                             photo_200={ad?.userAuthorAvatar}
                             redirect
                         />
-                        <Separator style={{ margin: '10px 0' }} />
+                        <Separator />
                         <FormItem>
                             {respond ? (
                                 <Button stretched size="l" mode="tertiary">
