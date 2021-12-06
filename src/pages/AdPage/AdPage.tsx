@@ -1,4 +1,4 @@
-import { Icon28ChevronLeftOutline } from '@vkontakte/icons';
+import { Icon28ChevronLeftOutline, Icon28CancelCircleFillRed } from '@vkontakte/icons';
 import {
     Panel,
     PanelHeader,
@@ -7,8 +7,8 @@ import {
     FormLayoutGroup,
     FormItem,
     FixedLayout,
-    Button,
-} from '@vkontakte/vkui';
+    Button, Snackbar, Avatar
+} from "@vkontakte/vkui";
 import React, { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
 import './AdPage.css';
 import { Ad, Api, InlineResponse2012 } from '../../api/Api';
@@ -25,6 +25,7 @@ interface AdPageProps {
 export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setCreateAd }) => {
     const [ad, setAd] = useState<Ad | undefined>(data);
     const [respond, setRespond] = useState<boolean>(false);
+    const [snackbar, setSnackbar] = useState<JSX.Element | null>(null);
 
     const handleChangeAd = () => {
         setCreateAd(data);
@@ -43,15 +44,29 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
     };
 
     const handleRespondAd = async () => {
-        const response = await fetch(
-            `https://handover.space/bot/respond?author_id=${data.userAuthorVkId}&executor_id=${userId}`,
-        );
-
-        if (!response.ok) {
-            console.log(`error: ${response}`);
-        }
-
-        setRespond(true);
+        new Api().api.adsExecutionCreate(data?.id || -1)
+            .then(() => {
+                setSnackbar(
+                    <Snackbar
+                        onClose={() => { setSnackbar(null); }}
+                        after={<Avatar src={data?.userAuthorAvatar} size={32} />}
+                    >
+                        Отправлено {data?.userAuthorName}.
+                    </Snackbar>
+                );
+                setRespond(true);
+            })
+            .catch(() => {
+                setSnackbar(
+                    <Snackbar
+                        onClose={() => { setSnackbar(null); }}
+                        before={<Avatar size={24}><Icon28CancelCircleFillRed width={14} height={14} /></Avatar>}
+                    >
+                        Произошли некоторые проблемы.
+                    </Snackbar>
+                );
+                setRespond(false);
+            });
     };
 
     useEffect(() => {
@@ -150,6 +165,7 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
                     </>
                 )}
             </FixedLayout>
+            {snackbar}
         </Panel>
     );
 };
