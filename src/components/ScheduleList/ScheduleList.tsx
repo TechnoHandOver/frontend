@@ -30,7 +30,7 @@ export const ScheduleList: FC<ScheduleListProps> = ({ onClickAddSchedule }) => {
             {routes.length ? (
                 <Group>
                     {routes.map((route, idx) => (
-                        <ScheduleCard {...route} key={idx} />
+                        <ScheduleCard {...route} setRoutes={setRoutes} key={idx} />
                     ))}
                 </Group>
             ) : (
