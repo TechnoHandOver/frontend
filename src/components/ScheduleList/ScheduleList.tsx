@@ -1,5 +1,5 @@
 import { Icon28AddOutline } from '@vkontakte/icons';
-import { CellButton, Footer, Group, Separator, Tabs, TabsItem } from "@vkontakte/vkui";
+import { CellButton, Footer, Group, Separator, Tabs, TabsItem } from '@vkontakte/vkui';
 import React, { FC, useMemo, useState } from 'react';
 import './Schedule.css';
 
