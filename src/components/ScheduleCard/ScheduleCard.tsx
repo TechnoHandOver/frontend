@@ -17,7 +17,7 @@ export const ScheduleCard: FC<ScheduleCardProps> = ({
     dayOfWeek,
     setRoutes,
 }) => {
-    const handleChange = () => {};
+    // const handleChange = () => {};
 
     const handleDelete = () => {
         new Api().api
@@ -39,7 +39,7 @@ export const ScheduleCard: FC<ScheduleCardProps> = ({
             after={`${minPrice} руб.`}
             actions={
                 <>
-                    <Button onClick={handleChange}>Изменить</Button>
+                    {/*<Button onClick={handleChange}>Изменить</Button>*/}
                     <Button mode="destructive" onClick={handleDelete}>
                         Удалить
                     </Button>

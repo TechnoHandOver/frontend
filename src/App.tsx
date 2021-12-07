@@ -34,6 +34,7 @@ const App: FC = () => {
     const [popout, setPopout] = useState(null);
     const [modalPriceInput, setModalPriceInput] = useState('');
     const [createAd, setCreateAd] = useState({});
+    const [appStarted, setAppStarted] = useState(false);
 
     useEffect(() => {
         bridge.subscribe(({ detail: { type, data } }) => {
@@ -74,6 +75,8 @@ const App: FC = () => {
             if (!session.ok) {
                 console.log(`/api/sessions: ${session.status}`);
             }
+
+            setAppStarted(true);
 
             await bridge.send('VKWebAppAllowMessagesFromGroup', { group_id: 207601466 });
         }

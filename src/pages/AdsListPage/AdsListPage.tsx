@@ -18,6 +18,7 @@ interface AdsListPageProps {
     modalHandler?: Dispatch<SetStateAction<Modals | null>>;
     active: string;
     setAdData: Dispatch<SetStateAction<any>>;
+    appStarted: boolean;
 }
 
 export const AdsListPage: FC<AdsListPageProps> = ({
@@ -27,6 +28,7 @@ export const AdsListPage: FC<AdsListPageProps> = ({
     active,
     priceFilter,
     setAdData,
+    appStarted,
 }) => {
     const [cards, setCards] = React.useState<any>([]);
     const [fromLocation, setFromLocation] = React.useState('');
@@ -88,8 +90,10 @@ export const AdsListPage: FC<AdsListPageProps> = ({
     );
 
     React.useEffect(() => {
-        search(fromLocation, toLocation, priceFilter);
-    }, [fromLocation, toLocation, priceFilter, search]);
+        if (appStarted) {
+            search(fromLocation, toLocation, priceFilter);
+        }
+    }, [fromLocation, toLocation, priceFilter, search, appStarted]);
 
     return (
         <BasePage
