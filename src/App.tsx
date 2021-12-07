@@ -156,6 +156,7 @@ const App: FC = () => {
                             // @ts-ignore
                             modalHandler={setActiveModal}
                             setAdData={setAdData}
+                            appStarted={appStarted}
                         />
                         <Profile
                             id={Pages.Profile}
