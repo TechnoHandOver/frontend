@@ -19,6 +19,7 @@ interface AdsListPageProps {
     active: string;
     setAdData: Dispatch<SetStateAction<any>>;
     appStarted: boolean;
+    order: string;
 }
 
 export const AdsListPage: FC<AdsListPageProps> = ({
@@ -29,6 +30,7 @@ export const AdsListPage: FC<AdsListPageProps> = ({
     priceFilter,
     setAdData,
     appStarted,
+    order,
 }) => {
     const [cards, setCards] = React.useState<any>([]);
     const [fromLocation, setFromLocation] = React.useState('');
@@ -50,7 +52,7 @@ export const AdsListPage: FC<AdsListPageProps> = ({
         }
     }, [modalHandler]);
 
-    const generateUrl = React.useCallback((fromLocation, toLocation, priceFilter) => {
+    const generateUrl = React.useCallback((fromLocation, toLocation, priceFilter, order) => {
         let result = `${backendUrl}/api/ads/search?`;
         if (fromLocation) {
             result += `loc_dep=${fromLocation}&`;
@@ -59,7 +61,10 @@ export const AdsListPage: FC<AdsListPageProps> = ({
             result += `loc_arr=${toLocation}&`;
         }
         if (priceFilter) {
-            result += `max_price=${priceFilter}`;
+            result += `max_price=${priceFilter}&`;
+        }
+        if (order) {
+            result += `order=${order}`;
         }
 
         return result;
@@ -67,8 +72,8 @@ export const AdsListPage: FC<AdsListPageProps> = ({
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const search = React.useCallback(
-        debounce((fromLocation, toLocation, priceFilter) => {
-            const url = generateUrl(fromLocation, toLocation, priceFilter);
+        debounce((fromLocation, toLocation, priceFilter, order) => {
+            const url = generateUrl(fromLocation, toLocation, priceFilter, order);
 
             customFetch(`${url}`)
                 .then(({ data }) => {
@@ -91,9 +96,9 @@ export const AdsListPage: FC<AdsListPageProps> = ({
 
     React.useEffect(() => {
         if (appStarted) {
-            search(fromLocation, toLocation, priceFilter);
+            search(fromLocation, toLocation, priceFilter, order);
         }
-    }, [fromLocation, toLocation, priceFilter, search, appStarted]);
+    }, [fromLocation, toLocation, priceFilter, search, appStarted, order]);
 
     return (
         <BasePage
