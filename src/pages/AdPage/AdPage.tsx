@@ -73,9 +73,9 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
                         onClose={() => {
                             setSnackbar(null);
                         }}
-                        after={<Avatar src={data?.userAuthorAvatar} size={32} />}
+                        after={<Avatar src={ad?.userAuthorAvatar} size={32} />}
                     >
-                        Отправлено {data?.userAuthorName}.
+                        Отправлено {ad?.userAuthorName}.
                     </Snackbar>,
                 );
                 const response = await fetch(
