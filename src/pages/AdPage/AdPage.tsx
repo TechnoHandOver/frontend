@@ -12,7 +12,7 @@ import {
     Avatar,
     Separator,
 } from '@vkontakte/vkui';
-import React, { Dispatch, FC, SetStateAction, useEffect, useState } from 'react';
+import React, { Dispatch, FC, SetStateAction, useEffect, useMemo, useState } from 'react';
 import './AdPage.css';
 import { Ad, Api } from '../../api/Api';
 import { ProfileBlock } from '../../components/ProfileBlock/ProfileBlock';
@@ -46,37 +46,47 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
             });
     };
 
+    const errorSnack = useMemo(
+        () => (
+            <Snackbar
+                onClose={() => {
+                    setSnackbar(null);
+                }}
+                before={
+                    <Avatar size={24}>
+                        <Icon28CancelCircleFillRed width={14} height={14} />
+                    </Avatar>
+                }
+            >
+                Произошли некоторые проблемы.
+            </Snackbar>
+        ),
+        [],
+    );
+
     const handleRespondAd = async () => {
         new Api().api
             .adsExecutionCreate(data?.id || -1)
-            .then(() => {
+            .then(async () => {
                 setSnackbar(
                     <Snackbar
                         onClose={() => {
                             setSnackbar(null);
                         }}
-                        after={<Avatar src={data?.userAuthorAvatar} size={32} />}
+                        after={<Avatar src={ad?.userAuthorAvatar} size={32} />}
                     >
-                        Отправлено {data?.userAuthorName}.
+                        Отправлено {ad?.userAuthorName}.
                     </Snackbar>,
                 );
-                setRespond(true);
+                const response = await fetch(
+                    `https://handover.space/bot/respond?author_id=${data.userAuthorVkId}&executor_id=${userId}`,
+                );
+                if (!response.ok) {
+                    setSnackbar(errorSnack);
+                }
             })
             .catch(() => {
-                setSnackbar(
-                    <Snackbar
-                        onClose={() => {
-                            setSnackbar(null);
-                        }}
-                        before={
-                            <Avatar size={24}>
-                                <Icon28CancelCircleFillRed width={14} height={14} />
-                            </Avatar>
-                        }
-                    >
-                        Произошли некоторые проблемы.
-                    </Snackbar>,
-                );
+                setSnackbar(errorSnack);
                 setRespond(false);
             });
     };
@@ -91,8 +101,6 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
             .catch((err) => {
                 console.log(err);
             });
-
-        console.log('я здесь');
     }, [data, data?.id]);
 
     return (

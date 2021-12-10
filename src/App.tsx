@@ -34,6 +34,8 @@ const App: FC = () => {
     const [popout, setPopout] = useState(null);
     const [modalPriceInput, setModalPriceInput] = useState('');
     const [createAd, setCreateAd] = useState({});
+    const [appStarted, setAppStarted] = useState(false);
+    const [order, setOrder] = useState('0');
 
     useEffect(() => {
         bridge.subscribe(({ detail: { type, data } }) => {
@@ -74,6 +76,8 @@ const App: FC = () => {
             if (!session.ok) {
                 console.log(`/api/sessions: ${session.status}`);
             }
+
+            setAppStarted(true);
 
             await bridge.send('VKWebAppAllowMessagesFromGroup', { group_id: 207601466 });
         }
@@ -116,14 +120,17 @@ const App: FC = () => {
                     <Input type="number" value={modalPriceInput} onChange={handleChangePrice} />
                 </FormItem>
                 <FormItem top="Сортировка">
-                    <Radio name="radio" value="1" defaultChecked>
-                        По умолчанию
+                    <Radio name="radio" value="0" checked={order === '0'} onClick={() => {setOrder('0')}}>
+                        Сначала новые
                     </Radio>
-                    <Radio name="radio" value="2">
-                        По новизне
+                    <Radio name="radio" value="1" checked={order === '1'} onClick={() => {setOrder('1')}}>
+                        Сначала старые
                     </Radio>
-                    <Radio name="radio" value="3">
-                        По стоимости
+                    <Radio name="radio" value="2" checked={order === '2'} onClick={() => {setOrder('2')}}>
+                        Сначала дорогие
+                    </Radio>
+                    <Radio name="radio" value="3" checked={order === '3'} onClick={() => {setOrder('3')}}>
+                        Сначала дешевые
                     </Radio>
                 </FormItem>
             </ModalPage>
@@ -153,6 +160,8 @@ const App: FC = () => {
                             // @ts-ignore
                             modalHandler={setActiveModal}
                             setAdData={setAdData}
+                            appStarted={appStarted}
+                            order={order}
                         />
                         <Profile
                             id={Pages.Profile}

@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { HeaderWithBackButton } from '../../components/HeaderWithBackButton/HeaderWithBackButton';
-import { Schedule } from '../../components/Schedule/Schedule';
+import { ScheduleList } from '../../components/ScheduleList/ScheduleList';
 import { Pages } from '../../enums/Pages';
 import { BasePage, BasePageProps } from '../BasePage/BasePage';
 
@@ -20,7 +20,7 @@ export const SchedulePage: FC<SchedulePageProps> = ({ id, active, navigationHand
                 </HeaderWithBackButton>
             }
         >
-            <Schedule onClickAddSchedule={onClickAddSchedule} />
+            <ScheduleList onClickAddSchedule={onClickAddSchedule} />
         </BasePage>
     );
 };
