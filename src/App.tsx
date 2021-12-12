@@ -56,8 +56,10 @@ const App: FC = () => {
                 console.log(data);
             }
 
-            if (type === 'VKWebAppLocationChanged') {
-                console.log(`VKWebAppLocationChanged: ${data}`);
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            if (type === 'VKWebAppChangeFragment') {
+                console.log(`VKWebAppChangeFragment: ${data}`);
             }
         });
 
@@ -85,6 +87,8 @@ const App: FC = () => {
             // setAppStarted(true);
             await bridge.send('VKWebAppAllowMessagesFromGroup', { group_id: 207601466 });
 
+
+            await bridge.send('VKWebAppSetLocation');
             // console.log(window.location.search);
             // console.log(window.top?.location.search);
             const params = new URLSearchParams(window.location.search);
