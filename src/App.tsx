@@ -84,6 +84,8 @@ const App: FC = () => {
         }
 
         fetchData();
+
+        console.log('window.location.href', window.location.href);
     }, []);
 
     const handleCloseModal = useCallback(() => {
