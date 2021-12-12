@@ -88,17 +88,17 @@ const App: FC = () => {
             await bridge.send('VKWebAppAllowMessagesFromGroup', { group_id: 207601466 });
 
 
-            await bridge.send('VKWebAppSetLocation');
+            // await bridge.send('VKWebAppSetLocation');
             // console.log(window.location.search);
             // console.log(window.top?.location.search);
-            const params = new URLSearchParams(window.location.search);
-            const ad = params.get('ad_id');
-            if (ad) {
-                setAdData({
-                    id: Number(ad),
-                });
-                setActivePanel(Pages.OneAd);
-            }
+            // const params = new URLSearchParams(window.location.search);
+            // const ad = params.get('ad_id');
+            // if (ad) {
+            //     setAdData({
+            //         id: Number(ad),
+            //     });
+            //     setActivePanel(Pages.OneAd);
+            // }
 
             setAppStarted(true);
         }
