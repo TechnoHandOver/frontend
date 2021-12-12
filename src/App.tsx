@@ -81,6 +81,8 @@ const App: FC = () => {
             // setAppStarted(true);
             await bridge.send('VKWebAppAllowMessagesFromGroup', { group_id: 207601466 });
 
+            console.log(window.location.search);
+            console.log(window.top?.location.search);
             const params = new URLSearchParams(window.location.search);
             const ad = params.get('ad_id');
             if (ad) {
