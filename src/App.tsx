@@ -233,6 +233,7 @@ const App: FC = () => {
                             active={activePanel}
                         />
                         <Route path="/ad/123">
+                            {setActivePanel(Pages.OneAd)}
                             <AdPage
                                 id={Pages.OneAd}
                                 data={adData}
