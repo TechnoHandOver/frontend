@@ -232,7 +232,7 @@ const App: FC = () => {
                             navigationHandler={setActivePanel}
                             active={activePanel}
                         />
-                        <Route path="/ad/123">
+                        <Route path="#ad/123">
                             {/* {setActivePanel(Pages.OneAd)} */}
                             {console.log('123')}
                             <AdPage
