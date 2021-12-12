@@ -15,6 +15,7 @@ import {
 import React, { useState, useEffect, useCallback, FC } from 'react';
 import '@vkontakte/vkui/dist/vkui.css';
 
+import { Ad } from './api/Api';
 import { Modals } from './enums/Modals';
 import { Pages } from './enums/Pages';
 import { AdPage } from './pages/AdPage/AdPage';
@@ -29,7 +30,7 @@ import { SchedulePage } from './pages/SchedulePage/SchedulePage';
 const App: FC = () => {
     const [activePanel, setActivePanel] = useState('adsListPage');
     const [activeModal, setActiveModal] = useState(null);
-    const [adData, setAdData] = useState({});
+    const [adData, setAdData] = useState<Ad>({});
     const [fetchedUser, setUser] = useState<UserInfo | undefined>();
     const [popout, setPopout] = useState(null);
     const [modalPriceInput, setModalPriceInput] = useState('');
@@ -77,9 +78,19 @@ const App: FC = () => {
                 console.log(`/api/sessions: ${session.status}`);
             }
 
-            setAppStarted(true);
-
+            // setAppStarted(true);
             await bridge.send('VKWebAppAllowMessagesFromGroup', { group_id: 207601466 });
+
+            const params = new URLSearchParams(window?.top?.location.search);
+            const ad = params.get('ad_id');
+            if (ad) {
+                setAdData({
+                    id: Number(ad),
+                });
+                setActivePanel(Pages.OneAd);
+            }
+
+            setAppStarted(true);
         }
 
         fetchData();
@@ -120,16 +131,44 @@ const App: FC = () => {
                     <Input type="number" value={modalPriceInput} onChange={handleChangePrice} />
                 </FormItem>
                 <FormItem top="Сортировка">
-                    <Radio name="radio" value="0" checked={order === '0'} onClick={() => {setOrder('0')}}>
+                    <Radio
+                        name="radio"
+                        value="0"
+                        checked={order === '0'}
+                        onClick={() => {
+                            setOrder('0');
+                        }}
+                    >
                         Сначала новые
                     </Radio>
-                    <Radio name="radio" value="1" checked={order === '1'} onClick={() => {setOrder('1')}}>
+                    <Radio
+                        name="radio"
+                        value="1"
+                        checked={order === '1'}
+                        onClick={() => {
+                            setOrder('1');
+                        }}
+                    >
                         Сначала старые
                     </Radio>
-                    <Radio name="radio" value="2" checked={order === '2'} onClick={() => {setOrder('2')}}>
+                    <Radio
+                        name="radio"
+                        value="2"
+                        checked={order === '2'}
+                        onClick={() => {
+                            setOrder('2');
+                        }}
+                    >
                         Сначала дорогие
                     </Radio>
-                    <Radio name="radio" value="3" checked={order === '3'} onClick={() => {setOrder('3')}}>
+                    <Radio
+                        name="radio"
+                        value="3"
+                        checked={order === '3'}
+                        onClick={() => {
+                            setOrder('3');
+                        }}
+                    >
                         Сначала дешевые
                     </Radio>
                 </FormItem>
@@ -177,6 +216,7 @@ const App: FC = () => {
                             setActivePanel={setActivePanel}
                             setCreateAd={setCreateAd}
                             userId={fetchedUser?.id}
+                            appStarted={appStarted}
                         />
                         <MyAdsListPage
                             id={Pages.MyAds}

@@ -23,9 +23,10 @@ interface AdPageProps {
     setActivePanel: Dispatch<SetStateAction<string>>;
     userId: number | undefined;
     setCreateAd: any;
+    appStarted: boolean;
 }
 
-export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setCreateAd }) => {
+export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setCreateAd, appStarted }) => {
     const [ad, setAd] = useState<Ad | undefined>(data);
     const [respond, setRespond] = useState<boolean>(false);
     const [snackbar, setSnackbar] = useState<JSX.Element | null>(null);
@@ -92,16 +93,18 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
     };
 
     useEffect(() => {
-        new Api().api
-            .getApi(data?.id || -1)
-            .then(async (response) => {
-                const { data } = response;
-                setAd(data.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }, [data, data?.id]);
+        if (appStarted) {
+            new Api().api
+                .getApi(data?.id || -1)
+                .then(async (response) => {
+                    const { data } = response;
+                    setAd(data.data);
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    }, [data, data?.id, appStarted]);
 
     return (
         <Panel id={id}>
