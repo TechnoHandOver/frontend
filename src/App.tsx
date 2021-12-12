@@ -15,6 +15,7 @@ import {
 import React, { useState, useEffect, useCallback, FC } from 'react';
 import '@vkontakte/vkui/dist/vkui.css';
 
+import { Route } from 'react-router-dom';
 import { Modals } from './enums/Modals';
 import { Pages } from './enums/Pages';
 import { AdPage } from './pages/AdPage/AdPage';
@@ -120,16 +121,44 @@ const App: FC = () => {
                     <Input type="number" value={modalPriceInput} onChange={handleChangePrice} />
                 </FormItem>
                 <FormItem top="Сортировка">
-                    <Radio name="radio" value="0" checked={order === '0'} onClick={() => {setOrder('0')}}>
+                    <Radio
+                        name="radio"
+                        value="0"
+                        checked={order === '0'}
+                        onClick={() => {
+                            setOrder('0');
+                        }}
+                    >
                         Сначала новые
                     </Radio>
-                    <Radio name="radio" value="1" checked={order === '1'} onClick={() => {setOrder('1')}}>
+                    <Radio
+                        name="radio"
+                        value="1"
+                        checked={order === '1'}
+                        onClick={() => {
+                            setOrder('1');
+                        }}
+                    >
                         Сначала старые
                     </Radio>
-                    <Radio name="radio" value="2" checked={order === '2'} onClick={() => {setOrder('2')}}>
+                    <Radio
+                        name="radio"
+                        value="2"
+                        checked={order === '2'}
+                        onClick={() => {
+                            setOrder('2');
+                        }}
+                    >
                         Сначала дорогие
                     </Radio>
-                    <Radio name="radio" value="3" checked={order === '3'} onClick={() => {setOrder('3')}}>
+                    <Radio
+                        name="radio"
+                        value="3"
+                        checked={order === '3'}
+                        onClick={() => {
+                            setOrder('3');
+                        }}
+                    >
                         Сначала дешевые
                     </Radio>
                 </FormItem>
@@ -203,6 +232,15 @@ const App: FC = () => {
                             navigationHandler={setActivePanel}
                             active={activePanel}
                         />
+                        <Route path="/ad/123">
+                            <AdPage
+                                id={Pages.OneAd}
+                                data={adData}
+                                setActivePanel={setActivePanel}
+                                setCreateAd={setCreateAd}
+                                userId={fetchedUser?.id}
+                            />
+                        </Route>
                     </View>
                 </SplitLayout>
             </AppRoot>
