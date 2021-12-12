@@ -56,8 +56,6 @@ const App: FC = () => {
                 console.log(data);
             }
 
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
             if (type === 'VKWebAppChangeFragment') {
                 console.log(`VKWebAppChangeFragment: ${data}`);
             }
@@ -84,9 +82,9 @@ const App: FC = () => {
                 console.log(`/api/sessions: ${session.status}`);
             }
 
+            bridge.send("VKWebAppSetLocation", {"location": "писька"});
             // setAppStarted(true);
             await bridge.send('VKWebAppAllowMessagesFromGroup', { group_id: 207601466 });
-
 
             // await bridge.send('VKWebAppSetLocation');
             // console.log(window.location.search);
