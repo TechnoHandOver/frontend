@@ -82,7 +82,6 @@ const App: FC = () => {
                 console.log(`/api/sessions: ${session.status}`);
             }
 
-            bridge.send("VKWebAppSetLocation", {"location": "писька"});
             // setAppStarted(true);
             await bridge.send('VKWebAppAllowMessagesFromGroup', { group_id: 207601466 });
 
