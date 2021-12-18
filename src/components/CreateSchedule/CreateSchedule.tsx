@@ -178,7 +178,7 @@ export const CreateSchedule: FC<CreateScheduleProps> = ({ navigationHandler }) =
                     status={!minPrice && error ? 'error' : undefined}
                     bottom={!minPrice && error && 'Обязательное поле'}
                 >
-                    <Input placeholder="500" value={minPrice} onChange={handleChangeMinPrice} />
+                    <Input type="number" placeholder="500" value={minPrice} onChange={handleChangeMinPrice} />
                 </FormItem>
             </FormLayout>
             <FixedLayout filled vertical="bottom" style={{ bottom: '50px' }}>
