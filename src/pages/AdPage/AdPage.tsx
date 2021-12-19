@@ -103,6 +103,8 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
                 if (!botResponse.ok) {
                     setSnackbar(errorSnack);
                 }
+
+                setRespond(true);
             })
             .catch((error) => {
                 if (error.status === 409) {
@@ -111,6 +113,7 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
                 }
 
                 setSnackbar(errorSnack);
+                setRespond(false);
             });
     };
 
