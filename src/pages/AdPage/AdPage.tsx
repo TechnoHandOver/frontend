@@ -1,8 +1,6 @@
-import { Icon28ChevronLeftOutline, Icon28CancelCircleFillRed } from '@vkontakte/icons';
+import { Icon28CancelCircleFillRed } from '@vkontakte/icons';
 import {
     Panel,
-    PanelHeader,
-    PanelHeaderButton,
     Title,
     FormLayoutGroup,
     FormItem,
@@ -15,7 +13,9 @@ import {
 import React, { Dispatch, FC, SetStateAction, useEffect, useMemo, useState } from 'react';
 import './AdPage.css';
 import { Ad, Api } from '../../api/Api';
+import { HeaderWithBackButton } from '../../components/HeaderWithBackButton/HeaderWithBackButton';
 import { ProfileBlock } from '../../components/ProfileBlock/ProfileBlock';
+import { Pages } from '../../enums/Pages';
 
 interface AdPageProps {
     id: string;
@@ -64,10 +64,30 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
         [],
     );
 
+    const invalidSnack = useMemo(
+        () => (
+            <Snackbar
+                onClose={() => {
+                    setSnackbar(null);
+                }}
+                before={
+                    <Avatar size={24}>
+                        <Icon28CancelCircleFillRed width={14} height={14} />
+                    </Avatar>
+                }
+            >
+                Данный заказ уже исполняет другой пользователь.
+            </Snackbar>
+        ),
+        [],
+    );
+
     const handleRespondAd = async () => {
         new Api().api
             .adsExecutionCreate(data?.id || -1)
-            .then(async () => {
+            .then(async (response) => {
+                setAd(response.data.data);
+
                 setSnackbar(
                     <Snackbar
                         onClose={() => {
@@ -78,14 +98,22 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
                         Отправлено {ad?.userAuthorName}.
                     </Snackbar>,
                 );
-                const response = await fetch(
+
+                const botResponse = await fetch(
                     `https://handover.space/bot/respond?author_id=${data.userAuthorVkId}&executor_id=${userId}`,
                 );
-                if (!response.ok) {
+                if (!botResponse.ok) {
                     setSnackbar(errorSnack);
                 }
+
+                setRespond(true);
             })
-            .catch(() => {
+            .catch((error) => {
+                if (error.status === 409) {
+                    setSnackbar(invalidSnack);
+                    return;
+                }
+
                 setSnackbar(errorSnack);
                 setRespond(false);
             });
@@ -97,6 +125,7 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
             .then(async (response) => {
                 const { data } = response;
                 setAd(data.data);
+                setRespond(!!data.data?.userExecutorVkId);
             })
             .catch((err) => {
                 console.log(err);
@@ -105,19 +134,12 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
 
     return (
         <Panel id={id}>
-            <PanelHeader
-                left={
-                    <PanelHeaderButton>
-                        <Icon28ChevronLeftOutline
-                            onClick={() => {
-                                setActivePanel('adsListPage');
-                            }}
-                        />
-                    </PanelHeaderButton>
-                }
+            <HeaderWithBackButton
+                navigationHandler={setActivePanel}
+                preventPage={ad?.userAuthorVkId === userId ? Pages.MyAds : Pages.AdsList}
             >
                 Объявление
-            </PanelHeader>
+            </HeaderWithBackButton>
             <FormItem top="Откуда" className="delivery-ad__form-item">
                 <Title level="3" weight="regular">
                     {ad?.locDep}
@@ -167,7 +189,9 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
                         <FormItem>
                             {respond ? (
                                 <Button stretched size="l" mode="tertiary">
-                                    Исполняется
+                                    {ad?.userExecutorVkId === userId
+                                        ? 'Вы исполняете данный заказ'
+                                        : 'Исполняется другим пользователем'}
                                 </Button>
                             ) : (
                                 <Button stretched size="l" onClick={handleRespondAd}>
