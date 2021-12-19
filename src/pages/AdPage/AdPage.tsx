@@ -1,8 +1,6 @@
-import { Icon28ChevronLeftOutline, Icon28CancelCircleFillRed } from '@vkontakte/icons';
+import { Icon28CancelCircleFillRed } from '@vkontakte/icons';
 import {
     Panel,
-    PanelHeader,
-    PanelHeaderButton,
     Title,
     FormLayoutGroup,
     FormItem,
@@ -15,8 +13,8 @@ import {
 import React, { Dispatch, FC, SetStateAction, useEffect, useMemo, useState } from 'react';
 import './AdPage.css';
 import { Ad, Api } from '../../api/Api';
-import { ProfileBlock } from '../../components/ProfileBlock/ProfileBlock';
 import { HeaderWithBackButton } from '../../components/HeaderWithBackButton/HeaderWithBackButton';
+import { ProfileBlock } from '../../components/ProfileBlock/ProfileBlock';
 import { Pages } from '../../enums/Pages';
 
 interface AdPageProps {
