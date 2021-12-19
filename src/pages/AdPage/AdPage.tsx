@@ -85,7 +85,9 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
     const handleRespondAd = async () => {
         new Api().api
             .adsExecutionCreate(data?.id || -1)
-            .then(async () => {
+            .then(async (response) => {
+                setAd(response.data.data);
+
                 setSnackbar(
                     <Snackbar
                         onClose={() => {
