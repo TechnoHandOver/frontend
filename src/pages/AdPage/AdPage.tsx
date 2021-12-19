@@ -118,6 +118,7 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
                 }
             })
             .catch(() => {
+                console.log(' я зедсь  у меня рак мозга')
                 setSnackbar(errorSnack);
                 setRespond(false);
             });
