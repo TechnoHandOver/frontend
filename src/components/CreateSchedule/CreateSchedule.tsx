@@ -10,7 +10,7 @@ import {
     FixedLayout,
     Button,
 } from '@vkontakte/vkui';
-import React, { FC } from "react";
+import React, { FC } from 'react';
 
 import './CreateSchedule.css';
 import { Api } from '../../api/Api';
@@ -56,11 +56,12 @@ export const CreateSchedule: FC<CreateScheduleProps> = ({ navigationHandler }) =
         const [hours, minutes] = time.split(':');
 
         return Number(hours) * 60 + Number(minutes);
-    }
+    };
 
     const validateTime = React.useCallback(
         (dep: string, arr: string): boolean => calculateMinutes(dep) < calculateMinutes(arr),
-        []);
+        [],
+    );
 
     const handleClick = React.useCallback(() => {
         if (timeDeparture.length < 5 || timeArrival.length < 5) {
@@ -107,7 +108,17 @@ export const CreateSchedule: FC<CreateScheduleProps> = ({ navigationHandler }) =
             .catch((error) => {
                 console.log(error);
             });
-    }, [dayOfTheWeek, locationFrom, locationTo, minPrice, navigationHandler, timeArrival, timeDeparture, validateTime, weekType]);
+    }, [
+        dayOfTheWeek,
+        locationFrom,
+        locationTo,
+        minPrice,
+        navigationHandler,
+        timeArrival,
+        timeDeparture,
+        validateTime,
+        weekType,
+    ]);
 
     const handleChangeFrom = React.useCallback((evt) => {
         setLocationFrom(evt.target.value);
@@ -203,7 +214,14 @@ export const CreateSchedule: FC<CreateScheduleProps> = ({ navigationHandler }) =
                 >
                     <FormLayoutGroup mode="horizontal">
                         <TimeInput error={error} header="От" time={timeDeparture} setTime={setTimeDeparture} />
-                        <TimeInput error={error} header="До" time={timeArrival} setTime={setTimeArrival} status={error && errorTime ? 'error' : undefined} bottom={errorTime} />
+                        <TimeInput
+                            error={error}
+                            header="До"
+                            time={timeArrival}
+                            setTime={setTimeArrival}
+                            status={error && errorTime ? 'error' : undefined}
+                            bottom={errorTime}
+                        />
                     </FormLayoutGroup>
                 </Group>
                 <FormItem

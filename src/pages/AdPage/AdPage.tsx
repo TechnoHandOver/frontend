@@ -16,8 +16,8 @@ import React, { Dispatch, FC, SetStateAction, useEffect, useMemo, useState } fro
 import './AdPage.css';
 import { Ad, Api } from '../../api/Api';
 import { ProfileBlock } from '../../components/ProfileBlock/ProfileBlock';
-import { HeaderWithBackButton } from "../../components/HeaderWithBackButton/HeaderWithBackButton";
-import { Pages } from "../../enums/Pages";
+import { HeaderWithBackButton } from '../../components/HeaderWithBackButton/HeaderWithBackButton';
+import { Pages } from '../../enums/Pages';
 
 interface AdPageProps {
     id: string;
@@ -134,7 +134,10 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
 
     return (
         <Panel id={id}>
-            <HeaderWithBackButton navigationHandler={setActivePanel} preventPage={ad?.userAuthorVkId === userId ? Pages.MyAds : Pages.AdsList}>
+            <HeaderWithBackButton
+                navigationHandler={setActivePanel}
+                preventPage={ad?.userAuthorVkId === userId ? Pages.MyAds : Pages.AdsList}
+            >
                 Объявление
             </HeaderWithBackButton>
             <FormItem top="Откуда" className="delivery-ad__form-item">
@@ -186,7 +189,9 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
                         <FormItem>
                             {respond ? (
                                 <Button stretched size="l" mode="tertiary">
-                                    {ad?.userExecutorVkId === userId ? 'Вы исполняете данный заказ' : 'Исполняется другим пользователем'}
+                                    {ad?.userExecutorVkId === userId
+                                        ? 'Вы исполняете данный заказ'
+                                        : 'Исполняется другим пользователем'}
                                 </Button>
                             ) : (
                                 <Button stretched size="l" onClick={handleRespondAd}>

@@ -8,7 +8,7 @@ interface TimeInput {
     error: boolean;
     time: string;
     setTime: React.Dispatch<React.SetStateAction<string>>;
-    status?: "error" | "default" | "valid" | undefined;
+    status?: 'error' | 'default' | 'valid' | undefined;
     bottom?: React.ReactNode;
 }
 
@@ -21,15 +21,11 @@ export const TimeInput: FC<TimeInput> = ({ error, header, time, setTime, status,
     };
 
     const formStatus = status || ((!time && error) || (time.length !== 5 && error) ? 'error' : undefined);
-    const formBottom = bottom || (!time && error ? 'Обязательное поле' : time.length !== 5 && error && 'Некорректные данные');
+    const formBottom =
+        bottom || (!time && error ? 'Обязательное поле' : time.length !== 5 && error && 'Некорректные данные');
 
     return (
-        <FormItem
-            top={header}
-            className="time"
-            status={formStatus}
-            bottom={formBottom}
-        >
+        <FormItem top={header} className="time" status={formStatus} bottom={formBottom}>
             <Input placeholder="14:20" value={time} onChange={handleChangeTime} />
         </FormItem>
     );
