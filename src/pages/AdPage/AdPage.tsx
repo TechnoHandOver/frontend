@@ -85,20 +85,7 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
     const handleRespondAd = async () => {
         new Api().api
             .adsExecutionCreate(data?.id || -1)
-            .then(async (response) => {
-                console.log(response.status);
-                console.log(response);
-
-                if (response.status === 409) {
-                    setSnackbar(invalidSnack);
-                    return;
-                }
-
-                if (!response.ok) {
-                    setSnackbar(errorSnack);
-                    return;
-                }
-
+            .then(async () => {
                 setSnackbar(
                     <Snackbar
                         onClose={() => {
@@ -118,9 +105,12 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
                 }
             })
             .catch((error) => {
-                console.log(error);
+                if (error.status === 409) {
+                    setSnackbar(invalidSnack);
+                    return;
+                }
+
                 setSnackbar(errorSnack);
-                setRespond(false);
             });
     };
 
