@@ -123,6 +123,7 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
             .then(async (response) => {
                 const { data } = response;
                 setAd(data.data);
+                setRespond(!!data.data?.userExecutorVkId);
             })
             .catch((err) => {
                 console.log(err);
