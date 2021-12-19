@@ -86,6 +86,9 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
         new Api().api
             .adsExecutionCreate(data?.id || -1)
             .then(async (response) => {
+                console.log(response.status);
+                console.log(response);
+
                 if (response.status === 409) {
                     setSnackbar(invalidSnack);
                     return;
