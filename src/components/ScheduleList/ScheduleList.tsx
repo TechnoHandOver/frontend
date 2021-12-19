@@ -37,7 +37,6 @@ export const ScheduleList: FC<ScheduleListProps> = ({ onClickAddSchedule }) => {
 
     return (
         <>
-            {routes.length ? (
                 <Group>
                     <Tabs>
                         <TabsItem
@@ -60,19 +59,19 @@ export const ScheduleList: FC<ScheduleListProps> = ({ onClickAddSchedule }) => {
                     <Separator style={{ margin: '10px 0' }} />
                     {(tab === TabType.ODD ? oddRoutes : evenRoutes).map((route, idx) => (
                         <ScheduleCard {...route} setRoutes={setRoutes} key={idx} />
-                    ))}
+                    )) && (
+                        <Footer className="schedule">
+                            Здесь пока нет вашего расписания
+                            <br />
+                            <br />
+                            Добавляйте сюда свое расписание, чтобы бот отправлял вам оповещения о новых заказах в только удобное
+                            для вас время.
+                            <br /> <br />
+                            Вам будет не обязательно заходить в приложение, чтобы узнать о новых заказах!
+                        </Footer>
+                    )}
                 </Group>
-            ) : (
-                <Footer className="schedule">
-                    Здесь пока нет вашего расписания
-                    <br />
-                    <br />
-                    Добавляйте сюда свое расписание, чтобы бот отправлял вам оповещения о новых заказах в только удобное
-                    для вас время.
-                    <br /> <br />
-                    Вам будет не обязательно заходить в приложение, чтобы узнать о новых заказах!
-                </Footer>
-            )}
+            )
             <Group className="schedule__add-schedule">
                 <CellButton before={<Icon28AddOutline />} onClick={onClickAddSchedule}>
                     Добавить расписание
