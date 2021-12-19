@@ -10,7 +10,7 @@ import {
     FixedLayout,
     Button,
 } from '@vkontakte/vkui';
-import React, { FC } from 'react';
+import React, { FC } from "react";
 
 import './CreateSchedule.css';
 import { Api } from '../../api/Api';
@@ -46,17 +46,44 @@ export const CreateSchedule: FC<CreateScheduleProps> = ({ navigationHandler }) =
     const [minPrice, setMinPrice] = React.useState('');
 
     const [error, setError] = React.useState(false);
+    const [errorTime, setErrorTime] = React.useState<string>('');
 
     const handleChangeDay = React.useCallback((evt) => {
         setDayOfTheWeek(evt.target.value);
     }, []);
 
+    const calculateMinutes = (time: string): number => {
+        const [hours, minutes] = time.split(':');
+
+        return Number(hours) * 60 + Number(minutes);
+    }
+
+    const validateTime = React.useCallback(
+        (dep: string, arr: string): boolean => calculateMinutes(dep) < calculateMinutes(arr),
+        []);
+
     const handleClick = React.useCallback(() => {
-        if (!(locationTo || timeDeparture || timeDeparture || locationFrom || minPrice)) {
+        if (timeDeparture.length < 5 || timeArrival.length < 5) {
+            setErrorTime('Некорректные данные');
             setError(true);
             return;
         }
+
+        if (!validateTime(timeDeparture, timeArrival)) {
+            setError(true);
+            setErrorTime('Некорректное время прибытия');
+            return;
+        }
+
+        setErrorTime('');
+
+        if (!locationTo || !locationFrom || !minPrice || !timeDeparture) {
+            setError(true);
+            return;
+        }
+
         setError(false);
+
         const body = {
             locDep: locationFrom,
             locArr: locationTo,
@@ -80,7 +107,7 @@ export const CreateSchedule: FC<CreateScheduleProps> = ({ navigationHandler }) =
             .catch((error) => {
                 console.log(error);
             });
-    }, [dayOfTheWeek, locationFrom, locationTo, minPrice, navigationHandler, timeArrival, timeDeparture, weekType]);
+    }, [dayOfTheWeek, locationFrom, locationTo, minPrice, navigationHandler, timeArrival, timeDeparture, validateTime, weekType]);
 
     const handleChangeFrom = React.useCallback((evt) => {
         setLocationFrom(evt.target.value);
@@ -170,7 +197,7 @@ export const CreateSchedule: FC<CreateScheduleProps> = ({ navigationHandler }) =
                 >
                     <FormLayoutGroup mode="horizontal">
                         <TimeInput error={error} header="От" time={timeDeparture} setTime={setTimeDeparture} />
-                        <TimeInput error={error} header="До" time={timeArrival} setTime={setTimeArrival} />
+                        <TimeInput error={error} header="До" time={timeArrival} setTime={setTimeArrival} status={error && errorTime ? 'error' : undefined} bottom={errorTime} />
                     </FormLayoutGroup>
                 </Group>
                 <FormItem
