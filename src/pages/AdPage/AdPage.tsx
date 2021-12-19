@@ -64,10 +64,38 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
         [],
     );
 
+    const invalidSnack = useMemo(
+        () => (
+            <Snackbar
+                onClose={() => {
+                    setSnackbar(null);
+                }}
+                before={
+                    <Avatar size={24}>
+                        <Icon28CancelCircleFillRed width={14} height={14} />
+                    </Avatar>
+                }
+            >
+                Данный заказ уже исполняет другой пользователь.
+            </Snackbar>
+        ),
+        [],
+    );
+
     const handleRespondAd = async () => {
         new Api().api
             .adsExecutionCreate(data?.id || -1)
-            .then(async () => {
+            .then(async (response) => {
+                if (response.status === 409) {
+                    setSnackbar(invalidSnack);
+                    return;
+                }
+
+                if (!response.ok) {
+                    setSnackbar(errorSnack);
+                    return;
+                }
+
                 setSnackbar(
                     <Snackbar
                         onClose={() => {
@@ -78,10 +106,11 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
                         Отправлено {ad?.userAuthorName}.
                     </Snackbar>,
                 );
-                const response = await fetch(
+
+                const botResponse = await fetch(
                     `https://handover.space/bot/respond?author_id=${data.userAuthorVkId}&executor_id=${userId}`,
                 );
-                if (!response.ok) {
+                if (!botResponse.ok) {
                     setSnackbar(errorSnack);
                 }
             })

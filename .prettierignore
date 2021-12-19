@@ -5,3 +5,4 @@ public/
 *.css.d.ts
 tmp
 *.md
+build/
