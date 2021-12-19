@@ -75,7 +75,6 @@ export const ScheduleList: FC<ScheduleListProps> = ({ onClickAddSchedule }) => {
                     </Footer>
                 )}
             </Group>
-            )
             <Group className="schedule__add-schedule">
                 <CellButton before={<Icon28AddOutline />} onClick={onClickAddSchedule}>
                     Добавить расписание
