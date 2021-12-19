@@ -117,8 +117,8 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
                     setSnackbar(errorSnack);
                 }
             })
-            .catch(() => {
-                console.log(' я зедсь  у меня рак мозга')
+            .catch((error) => {
+                console.log(error);
                 setSnackbar(errorSnack);
                 setRespond(false);
             });
