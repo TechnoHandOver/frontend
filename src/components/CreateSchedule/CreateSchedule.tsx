@@ -122,7 +122,13 @@ export const CreateSchedule: FC<CreateScheduleProps> = ({ navigationHandler }) =
     }, []);
 
     const handleChangeMinPrice = React.useCallback((evt) => {
-        setMinPrice(evt.target.value);
+        const target = evt.target as HTMLInputElement;
+
+        if (Number.isNaN(Number(target.value))) {
+            return;
+        }
+
+        setMinPrice(target.value);
     }, []);
 
     return (
@@ -205,7 +211,7 @@ export const CreateSchedule: FC<CreateScheduleProps> = ({ navigationHandler }) =
                     status={!minPrice && error ? 'error' : undefined}
                     bottom={!minPrice && error && 'Обязательное поле'}
                 >
-                    <Input type="number" placeholder="500" value={minPrice} onChange={handleChangeMinPrice} />
+                    <Input placeholder="500" value={minPrice} onChange={handleChangeMinPrice} />
                 </FormItem>
             </FormLayout>
             <FixedLayout filled vertical="bottom" style={{ bottom: '50px' }}>
