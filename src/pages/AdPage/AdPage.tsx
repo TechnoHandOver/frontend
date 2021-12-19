@@ -194,7 +194,7 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
                         <FormItem>
                             {respond ? (
                                 <Button stretched size="l" mode="tertiary">
-                                    Исполняется
+                                    {data.userExecutorVkId === userId ? 'Исполняется другим пользователем' : 'Вы исполняете данный заказ'}
                                 </Button>
                             ) : (
                                 <Button stretched size="l" onClick={handleRespondAd}>
