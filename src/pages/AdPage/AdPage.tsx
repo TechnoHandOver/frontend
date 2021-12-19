@@ -16,6 +16,8 @@ import React, { Dispatch, FC, SetStateAction, useEffect, useMemo, useState } fro
 import './AdPage.css';
 import { Ad, Api } from '../../api/Api';
 import { ProfileBlock } from '../../components/ProfileBlock/ProfileBlock';
+import { HeaderWithBackButton } from "../../components/HeaderWithBackButton/HeaderWithBackButton";
+import { Pages } from "../../enums/Pages";
 
 interface AdPageProps {
     id: string;
@@ -132,19 +134,9 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
 
     return (
         <Panel id={id}>
-            <PanelHeader
-                left={
-                    <PanelHeaderButton>
-                        <Icon28ChevronLeftOutline
-                            onClick={() => {
-                                setActivePanel('adsListPage');
-                            }}
-                        />
-                    </PanelHeaderButton>
-                }
-            >
+            <HeaderWithBackButton navigationHandler={setActivePanel} preventPage={ad?.userAuthorVkId === userId ? Pages.MyAds : Pages.AdsList}>
                 Объявление
-            </PanelHeader>
+            </HeaderWithBackButton>
             <FormItem top="Откуда" className="delivery-ad__form-item">
                 <Title level="3" weight="regular">
                     {ad?.locDep}
