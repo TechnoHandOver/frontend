@@ -34,7 +34,7 @@ const App: FC = () => {
     const [popout, setPopout] = useState(null);
     const [modalPriceInput, setModalPriceInput] = useState('');
     const [createAd, setCreateAd] = useState({});
-    const [appStarted, setAppStarted] = useState(false);
+    const [appStarted, setAppStarted] = useState(true);
     const [order, setOrder] = useState('0');
 
     useEffect(() => {
