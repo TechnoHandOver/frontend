@@ -1,3 +1,3 @@
 export enum BackendPaths {
-    MyAdsList = 'https://handover.space/api/ads/list',
+    MyAdsList = 'https://handover.shop/api/ads/list',
 }
