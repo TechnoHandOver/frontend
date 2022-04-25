@@ -204,7 +204,7 @@ export enum ContentType {
 }
 
 export class HttpClient<SecurityDataType = unknown> {
-    public baseUrl: string = 'http://51.250.67.90';
+    public baseUrl: string = 'https://handover.shop';
     private securityData: SecurityDataType | null = null;
     private securityWorker?: ApiConfig<SecurityDataType>['securityWorker'];
     private abortControllers = new Map<CancelToken, AbortController>();

@@ -9,7 +9,7 @@ import { BasePage } from '../BasePage/BasePage';
 import './AdsListPage.css';
 
 const delay = 500;
-const backendUrl = 'http://51.250.67.90';
+const backendUrl = 'https://handover.shop';
 
 interface AdsListPageProps {
     id: string;
