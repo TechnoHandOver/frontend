@@ -89,20 +89,12 @@ export const AdsListPage: FC<AdsListPageProps> = ({
                     }
                     let result = data;
 
-                    console.log('userId', currentUserId);
-
                     if (currentUserId) {
-                        // eslint-disable-next-line no-console
-                        console.log('ya tut');
-
                         result = data.filter((item: Ad) => {
                             const executorId = item.userExecutorVkId;
 
                             return !executorId || (executorId && executorId === currentUserId);
                         });
-
-                        // eslint-disable-next-line no-console
-                        console.log('result', result);
                     }
 
                     setCards(result);
@@ -119,8 +111,6 @@ export const AdsListPage: FC<AdsListPageProps> = ({
 
     React.useEffect(() => {
         if (appStarted && currentUserId) {
-            console.log('appStarted userId', `${appStarted} ${currentUserId}`)
-
             search(fromLocation, toLocation, priceFilter, order, currentUserId);
         }
     }, [fromLocation, toLocation, priceFilter, search, appStarted, order, currentUserId]);
