@@ -7,6 +7,7 @@ import { Modals } from '../../enums/Modals';
 import { customFetch } from '../../helpers/customFetch/customFetch';
 import { BasePage } from '../BasePage/BasePage';
 import './AdsListPage.css';
+// eslint-disable-next-line import/order
 import {Ad} from "../../api/Api";
 
 const delay = 500;

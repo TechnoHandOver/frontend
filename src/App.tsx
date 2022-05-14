@@ -98,10 +98,10 @@ const App: FC = () => {
     const onClickMyAds = useCallback(() => {
         setActivePanel('myAds');
     }, []);
-
-    const handleClickSchedule = useCallback(() => {
-        setActivePanel(Pages.Schedule);
-    }, []);
+    //
+    // const handleClickSchedule = useCallback(() => {
+    //     setActivePanel(Pages.Schedule);
+    // }, []);
 
     const handleClickAddSchedule = useCallback(() => {
         setActivePanel(Pages.CreateSchedule);

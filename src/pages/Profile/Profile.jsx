@@ -13,19 +13,19 @@ export const Profile = ({ id, user, active, navigationHandler, onClickMyAds }) =
             <Cell before={<Icon20CheckNewsfeedOutline fill="#99A2AD" height={35} width={35} />} onClick={onClickMyAds}>
                 Мои объявления
             </Cell>
-            {/* <div className="profile-schedule__box">*/}
-            {/*    <Cell*/}
-            {/*        before={<Icon24CalendarOutline fill="#99A2AD" width={35} height={35} />}*/}
-            {/*        className="profile-schedule"*/}
-            {/*        onClick={onClickSchedule}*/}
-            {/*    >*/}
-            {/*        Моё расписание*/}
-            {/*    </Cell>*/}
-            {/*    /!* в будущем здесь будет тултип *!/*/}
-            {/*    /!* <div className="profile-question"> *!/*/}
-            {/*    /!*    <Icon20HelpOutline fill="#99A2AD" /> *!/*/}
-            {/*    /!* </div> *!/*/}
-            {/*</div>*/}
+            {/* <div className="profile-schedule__box"> */}
+            {/*    <Cell */}
+            {/*        before={<Icon24CalendarOutline fill="#99A2AD" width={35} height={35} />} */}
+            {/*        className="profile-schedule" */}
+            {/*        onClick={onClickSchedule} */}
+            {/*    > */}
+            {/*        Моё расписание */}
+            {/*    </Cell> */}
+                {/* в будущем здесь будет тултип */} 
+                {/* <div className="profile-question"> */}
+                {/*    <Icon20HelpOutline fill="#99A2AD" /> */}
+                {/* </div> */}
+             {/* </div> */}
         </BasePage>
     );
 };
