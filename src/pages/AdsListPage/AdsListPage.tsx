@@ -77,7 +77,7 @@ export const AdsListPage: FC<AdsListPageProps> = ({
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const search = React.useCallback(
-        debounce((fromLocation, toLocation, priceFilter, order) => {
+        debounce((fromLocation, toLocation, priceFilter, order, currentUserId) => {
             const url = generateUrl(fromLocation, toLocation, priceFilter, order);
 
             customFetch(`${url}`)
@@ -121,7 +121,7 @@ export const AdsListPage: FC<AdsListPageProps> = ({
         if (appStarted && currentUserId) {
             console.log('appStarted userId', `${appStarted} ${currentUserId}`)
 
-            search(fromLocation, toLocation, priceFilter, order);
+            search(fromLocation, toLocation, priceFilter, order, currentUserId);
         }
     }, [fromLocation, toLocation, priceFilter, search, appStarted, order, currentUserId]);
 
