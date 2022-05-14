@@ -89,6 +89,8 @@ export const AdsListPage: FC<AdsListPageProps> = ({
                     }
                     let result = data;
 
+                    console.log('userId', currentUserId);
+
                     if (currentUserId) {
                         // eslint-disable-next-line no-console
                         console.log('ya tut');
