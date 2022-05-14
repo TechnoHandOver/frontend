@@ -116,7 +116,7 @@ export const AdsListPage: FC<AdsListPageProps> = ({
     );
 
     React.useEffect(() => {
-        if (appStarted) {
+        if (appStarted && currentUserId) {
             search(fromLocation, toLocation, priceFilter, order);
         }
     }, [fromLocation, toLocation, priceFilter, search, appStarted, order, currentUserId]);
