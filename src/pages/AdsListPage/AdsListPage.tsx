@@ -7,6 +7,7 @@ import { Modals } from '../../enums/Modals';
 import { customFetch } from '../../helpers/customFetch/customFetch';
 import { BasePage } from '../BasePage/BasePage';
 import './AdsListPage.css';
+import {Ad} from "../../api/Api";
 
 const delay = 500;
 const backendUrl = 'https://handover.shop';
@@ -20,6 +21,8 @@ interface AdsListPageProps {
     setAdData: Dispatch<SetStateAction<any>>;
     appStarted: boolean;
     order: string;
+
+    currentUserId?: number;
 }
 
 export const AdsListPage: FC<AdsListPageProps> = ({
@@ -31,6 +34,7 @@ export const AdsListPage: FC<AdsListPageProps> = ({
     setAdData,
     appStarted,
     order,
+    currentUserId,
 }) => {
     const [cards, setCards] = React.useState<any>([]);
     const [fromLocation, setFromLocation] = React.useState('');
@@ -82,7 +86,17 @@ export const AdsListPage: FC<AdsListPageProps> = ({
                         setIsLoading(false);
                         return;
                     }
-                    setCards(data);
+                    let result = data;
+
+                    if (currentUserId) {
+                        result = data.filter((item: Ad) => {
+                            const executorId = item.userExecutorVkId;
+
+                            return !executorId || (executorId && executorId === currentUserId);
+                        });
+                    }
+
+                    setCards(result);
                     setIsLoading(false);
                 })
                 .catch((error) => {
