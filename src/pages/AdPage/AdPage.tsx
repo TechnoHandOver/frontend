@@ -100,7 +100,7 @@ export const AdPage: FC<AdPageProps> = ({ id, data, setActivePanel, userId, setC
                 );
 
                 const botResponse = await fetch(
-                    `https://handover.space/bot/respond?author_id=${data.userAuthorVkId}&executor_id=${userId}`,
+                    `https://handover.shop/bot/respond?author_id=${data.userAuthorVkId}&executor_id=${userId}`,
                 );
                 if (!botResponse.ok) {
                     setSnackbar(errorSnack);

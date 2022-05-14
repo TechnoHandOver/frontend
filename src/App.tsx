@@ -98,10 +98,10 @@ const App: FC = () => {
     const onClickMyAds = useCallback(() => {
         setActivePanel('myAds');
     }, []);
-
-    const handleClickSchedule = useCallback(() => {
-        setActivePanel(Pages.Schedule);
-    }, []);
+    //
+    // const handleClickSchedule = useCallback(() => {
+    //     setActivePanel(Pages.Schedule);
+    // }, []);
 
     const handleClickAddSchedule = useCallback(() => {
         setActivePanel(Pages.CreateSchedule);
@@ -190,6 +190,7 @@ const App: FC = () => {
                             setAdData={setAdData}
                             appStarted={appStarted}
                             order={order}
+                            currentUserId={fetchedUser?.id}
                         />
                         <Profile
                             id={Pages.Profile}
@@ -197,7 +198,7 @@ const App: FC = () => {
                             navigationHandler={setActivePanel}
                             user={fetchedUser}
                             onClickMyAds={onClickMyAds}
-                            onClickSchedule={handleClickSchedule}
+                            // onClickSchedule={handleClickSchedule}
                         />
                         <AdPage
                             id={Pages.OneAd}

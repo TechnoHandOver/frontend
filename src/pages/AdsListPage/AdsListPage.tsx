@@ -7,9 +7,11 @@ import { Modals } from '../../enums/Modals';
 import { customFetch } from '../../helpers/customFetch/customFetch';
 import { BasePage } from '../BasePage/BasePage';
 import './AdsListPage.css';
+// eslint-disable-next-line import/order
+import {Ad} from "../../api/Api";
 
 const delay = 500;
-const backendUrl = 'https://handover.space';
+const backendUrl = 'https://handover.shop';
 
 interface AdsListPageProps {
     id: string;
@@ -20,6 +22,8 @@ interface AdsListPageProps {
     setAdData: Dispatch<SetStateAction<any>>;
     appStarted: boolean;
     order: string;
+
+    currentUserId?: number;
 }
 
 export const AdsListPage: FC<AdsListPageProps> = ({
@@ -31,6 +35,7 @@ export const AdsListPage: FC<AdsListPageProps> = ({
     setAdData,
     appStarted,
     order,
+    currentUserId,
 }) => {
     const [cards, setCards] = React.useState<any>([]);
     const [fromLocation, setFromLocation] = React.useState('');
@@ -72,7 +77,7 @@ export const AdsListPage: FC<AdsListPageProps> = ({
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const search = React.useCallback(
-        debounce((fromLocation, toLocation, priceFilter, order) => {
+        debounce((fromLocation, toLocation, priceFilter, order, currentUserId) => {
             const url = generateUrl(fromLocation, toLocation, priceFilter, order);
 
             customFetch(`${url}`)
@@ -82,7 +87,17 @@ export const AdsListPage: FC<AdsListPageProps> = ({
                         setIsLoading(false);
                         return;
                     }
-                    setCards(data);
+                    let result = data;
+
+                    if (currentUserId) {
+                        result = data.filter((item: Ad) => {
+                            const executorId = item.userExecutorVkId;
+
+                            return !executorId || (executorId && executorId === currentUserId);
+                        });
+                    }
+
+                    setCards(result);
                     setIsLoading(false);
                 })
                 .catch((error) => {
@@ -95,10 +110,10 @@ export const AdsListPage: FC<AdsListPageProps> = ({
     );
 
     React.useEffect(() => {
-        if (appStarted) {
-            search(fromLocation, toLocation, priceFilter, order);
+        if (appStarted && currentUserId) {
+            search(fromLocation, toLocation, priceFilter, order, currentUserId);
         }
-    }, [fromLocation, toLocation, priceFilter, search, appStarted, order]);
+    }, [fromLocation, toLocation, priceFilter, search, appStarted, order, currentUserId]);
 
     return (
         <BasePage
